@@ -33,6 +33,19 @@ frontend/
   vite.config.ts
   tsconfig.json
 ```
+Trong đó:
+
+- *pages/*: gồm các giao diện Page như trong Figma
+
+- *components/*: gồm các component có thể dùng đi dùng lại
+
+- *api/*: dùng để khai báo các hàm sau này backend gọi
+
+- *images/*: lưu hình ảnh dùng cho các Page
+
+- *styles/*: File CSS cho các Page
+
+- *App.tsx*: khai báo các route đến Page
 
 ### Backend
 ```arduino
@@ -41,3 +54,8 @@ backend/
   data/users.json
   package.json
 ```
+Trong đó:
+
+- *server.js*: Xử lý các route
+
+- *data/*: Lưu database định sẵn

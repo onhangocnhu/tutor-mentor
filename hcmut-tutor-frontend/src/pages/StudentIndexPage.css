@@ -30,7 +30,7 @@
 
 /* Adjust existing .student-page to fill the inner container */
 .student-page {
-  width: 100%;
+  width: 100vw;
   min-height: 100dvh;
   /* background removed here because handled by page-outer */
   display: flex;
@@ -57,7 +57,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 70px;
   background: #3c8dbc;
   display: flex;

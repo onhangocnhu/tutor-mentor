@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "username": "stu1",
+    "password": "123",
+    "role": "student",
+    "name": "Student One"
+  },
+  {
+    "id": 2,
+    "username": "stu2",
+    "password": "123",
+    "role": "student",
+    "name": "Student Two"
+  },
+  {
+    "id": 3,
+    "username": "stu3",
+    "password": "123",
+    "role": "student",
+    "name": "Student Three"
+  },
+  {
+    "id": 4,
+    "username": "tutor1",
+    "password": "123",
+    "role": "tutor",
+    "name": "Tutor A"
+  },
+  {
+    "id": 5,
+    "username": "tutor2",
+    "password": "123",
+    "role": "tutor",
+    "name": "Tutor B"
+  },
+  {
+    "id": 6,
+    "username": "tutor3",
+    "password": "123",
+    "role": "tutor",
+    "name": "Tutor C"
+  },
+  {
+    "id": 7,
+    "username": "tutor4",
+    "password": "123",
+    "role": "tutor",
+    "name": "Tutor D"
+  },
+  {
+    "id": 8,
+    "username": "tutor5",
+    "password": "123",
+    "role": "tutor",
+    "name": "Tutor E"
+  },
+  {
+    "id": 9,
+    "username": "ctsv",
+    "password": "123",
+    "role": "ctsv",
+    "name": "Phòng Công tác Sinh viên"
+  },
+  {
+    "id": 10,
+    "username": "pdt",
+    "password": "123",
+    "role": "pdt",
+    "name": "Phòng Đào tạo"
+  },
+  {
+    "id": 11,
+    "username": "faculty",
+    "password": "123",
+    "role": "faculty",
+    "name": "Khoa Khoa học và Kỹ thuật Máy tính"
+  }
+]

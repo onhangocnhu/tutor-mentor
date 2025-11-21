@@ -1,0 +1,51 @@
+# ---
+# Node / JS
+# ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# ---
+# Build output
+# ---
+dist/
+build/
+.cache/
+.esbuild/
+
+# ---
+# Environment variables
+# ---
+.env
+.env.local
+.env.*.local
+
+# ---
+# Vite
+# ---
+vite.config.ts.timestamp*
+*.tsbuildinfo
+
+# ---
+# Logs
+# ---
+logs/
+*.log
+*.log.*
+
+# ---
+# OS-specific trash
+# ---
+.DS_Store
+Thumbs.db
+
+# ---
+# Editor / IDE
+# ---
+.vscode/
+.idea/
+*.swp
+*.swo

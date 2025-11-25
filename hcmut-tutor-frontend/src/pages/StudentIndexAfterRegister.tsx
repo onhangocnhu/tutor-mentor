@@ -1,10 +1,20 @@
-import hcmut_logo from "../images/hcmut_logo.png"
+import React, { useState } from "react";
+import hcmut_logo from "../images/hcmut_logo.png";
 import last_seen_icon from "../images/last-seen-icon.svg";
 import menu_icon from "../images/menu.png";
 import home_icon from "../images/Home.svg";
+import { useNavigate } from "react-router-dom";
 import "./StudentIndexPage.css";
+import SideBarOpen from "../components/SideBarOpen";
 
-export default function StudentIndexAfterRegister() {
+export default function StudentIndexPage() {
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const goToRegisterProgram = () => {
+    navigate("/register-program");
+  };
+
   const formatDateTime = () => {
     const now = new Date();
 
@@ -25,14 +35,29 @@ export default function StudentIndexAfterRegister() {
       {/* inner centered container to prevent large white gutter on the right */}
       <div className="page-inner">
         <div className="student-page">
-          {/* SIDEBAR */}
-          <aside className="sidebar">
-            <img
-              className="sidebar-avatar"
-              src={hcmut_logo}
-              alt="hcmut logo"
+          {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
+          {menuOpen && (
+            <div
+              onClick={() => setMenuOpen(false)}
+              style={{
+                position: "fixed",
+                left: 0,
+                top: 0,
+                width: "100vw",
+                height: "100vh",
+                background: "rgba(0, 0, 0, 0.5)",
+                zIndex: 202, // below SideBarOpen (203) and above topbar (201)
+              }}
             />
+          )}
+
+          {/* collapsed sidebar (always present) */}
+          <aside className="sidebar">
+            <img className="sidebar-avatar" src={hcmut_logo} alt="hcmut logo" />
           </aside>
+
+          {/* render drawer component (separate component) */}
+          <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
           {/* HEADER (BLUE BAR) */}
           <header className="topbar">
@@ -40,11 +65,16 @@ export default function StudentIndexAfterRegister() {
               <div className="logo-text">Bk</div>
             </div>
             <div className="top-title">
-              <img
-                className="top-menu"
-                src={menu_icon}
-                alt="menu"
-              />
+              {/* show top-menu icon only when drawer is closed */}
+              {!menuOpen && (
+                <img
+                  className="top-menu"
+                  src={menu_icon}
+                  alt="menu"
+                  onClick={() => setMenuOpen(true)}
+                  style={{ cursor: "pointer", zIndex: 1100, position: "relative" }}
+                />
+              )}
             </div>
           </header>
 
@@ -119,6 +149,7 @@ export default function StudentIndexAfterRegister() {
                 </div>
               </div>
             </div>
+
           </main>
         </div>
       </div>

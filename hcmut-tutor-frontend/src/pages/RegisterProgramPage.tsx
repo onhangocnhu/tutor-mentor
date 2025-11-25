@@ -7,6 +7,7 @@ import checkbox_true from "../images/checkbox-true.svg";
 import error_icon from "../images/error.svg";
 import done_icon from "../images/done-register.svg";
 import menu_icon from "../images/menu.png";
+import SideBarOpen from "../components/SideBarOpen";
 
 
 const TermsModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
@@ -79,6 +80,7 @@ const TermsModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open, on
 
 
 const RegisterProgramPage: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
   const [fullName, setFullName] = useState("");
   const [studentId, setStudentId] = useState("");
@@ -210,23 +212,49 @@ const RegisterProgramPage: React.FC = () => {
       </div>
 
       {/* menu icon placed to the right of "Bk" (not sidebar) */}
-      <div
-        style={{
-          position: "absolute",
-          left: 90, // just to the right of the Bk block
-          top: 20,
-          height: 29,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          zIndex: 10,
-        }}
-        role="button"
-        aria-label="menu"
-      >
-        <img src={menu_icon} alt="menu" style={{ width: 24, height: 24 }} />
-      </div>
+      {!menuOpen && (
+        <div
+          style={{
+            position: "absolute",
+            left: 90, // just to the right of the Bk block
+            top: 20,
+            height: 29,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            zIndex: 210, // above overlay
+          }}
+          role="button"
+          aria-label="menu"
+        >
+          <img
+            src={menu_icon}
+            alt="menu"
+            onClick={() => setMenuOpen(true)}
+            style={{ width: 24, height: 24, cursor: "pointer" }}
+          />
+        </div>
+      )}
+
+      {/* overlay for drawer (below SideBarOpen which uses zIndex 202) */}
+      {menuOpen && (
+        <div
+          onClick={() => setMenuOpen(false)}
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.35)",
+            zIndex: 200,
+          }}
+        />
+      )}
+
+      {/* drawer component */}
+      <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <div
         style={{

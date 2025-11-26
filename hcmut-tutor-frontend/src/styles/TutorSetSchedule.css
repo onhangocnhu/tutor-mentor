@@ -1,91 +1,22 @@
-/* Reset cơ bản */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 .app-container {
   display: flex;
   min-height: 100vh;
   background-color: #f5f5f5;
 }
 
-/* --- Sidebar --- */
-.sidebar {
-  width: 60px;
-  background-color: #263238; /* Màu đen xám sidebar */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 10px;
-  color: white;
-}
-
-.logo-box {
-  width: 40px;
-  height: 40px;
-  background: url('https://via.placeholder.com/40x40/0056b3/ffffff?text=BK') no-repeat center; /* Placeholder logo */
-  background-size: cover;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-}
-
-.menu-item {
-  width: 100%;
-  padding: 15px 0;
-  text-align: center;
-  cursor: pointer;
-  color: #b0bec5;
-  font-size: 20px;
-}
-
-.menu-item:hover, .menu-item.active {
-  background-color: #37474f;
-  color: white;
-}
-
 /* --- Main Content --- */
 .main-content {
-  flex: 1;
+  /* flex: 1; */
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Header màu xanh */
-.top-header {
-  background-color: #4aa3d3; /* Màu xanh dương header */
-  height: 50px;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  color: white;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.menu-toggle {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-}
 
 /* Content Body */
 .content-body {
   padding: 20px 40px;
+
   background-color: white;
   flex: 1;
 }
@@ -94,6 +25,7 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  margin-top: 70px;
   margin-bottom: 20px;
 }
 
@@ -108,12 +40,17 @@
 }
 
 /* --- Table Section --- */
+.section-wrapper {
+  align-items: center;
+}
+
 .schedule-section {
   margin-bottom: 20px;
 }
 
 .section-header-bar {
-  background-color: #4682b4; /* Xanh đậm hơn header chút */
+  background-color: #4682b4;
+  /* Xanh đậm hơn header chút */
   color: white;
   padding: 10px 15px;
   font-weight: bold;
@@ -131,10 +68,12 @@ table {
 }
 
 thead {
-  background-color: #f2f4f8; /* Màu xám nhạt tiêu đề bảng */
+  background-color: #f2f4f8;
+  /* Màu xám nhạt tiêu đề bảng */
 }
 
-th, td {
+th,
+td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #eee;
@@ -172,10 +111,12 @@ th {
 }
 
 .btn-setup {
-  background-color: #9adbf9; /* Màu xanh nhạt nút to */
+  background-color: #9adbf9;
+  /* Màu xanh nhạt nút to */
   border: none;
   width: 100%;
-  max-width: 800px; /* Giới hạn chiều rộng cho đẹp */
+  max-width: 800px;
+  /* Giới hạn chiều rộng cho đẹp */
   padding: 15px;
   font-size: 16px;
   font-weight: bold;
@@ -194,7 +135,7 @@ th {
   padding: 30px;
   border: 1px solid #eee;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   background-color: white;
 }
 
@@ -206,7 +147,8 @@ th {
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Chia làm 5 cột đều nhau */
+  grid-template-columns: repeat(5, 1fr);
+  /* Chia làm 5 cột đều nhau */
   gap: 20px;
   margin-bottom: 30px;
 }
@@ -247,7 +189,8 @@ th {
   gap: 15px;
 }
 
-.btn-cancel, .btn-save {
+.btn-cancel,
+.btn-save {
   padding: 10px 30px;
   border-radius: 20px;
   border: none;
@@ -262,7 +205,8 @@ th {
 }
 
 .btn-save {
-  background-color: #007bff; /* Màu xanh đậm nút Lưu */
+  background-color: #007bff;
+  /* Màu xanh đậm nút Lưu */
   color: white;
 }
 
@@ -276,15 +220,24 @@ th {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive cho màn hình nhỏ */
 @media (max-width: 900px) {
   .form-grid {
-    grid-template-columns: 1fr 1fr; /* Xuống 2 cột */
+    grid-template-columns: 1fr 1fr;
+    /* Xuống 2 cột */
   }
+
   .form-grid .form-group:last-child {
     grid-column: span 2;
   }

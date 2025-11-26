@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/TutorSetSchedule.css'
+import { useNavigate } from 'react-router-dom';
+import SidebarRail from '../../components/SidebarRail';
+import SideBarOpen from '../../components/SideBarOpen';
+import TopBar from '../../components/TopBar';
 
-// Định nghĩa kiểu dữ liệu cho môn học
 interface ClassSession {
   id: number;
   className: string;
@@ -12,8 +15,9 @@ interface ClassSession {
 }
 
 const TutorSchedule: React.FC = () => {
-  // State để điều khiển việc hiển thị form thêm lịch rảnh
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Dữ liệu giả lập 
   const scheduleData: ClassSession[] = [
@@ -31,30 +35,54 @@ const TutorSchedule: React.FC = () => {
     setShowAddForm(false); // Ẩn form khi bấm Thoát
   };
 
+  useEffect(() => {
+    const cookieRole = document.cookie
+      .split(";")
+      .map((s) => s.trim())
+      .find((s) => s.startsWith("role="))
+      ? document.cookie
+        .split(";")
+        .map((s) => s.trim())
+        .find((s) => s.startsWith("role="))!
+        .split("=")[1]
+      : null;
+
+    if (!cookieRole || decodeURIComponent(cookieRole) !== "tutor") {
+      navigate("/unauthorized");
+    }
+  }, [navigate]);
+
   return (
     <div className="app-container">
-      {/* Sidebar bên trái (Mô phỏng) */}
-      <aside className="sidebar">
-        <div className="logo-area">
-          <div className="logo-box">BK</div>
-        </div>
-        <div className="menu-items">
-          <div className="menu-item active"><span className="icon">☰</span></div>
-          <div className="menu-item"><span className="icon">📂</span></div>
-          <div className="menu-item"><span className="icon">📅</span></div>
-        </div>
-      </aside>
+      {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
+      {menuOpen && (
+        <div
+          onClick={() => setMenuOpen(false)}
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0, 0, 0, 0.5)",
+            zIndex: 202,
+          }}
+        />
+      )}
+
+      <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
+
+      <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
+
+      {/* HEADER (using TopBar component) */}
+      <TopBar
+        menuOpen={menuOpen}
+        onMenuClick={() => setMenuOpen(true)}
+        onLogoClick={() => navigate("/tutor-dashboard")}
+      />
 
       {/* Nội dung chính bên phải */}
       <main className="main-content">
-        {/* Header */}
-        <header className="top-header">
-          <div className="header-left">
-            <span className="logo-text">Bk</span>
-            <button className="menu-toggle">☰</button>
-          </div>
-        </header>
-
         <div className="content-body">
           <div className="page-title-section">
             <h1>Thiết lập lịch rảnh</h1>
@@ -62,38 +90,40 @@ const TutorSchedule: React.FC = () => {
           </div>
 
           {/* Phần Lịch dạy - Table */}
-          <section className="schedule-section">
-            <div className="section-header-bar">Lịch dạy</div>
+          <div className="session-wrapper">
+            <section className="schedule-section">
+              <div className="section-header-bar">Lịch dạy</div>
 
-            <div className="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Số thứ tự</th>
-                    <th>Lớp</th>
-                    <th>Tên môn học</th>
-                    <th>Phòng học / Link lớp học</th>
-                    <th>Thứ</th>
-                    <th>Giờ học</th>
-                    <th>Hành động</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {scheduleData.map((item) => (
-                    <tr key={item.id}>
-                      <td className="col-id">{item.id}</td>
-                      <td>{item.className}</td>
-                      <td>{item.subjectName}</td>
-                      <td className="col-link">{item.location}</td>
-                      <td>{item.day}</td>
-                      <td>{item.time}</td>
-                      <td><a href="#" className="action-link">Chỉnh sửa</a></td>
+              <div className="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Số thứ tự</th>
+                      <th>Lớp</th>
+                      <th>Tên môn học</th>
+                      <th>Phòng học / Link lớp học</th>
+                      <th>Thứ</th>
+                      <th>Giờ học</th>
+                      <th>Hành động</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
+                  </thead>
+                  <tbody>
+                    {scheduleData.map((item) => (
+                      <tr key={item.id}>
+                        <td className="col-id">{item.id}</td>
+                        <td>{item.className}</td>
+                        <td>{item.subjectName}</td>
+                        <td className="col-link">{item.location}</td>
+                        <td>{item.day}</td>
+                        <td>{item.time}</td>
+                        <td><a href="#" className="action-link">Chỉnh sửa</a></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
 
           {/* Nút kích hoạt form  */}
           <div className="action-bar">

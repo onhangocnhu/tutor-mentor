@@ -123,13 +123,13 @@ export const DocumentSection: React.FC = () => {
           </div>
 
           <div className="info-row">
-            <label htmlFor="release-year">Năm phát hành</label>
+            <label htmlFor="release-year">Năm xuất bản</label>
             <input
               type="text"
               id="release-year"
               value={releaseYear}
               onChange={(e) => setReleaseYear(e.target.value)}
-              placeholder="Nhập năm phát hành"
+              placeholder="Nhập năm xuất bản"
             />
           </div>
 

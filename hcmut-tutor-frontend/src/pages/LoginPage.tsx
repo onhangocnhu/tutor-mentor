@@ -1,6 +1,6 @@
 import hcmut_logo from "../images/hcmut_logo.png";
 import login_homepic from "../images/login_homepic.png";
-import "./LoginPage.css";
+import "../styles/LoginPage.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,11 +26,80 @@ export const LoginPage = (): React.JSX.Element => {
       return;
     }
 
-    if (data.role === "student") navigate("/student-dashboard");
-    if (data.role === "tutor") navigate("/tutor-dashboard");
-    if (data.role === "ctsv") navigate("/ctsv-dashboard");
-    if (data.role === "pdt") navigate("/pdt-dashboard");
-    if (data.role === "faculty") navigate("/faculty-dashboard");
+    document.cookie = `username=${encodeURIComponent(username)}; path=/; max-age=${60 * 60 * 24}`;
+    document.cookie = `role=${encodeURIComponent(data.role)}; path=/; max-age=${60 * 60 * 24}`;
+
+    const cookieRole = document.cookie
+      .split(";")
+      .map((s) => s.trim())
+      .find((s) => s.startsWith("role="))
+      ? document.cookie
+        .split(";")
+        .map((s) => s.trim())
+        .find((s) => s.startsWith("role="))!
+        .split("=")[1]
+      : null;
+
+    if (!cookieRole || decodeURIComponent(cookieRole) !== data.role) {
+      alert("Lỗi: không thể xác thực vai trò. Vui lòng thử lại.");
+      return;
+    }
+
+    const originalFetch: any = window.fetch;
+    window.fetch = (input: any, init: any = {}) => {
+      init = init || {};
+      const headers = new Headers(init.headers || {});
+      if (!headers.has("X-User-Role")) {
+        headers.set("X-User-Role", data.role);
+      }
+      init.headers = headers;
+      return originalFetch(input, init);
+    };
+
+    if (data.role === "student") {
+      if (decodeURIComponent(cookieRole) === "student") {
+        navigate("/student-dashboard");
+      } else {
+        alert("Bạn không được phép truy cập trang sinh viên.");
+      }
+      return;
+    }
+
+    if (data.role === "tutor") {
+      if (decodeURIComponent(cookieRole) === "tutor") {
+        navigate("/tutor-dashboard");
+      } else {
+        alert("Bạn không được phép truy cập trang Tutor.");
+      }
+      return;
+    }
+
+    if (data.role === "ctsv") {
+      if (decodeURIComponent(cookieRole) === "ctsv") {
+        navigate("/ctsv-dashboard");
+      } else {
+        alert("Bạn không được phép truy cập trang Phòng Công tác sinh viên.");
+      }
+      return;
+    }
+
+    if (data.role === "pdt") {
+      if (decodeURIComponent(cookieRole) === "pdt") {
+        navigate("/pdt-dashboard");
+      } else {
+        alert("Bạn không được phép truy cập trang Phòng đào tạo.");
+      }
+      return;
+    }
+
+    if (data.role === "faculty") {
+      if (decodeURIComponent(cookieRole) === "faculty") {
+        navigate("/faculty-dashboard");
+      } else {
+        alert("Bạn không được phép truy cập trang Khoa/Bộ môn.");
+      }
+      return;
+    }
   };
 
   return (

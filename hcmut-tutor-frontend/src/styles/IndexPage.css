@@ -41,6 +41,7 @@
 /* SIDEBAR */
 .sidebar {
   width: 70px;
+  height: 100vh;
   background: #222d32;
   padding-top: 80px;
   display: flex;

@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import hcmut_logo from "../images/hcmut_logo.png"
 import edit_icon from "../images/edit.svg";
 import checkbox_none from "../images/checkbox-none.svg";
 import checkbox_true from "../images/checkbox-true.svg";
 import error_icon from "../images/error.svg";
 import done_icon from "../images/done-register.svg";
-import menu_icon from "../images/menu.png";
 import SideBarOpen from "../components/SideBarOpen";
+import SidebarRail from "../components/SidebarRail";
+import TopBar from "../components/TopBar";
+import "../styles/RegisterProgramPage.css";
 
 
 const TermsModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
@@ -90,31 +91,48 @@ const RegisterProgramPage: React.FC = () => {
   const [degree, setDegree] = useState("");
   const [trainingSystem, setTrainingSystem] = useState("");
   const [year, setYear] = useState("");
-  const [registered, setRegistered] = useState(false); // <-- new
-  const navigate = useNavigate(); // <-- new
-  const [agreed, setAgreed] = useState(false); // <-- new: checkbox state
-  const [showAgreeError, setShowAgreeError] = useState(false); // <-- existing
-  const [errorFading, setErrorFading] = useState(false); // <-- new: controls opacity fade
+  const [registered, setRegistered] = useState(false);
+  const navigate = useNavigate();
+  const [agreed, setAgreed] = useState(false);
+  const [showAgreeError, setShowAgreeError] = useState(false);
+  const [errorFading, setErrorFading] = useState(false);
 
   const fadeTimerRef = useRef<number | null>(null);
   const hideTimerRef = useRef<number | null>(null);
-  const navTimerRef = useRef<number | null>(null); // <-- new: navigation timer
+  const navTimerRef = useRef<number | null>(null);
 
-  // helper to show error then auto-fade and hide
+  // load current student info from backend and populate the form values (read-only)
+  useEffect(() => {
+    const loadStudent = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/current-student", { credentials: "include" });
+        if (!res.ok) return;
+        const data = await res.json();
+        setFullName(data.fullName ?? data.name ?? "");
+        setStudentId(data.studentId ?? data.id ?? "");
+        setFaculty(data.faculty ?? "");
+        setClassCode(data.classCode ?? data.class ?? "");
+        setEmail(data.email ?? "");
+        setDegree(data.degree ?? "");
+        setTrainingSystem(data.trainingSystem ?? data.training_system ?? "");
+        setYear(String(data.year ?? data.graduationYear ?? ""));
+      } catch (e) {
+      }
+    };
+    loadStudent();
+  }, []);
+
   const triggerAgreeError = () => {
-    // clear any existing timers
     if (fadeTimerRef.current) window.clearTimeout(fadeTimerRef.current);
     if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
 
     setErrorFading(false);
     setShowAgreeError(true);
 
-    // start fade at 3.5s
     fadeTimerRef.current = window.setTimeout(() => {
       setErrorFading(true);
     }, 3500);
 
-    // hide completely at 4s
     hideTimerRef.current = window.setTimeout(() => {
       setShowAgreeError(false);
       setErrorFading(false);
@@ -123,7 +141,6 @@ const RegisterProgramPage: React.FC = () => {
     }, 4000);
   };
 
-  // cleanup timers on unmount
   useEffect(() => {
     return () => {
       if (fadeTimerRef.current) window.clearTimeout(fadeTimerRef.current);
@@ -132,13 +149,35 @@ const RegisterProgramPage: React.FC = () => {
     };
   }, []);
 
-  // when registration completed, wait 4s then navigate to the "after register" page
+  useEffect(() => {
+    const cookieRole = document.cookie
+      .split(";")
+      .map((s) => s.trim())
+      .find((s) => s.startsWith("role="))
+      ? document.cookie
+        .split(";")
+        .map((s) => s.trim())
+        .find((s) => s.startsWith("role="))!
+        .split("=")[1]
+      : null;
+
+    if (!cookieRole || decodeURIComponent(cookieRole) !== "student") {
+      alert("Bạn không có quyền truy cập trang này. Vui lòng đăng nhập bằng tài khoản sinh viên.");
+      navigate("/login");
+    }
+  }, [navigate]);
+
   useEffect(() => {
     if (!registered) return;
-    // clear existing nav timer if any
+    try {
+      localStorage.setItem("programRegistered", "true");
+    } catch (e) {
+    }
+    document.cookie = `programRegistered=true; path=/; max-age=${60 * 60 * 24 * 365}`;
+
     if (navTimerRef.current) window.clearTimeout(navTimerRef.current);
     navTimerRef.current = window.setTimeout(() => {
-      navigate("/student-dashboard-after");
+      navigate("/student-dashboard");
     }, 2000);
 
     return () => {
@@ -149,398 +188,87 @@ const RegisterProgramPage: React.FC = () => {
     };
   }, [registered, navigate]);
 
-  const inputStyle: React.CSSProperties = {
-    marginTop: 6,
-    height: 34, // adjusted for more balanced appearance
-    background: "#EEEEEE",
-    border: "1px solid #D2D6DE",
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: 9,
-    color: "#333",
-    fontSize: 16,
-    outline: "none",
-  };
-
   return (
-    <div
-      style={{
-        width: 1440,
-        height: 1024,
-        position: "relative",
-        background: "#ECF0F5",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          width: 1440,
-          height: 70,
-          left: 0,
-          top: 0,
-          position: "absolute",
-          background: "#3C8DBC",
-        }}
-      />
-      <div
-        style={{
-          width: 70,
-          height: 70,
-          left: 0,
-          top: 0,
-          position: "absolute",
-          background: "#367FA9",
-        }}
-      />
-      <div
-        style={{
-          width: 117,
-          height: 29,
-          left: -24,
-          top: 20,
-          position: "absolute",
-          textAlign: "center",
-          justifyContent: "center",
-          display: "flex",
-          alignItems: "center",
-          color: "white",
-          fontSize: 24,
-          fontWeight: 700,
-        }}
-      >
-        Bk
-      </div>
+    <div className="register-page">
+      <TopBar onLogoClick={() => navigate("/student-dashboard")} menuOpen={menuOpen} onMenuClick={() => setMenuOpen(true)} />
 
-      {/* menu icon placed to the right of "Bk" (not sidebar) */}
-      {!menuOpen && (
-        <div
-          style={{
-            position: "absolute",
-            left: 90, // just to the right of the Bk block
-            top: 20,
-            height: 29,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            zIndex: 210, // above overlay
-          }}
-          role="button"
-          aria-label="menu"
-        >
-          <img
-            src={menu_icon}
-            alt="menu"
-            onClick={() => setMenuOpen(true)}
-            style={{ width: 24, height: 24, cursor: "pointer" }}
-          />
+      {/* {!menuOpen && (
+        <div className="register-menu-btn" role="button" aria-label="menu">
+          <img src={menu_icon} alt="menu" onClick={() => setMenuOpen(true)} style={{ width: 24, height: 24, cursor: "pointer" }} />
         </div>
-      )}
+      )} */}
 
-      {/* overlay for drawer (below SideBarOpen which uses zIndex 202) */}
-      {menuOpen && (
-        <div
-          onClick={() => setMenuOpen(false)}
-          style={{
-            position: "fixed",
-            left: 0,
-            top: 0,
-            width: "100vw",
-            height: "100vh",
-            background: "rgba(0,0,0,0.35)",
-            zIndex: 200,
-          }}
-        />
-      )}
+      {menuOpen && <div className="register-drawer-overlay" onClick={() => setMenuOpen(false)} />}
 
       {/* drawer component */}
       <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <SidebarRail wrapperClass="register-sidebar-rail" imgClass="sidebar-avatar" />
 
-      <div
-        style={{
-          width: 70,
-          height: 954,
-          left: 0.02,
-          top: 70,
-          position: "absolute",
-          background: "#222D32",
-        }}
-      />
-
-      <img
-        src={hcmut_logo}
-        alt="logo"
-        style={{ width: 65, height: 50, left: 2, top: 82, position: "absolute" }}
-      />
-
-      <div
-        style={{
-          width: 385,
-          height: 38,
-          left: 93,
-          top: 112,
-          position: "absolute",
-          display: "flex",
-          alignItems: "center",
-          color: "black",
-          fontSize: 36,
-          fontWeight: 700,
-        }}
-      >
-        Hệ thống hỗ trợ Tutor
-      </div>
-
-      <div
-        style={{
-          width: 2,
-          height: 814,
-          left: 124,
-          top: 211,
-          position: "absolute",
-          background: "#D9D9D9",
-        }}
-      />
-
-      <div
-        style={{
-          width: 242,
-          height: 43,
-          left: 91,
-          top: 172,
-          position: "absolute",
-          background: "#0073B7",
-        }}
-      />
-      <div
-        style={{
-          width: 238,
-          height: 47,
-          left: 93,
-          top: 170,
-          position: "absolute",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "white",
-          fontSize: 15,
-          fontWeight: 900,
-        }}
-      >
-        Đăng ký tham gia chương trình
-      </div>
-
-      {/* blue circular edit button */}
-      <div
-        style={{
-          width: 45,
-          height: 45,
-          left: 102,
-          top: 241,
-          position: "absolute",
-          background: "#0073B7",
-          borderRadius: 9999,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-        }}
-      >
-        <img src={edit_icon} alt="edit" style={{ width: 20, height: 20 }} />
-      </div>
+      <div className="register-main-title">Hệ thống hỗ trợ Tutor</div>
+      <div className="register-vertical-divider" />
+      <div className="register-ribbon" />
+      <div className="register-ribbon-text">Đăng ký tham gia chương trình</div>
+      <div className="register-edit-circle"><img src={edit_icon} alt="edit" style={{ width: 20, height: 20 }} /></div>
 
       {/* main white card (form) */}
-      <div
-        style={{
-          width: 1243,
-          height: 380,
-          left: 165,
-          top: 241,
-          position: "absolute",
-          background: "white",
-          boxSizing: "border-box",
-          padding: 20,
-          // removed blur/opacity/pointerEvents — replaced by overlay element below
-        }}
-      >
-        {/* Header inside white card */}
-        <div
-          style={{
-            width: 476,
-            height: 51,
-            left: 20,
-            top: 11,
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            color: "black",
-            fontSize: 20,
-            fontWeight: 800,
-          }}
-        >
-          Kiểm tra thông tin cá nhân
-        </div>
+      <div className="register-form-card">
+        <div className="register-form-card-header">Kiểm tra thông tin cá nhân</div>
 
-        {/* Row 1 - editable inputs */}
-        <div style={{ position: "absolute", left: 20, top: 70, display: "flex", gap: 20 }}>
-          <div style={{ width: 320, height: 65 }}>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>Họ và tên</div>
-            <input
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="Nguyễn Văn A"
-              style={inputStyle}
-            />
+        <div className="register-form-row row-1">
+          <div className="register-input-wrap">
+            <div className="register-input-label">Họ và tên</div>
+            <input className="register-input" value={fullName} readOnly placeholder={fullName} />
           </div>
-
-          <div style={{ width: 260, height: 64 }}>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>Mã sinh viên</div>
-            <input
-              value={studentId}
-              onChange={(e) => setStudentId(e.target.value)}
-              placeholder="2312XXX"
-              style={{ ...inputStyle, height: 34 }}
-            />
+          <div className="register-input-wrap">
+            <div className="register-input-label">Mã sinh viên</div>
+            <input className="register-input" value={studentId} readOnly placeholder={studentId} />
           </div>
-
-          <div style={{ width: 260, height: 64 }}>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>Khoa/TT Đào tạo</div>
-            <input
-              value={faculty}
-              onChange={(e) => setFaculty(e.target.value)}
-              placeholder="KH&KT Máy tính"
-              style={{ ...inputStyle, height: 34 }}
-            />
+          <div className="register-input-wrap">
+            <div className="register-input-label">Khoa/TT Đào tạo</div>
+            <input className="register-input" value={faculty} readOnly placeholder={faculty} />
           </div>
-
-          <div style={{ width: 260, height: 64 }}>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>Mã lớp</div>
-            <input
-              value={classCode}
-              onChange={(e) => setClassCode(e.target.value)}
-              placeholder="MT23KHMX"
-              style={{ ...inputStyle, height: 34 }}
-            />
+          <div className="register-input-wrap">
+            <div className="register-input-label">Mã lớp</div>
+            <input className="register-input" value={classCode} readOnly placeholder={classCode} />
           </div>
         </div>
 
-        {/* Row 2 - editable inputs */}
-        <div style={{ position: "absolute", left: 20, top: 170, display: "flex", gap: 20 }}>
-          <div style={{ width: 320, height: 65 }}>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>Email sinh viên</div>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="nguyenvana@hcmut.edu.vn"
-              style={inputStyle}
-            />
+        <div className="register-form-row row-2">
+          <div className="register-input-wrap">
+            <div className="register-input-label">Email sinh viên</div>
+            <input className="register-input" value={email} readOnly placeholder={email} />
           </div>
-
-          <div style={{ width: 260, height: 64 }}>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>Bậc học</div>
-            <input
-              value={degree}
-              onChange={(e) => setDegree(e.target.value)}
-              placeholder="Ví dụ: Đại học"
-              style={{ ...inputStyle, height: 34 }}
-            />
+          <div className="register-input-wrap">
+            <div className="register-input-label">Bậc học</div>
+            <input className="register-input" value={degree} readOnly placeholder={degree} />
           </div>
-
-          <div style={{ width: 260, height: 64 }}>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>Hệ đào tạo</div>
-            <input
-              value={trainingSystem}
-              onChange={(e) => setTrainingSystem(e.target.value)}
-              placeholder="Chính quy"
-              style={{ ...inputStyle, height: 34 }}
-            />
+          <div className="register-input-wrap">
+            <div className="register-input-label">Hệ đào tạo</div>
+            <input className="register-input" value={trainingSystem} readOnly placeholder={trainingSystem} />
           </div>
-
-          <div style={{ width: 260, height: 64 }}>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>Năm CTĐT</div>
-            <input
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              placeholder="2023"
-              style={{ ...inputStyle, height: 34 }}
-            />
+          <div className="register-input-wrap">
+            <div className="register-input-label">Năm CTĐT</div>
+            <input className="register-input" value={year} readOnly placeholder={year} />
           </div>
         </div>
 
-        {/* Bottom actions */}
-        <div style={{ position: "absolute", right: 20, bottom: 20, display: "flex", gap: 12 }}>
-          <div style={{ width: 100, height: 40, background: "rgba(68,68,68,0.18)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
-            <span style={{ fontWeight: 800 }}>Hủy</span>
-          </div>
-          <div
-            onClick={() => {
-              if (!agreed) {
-                triggerAgreeError(); // use auto-hide + fade
-                return;
-              }
-              setRegistered(true);
-            }}
-            style={{ width: 100, height: 40, background: "#0073B7", display: "flex", alignItems: "center", justifyContent: "center", color: "white", cursor: "pointer" }}
-          >
-            <span style={{ fontWeight: 800 }}>Đăng ký</span>
-          </div>
+        <div className="register-actions">
+          <div className="register-btn-cancel"><span style={{ fontWeight: 800 }}>Hủy</span></div>
+          <div className="register-btn-submit" onClick={() => { if (!agreed) { triggerAgreeError(); return; } setRegistered(true); }}><span style={{ fontWeight: 800 }}>Đăng ký</span></div>
         </div>
       </div>
 
-      {/* Overlay gray-out the form area (covers form to simulate "grayed" look and blocks interaction) */}
-      {registered && (
-        <div
-          style={{
-            position: "absolute",
-            left: 165,
-            top: 241,
-            width: 1243,
-            height: 380,
-            background: "rgba(209, 217, 221, 0.75)", // gray overlay
-            zIndex: 5,
-          }}
-        />
-      )}
+      {registered && <div className="register-form-overlay" />}
 
       {/* Agreement block */}
-      <div style={{ width: 622, height: 32, left: 205, top: 523, position: "absolute" }}>
-        <div style={{ position: "absolute", left: 27, top: 0, color: "black", fontSize: 14, fontWeight: 300 }}>
-          Tôi đã đọc kỹ và đồng ý với
+      <div className="register-agreement">
+        <div className="text-left">Tôi đã đọc kỹ và đồng ý với</div>
+        <div className="links">
+          <span onClick={() => setTermsOpen(true)} style={{ fontWeight: 700, textDecoration: "underline", cursor: "pointer" }}>Điều khoản sử dụng</span>
+          <span onClick={() => setTermsOpen(true)} style={{ fontWeight: 300, textDecoration: "underline", cursor: "pointer" }}>và</span>
+          <span onClick={() => setTermsOpen(true)} style={{ fontWeight: 700, textDecoration: "underline", cursor: "pointer" }}>Chính sách bảo mật</span>
         </div>
-        <div style={{ position: "absolute", left: 209, top: 1, display: "flex", gap: 6 }}>
-          <span
-            onClick={() => setTermsOpen(true)}
-            style={{ fontWeight: 700, textDecoration: "underline", cursor: "pointer" }}
-          >
-            Điều khoản sử dụng
-          </span>
-          <span style={{ fontWeight: 300, textDecoration: "underline", cursor: "pointer" }} onClick={() => setTermsOpen(true)}>
-            và
-          </span>
-          <span
-            onClick={() => setTermsOpen(true)}
-            style={{ fontWeight: 700, textDecoration: "underline", cursor: "pointer" }}
-          >
-            Chính sách bảo mật
-          </span>
-        </div>
-        {/* clickable checkbox image */}
-        <img
-          src={agreed ? checkbox_true : checkbox_none}
-          alt={agreed ? "checked" : "unchecked"}
-          onClick={() => {
-            const next = !agreed;
-            setAgreed(next);
-            if (next) setShowAgreeError(false); // hide error once user agrees
-          }}
-          style={{
-            position: "absolute",
-            left: 4,
-            top: 7,
-            width: 18,
-            height: 18,
-            cursor: "pointer",
-          }}
-        />
+        <img className="register-checkbox" src={agreed ? checkbox_true : checkbox_none} alt={agreed ? "checked" : "unchecked"} onClick={() => { const next = !agreed; setAgreed(next); if (next) setShowAgreeError(false); }} />
       </div>
 
       {/* render modal */}
@@ -548,100 +276,27 @@ const RegisterProgramPage: React.FC = () => {
 
       {/* Confirmation block shown after register */}
       {registered && (
-        <div
-          style={{
-            width: 1243,
-            height: 326,
-            left: 165,
-            top: 641,
-            position: "absolute",
-            background: "white",
-            boxSizing: "border-box",
-            padding: 24,
-            paddingTop: 64, // ensure space for the header
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center", // center main content horizontally
-            gap: 24,
-            zIndex: 6, // above overlay
-          }}
-        >
-          {/* header at top-left (like the form header) */}
-          <div
-            style={{
-              width: 476,
-              height: 51,
-              left: 20,
-              top: 11,
-              position: "absolute",
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              fontSize: 20,
-              fontWeight: 800,
-            }}
-          >
-            Xác nhận đơn đăng ký
-          </div>
-
-          {/* center: image with text under it */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 300, gap: 12 }}>
+        <div className="register-confirm">
+          <div className="confirm-header">Xác nhận đơn đăng ký</div>
+          <div className="confirm-center">
             <img style={{ width: 133, height: 133 }} src={done_icon} alt="confirm" />
             <div style={{ fontSize: 16, fontWeight: 800, color: "black" }}>Đăng ký thành công</div>
             <div style={{ fontSize: 13, fontWeight: 300, color: "black", textAlign: "center", maxWidth: 300 }}>
               Tài khoản của bạn đã được kích hoạt và sẵn sàng sử dụng. Bạn có thể truy cập và trải nghiệm đầy đủ các chức năng mà hệ thống cung cấp.
             </div>
           </div>
-
-          {/* removed spacer so content is centered */}
         </div>
       )}
 
       {/* error alert shown when user clicks Đăng ký without agreeing (auto-fade after 4s) */}
       {showAgreeError && (
-        <div
-          style={{
-            position: "absolute",
-            right: 20,
-            top: 74, // slightly below top bar
-            zIndex: 60,
-            opacity: errorFading ? 0 : 1,
-            transition: "opacity 0.5s ease",
-            pointerEvents: "none",
-          }}
-        >
-          <div style={{ width: 598, height: 79, position: "relative" }}>
-            <div
-              style={{
-                width: 630,
-                height: 79,
-                left: 0,
-                top: 0,
-                position: "absolute",
-                background: "rgba(213,1,1,0.20)", // corrected redish background
-                overflow: "hidden",
-              }}
-            >
-              <div
-                style={{
-                  width: 520,
-                  // center vertically inside the 79px container
-                  position: "absolute",
-                  left: 73,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  display: "flex",
-                  alignItems: "center",
-                  paddingRight: 8,
-                }}
-              >
-                <span style={{ color: "#D50100", fontSize: 20, fontWeight: 400, lineHeight: 1.1 }}>
-                  Lỗi: Vui lòng đồng ý với <strong style={{ whiteSpace: "nowrap", color: "#D50100", fontWeight: 700 }}>Điều khoản sử dụng và Chính sách bảo mật</strong> trước khi nhấn Đăng ký.
-                </span>
-              </div>
+        <div className={`register-error-alert ${errorFading ? "fading" : ""}`} >
+          <div className="box">
+            <div className="text-wrap">
+              Lỗi: Vui lòng đồng ý với <strong style={{ whiteSpace: "nowrap", color: "#D50100", fontWeight: 700 }}>Điều khoản sử dụng và Chính sách bảo mật</strong> trước khi nhấn Đăng ký.
             </div>
-            <img src={error_icon} alt="error" style={{ width: 79, height: 79, left: 3, top: 0, position: "absolute" }} />
           </div>
+          <img src={error_icon} alt="error" />
         </div>
       )}
 

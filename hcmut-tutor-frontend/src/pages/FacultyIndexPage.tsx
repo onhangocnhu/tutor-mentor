@@ -1,20 +1,15 @@
 import { useEffect, useState } from "react";
+import hcmut_logo from "../images/hcmut_logo.png";
 import last_seen_icon from "../images/last-seen-icon.svg";
+import menu_icon from "../images/menu.png";
 import home_icon from "../images/Home.svg";
 import { useNavigate } from "react-router-dom";
 import "../styles/IndexPage.css";
 import SideBarOpen from "../components/SideBarOpen";
-import SidebarRail from "../components/SidebarRail";
-import TopBar from "../components/TopBar";
 
-export default function StudentIndexPage() {
+export default function FacultyIndexPage() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [programRegistered, setProgramRegistered] = useState(false);
-
-  const goToRegisterProgram = () => {
-    navigate("/register-program");
-  };
 
   const formatDateTime = () => {
     const now = new Date();
@@ -30,7 +25,6 @@ export default function StudentIndexPage() {
     return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  // guard: allow only users with role cookie === 'student'
   useEffect(() => {
     const cookieRole = document.cookie
       .split(";")
@@ -43,25 +37,11 @@ export default function StudentIndexPage() {
         .split("=")[1]
       : null;
 
-    if (!cookieRole || decodeURIComponent(cookieRole) !== "student") {
-      alert("Bạn không có quyền truy cập trang này. Vui lòng đăng nhập bằng tài khoản sinh viên.");
+    if (!cookieRole || decodeURIComponent(cookieRole) !== "faculty") {
+      alert("Bạn không có quyền truy cập trang này. Vui lòng đăng nhập bằng tài khoản Khoa/Bộ môn.");
       navigate("/login");
     }
   }, [navigate]);
-
-  useEffect(() => {
-    try {
-      const fromLs = localStorage.getItem("programRegistered") === "true";
-      const cookieItem = document.cookie
-        .split(";")
-        .map((s) => s.trim())
-        .find((s) => s.startsWith("programRegistered="));
-      const fromCookie = cookieItem ? decodeURIComponent(cookieItem.split("=")[1]) === "true" : false;
-      setProgramRegistered(Boolean(fromLs || fromCookie));
-    } catch (e) {
-      setProgramRegistered(false);
-    }
-  }, []);
 
   return (
     // outer full-width background wrapper
@@ -80,23 +60,37 @@ export default function StudentIndexPage() {
                 width: "100vw",
                 height: "100vh",
                 background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 202, // below SideBarOpen (300) and above topbar (200)
+                zIndex: 202, // below SideBarOpen (203) and above topbar (201)
               }}
             />
           )}
 
           {/* collapsed sidebar (always present) */}
-          <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
+          <aside className="sidebar">
+            <img className="sidebar-avatar" src={hcmut_logo} alt="hcmut logo" />
+          </aside>
 
           {/* render drawer component (separate component) */}
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
-          <TopBar
-            menuOpen={menuOpen}
-            onMenuClick={() => setMenuOpen(true)}
-            onLogoClick={() => navigate("/student-dashboard")}
-          />
+          {/* HEADER (BLUE BAR) */}
+          <header className="topbar">
+            <div className="logo-box">
+              <div className="logo-text">Bk</div>
+            </div>
+            <div className="top-title">
+              {/* show top-menu icon only when drawer is closed */}
+              {!menuOpen && (
+                <img
+                  className="top-menu"
+                  src={menu_icon}
+                  alt="menu"
+                  onClick={() => setMenuOpen(true)}
+                  style={{ cursor: "pointer", zIndex: 1100, position: "relative" }}
+                />
+              )}
+            </div>
+          </header>
 
           {/* MAIN CONTENT */}
           <main className="content">
@@ -169,13 +163,6 @@ export default function StudentIndexPage() {
                 </div>
               </div>
             </div>
-
-            {/* REGISTER BUTTON (hidden when already registered) */}
-            {!programRegistered && (
-              <button className="register-btn" onClick={goToRegisterProgram}>
-                Đăng ký tham gia chương trình
-              </button>
-            )}
           </main>
         </div>
       </div>

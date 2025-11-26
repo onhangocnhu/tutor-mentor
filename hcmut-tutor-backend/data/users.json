@@ -4,76 +4,87 @@
     "username": "stu1",
     "password": "123",
     "role": "student",
-    "name": "Student One"
+    "name": "Student One",
+    "email": "a.nguyenvan@hcmut.edu.vn"
   },
   {
     "id": 2,
     "username": "stu2",
     "password": "123",
     "role": "student",
-    "name": "Student Two"
+    "name": "Student Two",
+    "email": "c.lethi@hcmut.edu.vn"
   },
   {
     "id": 3,
     "username": "stu3",
     "password": "123",
     "role": "student",
-    "name": "Student Three"
+    "name": "Student Three",
+    "email": "d.nguyenminh@hcmut.edu.vn"
   },
   {
     "id": 4,
     "username": "tutor1",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor A"
+    "name": "Tutor A",
+    "email": "tutor1@hcmut.edu.vn"
   },
   {
     "id": 5,
     "username": "tutor2",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor B"
+    "name": "Tutor B",
+    "email": "tutor2@hcmut.edu.vn"
   },
   {
     "id": 6,
     "username": "tutor3",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor C"
+    "name": "Tutor C",
+    "email": "tutor3@hcmut.edu.vn"
   },
   {
     "id": 7,
     "username": "tutor4",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor D"
+    "name": "Tutor D",
+    "email": "tutor4@hcmut.edu.vn"
   },
   {
     "id": 8,
     "username": "tutor5",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor E"
+    "name": "Tutor E",
+    "email": "tutor5@hcmut.edu.vn"
   },
   {
     "id": 9,
     "username": "ctsv",
     "password": "123",
     "role": "ctsv",
-    "name": "Phòng Công tác Sinh viên"
+    "name": "Phòng Công tác Sinh viên",
+    "email": "ctsv@hcmut.edu.vn"
   },
   {
     "id": 10,
     "username": "pdt",
     "password": "123",
     "role": "pdt",
-    "name": "Phòng Đào tạo"
+    "name": "Phòng Đào tạo",
+    "email": "pdt@hcmut.edu.vn"
   },
   {
     "id": 11,
     "username": "faculty",
     "password": "123",
     "role": "faculty",
-    "name": "Khoa Khoa học và Kỹ thuật Máy tính"
+    "name": "Khoa Khoa học và Kỹ thuật Máy tính",
+    "email": "faculty@hcmut.edu.vn"
   }
 ]

@@ -1,0 +1,282 @@
+/* Container chính cho bảng */
+.tutor-list-card {
+  background: white;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  /* Để bo góc hoạt động */
+  border: 1px solid #EAECF0;
+}
+
+/* Header của Card */
+.card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #EAECF0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #101828;
+}
+
+.header-desc {
+  font-size: 14px;
+  color: #667085;
+  margin-top: 4px;
+}
+
+/* Bảng dữ liệu */
+.tutor-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tutor-table th {
+  background: #FCFCFD;
+  color: #667085;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 24px;
+  border-bottom: 1px solid #EAECF0;
+}
+
+.tutor-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid #EAECF0;
+  color: #101828;
+  font-size: 14px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+/* Cột thông tin Tutor (Avatar + Tên) */
+.tutor-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tutor-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #f2f4f7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #667085;
+  font-size: 12px;
+}
+
+/* Badges trạng thái */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-active {
+  background-color: #ECFDF3;
+  color: #027A48;
+}
+
+.status-active::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #12B76A;
+}
+
+.status-inactive {
+  background-color: #F2F4F7;
+  color: #344054;
+}
+
+.status-inactive::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #667085;
+}
+
+/* Nút Chọn */
+.select-btn {
+  background-color: #0073B7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.select-btn:hover {
+  background-color: #006099;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Nền tối mờ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* Đè lên mọi thứ */
+}
+
+.modal-box {
+  background: white;
+  width: 500px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  color: #667085;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.modal-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+
+/* Icon tròn xanh lá */
+.icon-circle-green {
+  width: 48px;
+  height: 48px;
+  background-color: #D1FADF;
+  /* Màu xanh nhạt nền */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 8px solid #ECFDF3;
+  /* Viền nhạt hơn nữa */
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #101828;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  /* Đẩy nút sang phải */
+  gap: 12px;
+}
+
+/* Nút Huỷ (nền trắng) */
+.btn-cancel {
+  padding: 10px 18px;
+  background: white;
+  border: 1px solid #D0D5DD;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #344054;
+  cursor: pointer;
+}
+
+/* Nút Xác nhận (nền xanh) */
+.btn-confirm-blue {
+  padding: 10px 18px;
+  background: #007aff;
+  /* Màu xanh giống trong ảnh */
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-confirm-blue:hover {
+  background: #0060c9;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  font-size: 16px;
+  color: #333;
+}
+
+/* clickable breadcrumb links: no underline by default, underline on hover/focus */
+.breadcrumb-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  margin-right: 8px;
+}
+
+.breadcrumb-link:hover,
+.breadcrumb-link:focus {
+  text-decoration: underline;
+  outline: none;
+  /* keep default focus visible if you add custom focus style */
+}
+
+/* separator spacing */
+.breadcrumb-sep {
+  margin-right: 8px;
+  color: #666;
+}
+
+/* current page text (non-clickable) */
+.breadcrumb-sep.current {
+  margin-left: 8px;
+  color: #333;
+  text-decoration: none;
+}

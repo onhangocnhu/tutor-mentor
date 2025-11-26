@@ -245,7 +245,7 @@
   position: absolute;
   left: 165px;
   top: 241px;
-  width: 1243px;
+  width: 1300px;
   height: 380px;
   background: rgba(209, 217, 221, 0.75);
   z-index: 5;
@@ -328,50 +328,32 @@
 
 /* error alert */
 .register-error-alert {
-  position: absolute;
-  right: 20px;
-  top: 74px;
-  z-index: 60;
-  opacity: 1;
-  transition: opacity 0.5s ease;
+  position: fixed;
+  top: calc(70px + 16px);
+  right: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  max-width: 630px;
+  padding: 12px 16px;
+
+  background: rgba(213, 1, 1, 0.2);
+  border-left: 4px solid #D50100;
+  border-radius: 4px;
+
+  box-sizing: border-box;
   pointer-events: none;
 }
 
-.register-error-alert.fading {
-  opacity: 0;
-}
-
-.register-error-alert .box {
-  width: 630px;
-  height: 79px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  background: rgba(213, 1, 1, 0.20);
-  overflow: hidden;
-}
-
-.register-error-alert .text-wrap {
-  width: 520px;
-  position: absolute;
-  left: 73px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  padding-right: 8px;
-  color: #D50100;
-  font-size: 20px;
-  line-height: 1.1;
-}
-
-/* small icon inside error */
-.register-error-alert img {
-  width: 79px;
-  height: 79px;
-  position: absolute;
-  left: 3px;
-  top: 0;
+/* nhỏ hơn nữa thì giảm lề phải để vừa khung */
+@media (max-width: 420px) {
+  .register-error-alert {
+    right: 8px;
+    max-width: calc(100vw - 16px);
+    top: calc(70px + 8px);
+  }
 }
 
 /* utility */

@@ -1,0 +1,291 @@
+/* ===== SECTION CONTAINER ===== */
+.document-section {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+/* ===== TITLE ===== */
+.title-header {
+  text-align: center;
+}
+
+.title-main {
+  font-size: 38px;
+  font-weight: 700;
+  color: #0070b1;
+  margin-bottom: 2px;
+  letter-spacing: 1px;
+}
+
+.title-sub {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin-top: -8px;
+}
+
+/* ===== DOC TYPE ===== */
+.doct-fieldset {
+  border: none;
+  margin-top: 15px;
+}
+
+.doct-header {
+  font-size: 20px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #032B91;
+}
+
+.doct-options {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.doct-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* Hide default radio */
+.doct-radio {
+  display: none;
+}
+
+.doct-circle {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #0070b1;
+  border-radius: 50%;
+  display: inline-block;
+  background: white;
+  transition: 0.2s;
+}
+
+.doct-radio:checked + .doct-circle {
+  background: #0070b1;
+}
+
+.doct-label {
+  font-size: 15px;
+  color: #444;
+}
+
+/* ===== INFO SECTION ===== */
+.info-section {
+  padding: 20px;
+  border: 1px solid #d6d6d6;
+  border-radius: 12px;
+  background: white;
+  padding: 20px 40px;
+}
+
+.info-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #032B91;
+  margin-bottom: 20px;
+} */
+
+/* ===== INPUT ROW ===== */
+.info-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-row label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #3b3b3b;
+}
+
+.info-row input {
+  border: 1px solid #b2adad;
+  background-color: white;
+  color:rgb(7, 7, 7);
+  padding: 10px;
+  border-radius: 7px;
+  font-size: 15px;
+  transition: border 0.2s;
+  margin-bottom: 10px;
+}
+
+.info-row input:focus {
+  border-color: #0070b1;
+  outline: none;
+}
+
+/* ===== FILE SECTION ===== */
+.file-upload-section label {
+  color: #3b3b3b;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.file-dropzone {
+  width: 100%;
+  height: 110px;
+  border: 2px dashed #aaa;
+  border-radius: 10px;
+  margin-top: 7px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.file-dropzone.dragging {
+  border-color: #0070b1;
+  background: #f0f9ff;
+  color: #0070b1;
+}
+
+/* Browse button */
+.browse-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #0070b1;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.browse-btn:hover {
+  background: #00639d;
+}
+
+
+/* Agreement + Upload */
+.agreement-section {
+  margin-top: 20px; 
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.agreement-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #454545;
+  cursor: pointer;
+}
+
+.agreement-checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #2ac0fb;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.terms-link {
+  color: #10b8fb;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.upload-btn-container {
+  display: flex;
+  justify-content: flex-end; /* canh phải */
+  margin-top: 15px; /* khoảng cách với phần trên */
+}
+
+.upload-btn {
+  margin-top: 15px;  
+  align-self: flex-end; /* canh phải */
+  background-color: #2453A4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+
+.upload-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: rgb(43, 43, 43);
+}
+
+.terms-link {
+  color: #10b8fb;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 30px;
+  color: #2453a4;
+}
+
+.modal-content p {
+  margin: 15px 0;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.modal-close-btn-container{
+  display: flex;
+  justify-content: flex-end; /* canh phải */
+  margin-top: 15px; /* khoảng cách với phần trên */
+}
+.modal-close-btn {
+  background-color: #616161;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-items: flex-end;
+}
+
+
+

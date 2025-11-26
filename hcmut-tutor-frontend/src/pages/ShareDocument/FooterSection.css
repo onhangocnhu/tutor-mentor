@@ -1,0 +1,92 @@
+.footer {
+  width: 100%;
+  background-color: #333333;
+  color: white;
+  padding: 40px 0px 0px; 
+  font-family: "Be Vietnam Pro", sans-serif;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between; /* left sang trái, right sang phải */
+  gap: 50px;
+}
+
+.footer-logo img {
+  width: 100px;
+  height: auto;
+}
+
+.footer-left {
+  flex: 1;
+  margin-left: 200px;
+}
+
+.footer-title {
+  font-weight: normal;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0px;
+}
+
+.footer-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-contact-text {
+  font-size: 14px;
+}
+
+.footer-right {
+  margin-top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 500px;
+}
+
+.footer-info-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer-info-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.footer-bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.footer-bottom {
+  display: flex;
+  width: 100vw;
+  justify-content: center; 
+  align-items: center;
+  gap: 8px;
+  margin-top: 50px;
+  background-color: #242424;
+  padding: 10px 0;
+}
+.footer-copy-icon {
+  width: 15px;
+  height: 15px;
+}
+

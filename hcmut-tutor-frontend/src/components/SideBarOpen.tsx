@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import menu_icon from "../images/menu.png";
 import hcmut_logo from "../images/hcmut_logo.png";
 
@@ -9,6 +9,35 @@ export type SideBarOpenProps = {
 
 const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
   if (!open) return null;
+  const [studentName, setStudentName] = useState<string>("");
+  const [faculty, setFaculty] = useState<string>("");
+
+  useEffect(() => {
+    // read username from cookie (set at login)
+    const cookie = document.cookie || "";
+    let username: string | null = null;
+    cookie.split(";").map(s => s.trim()).forEach(pair => {
+      const [k, v] = pair.split("=");
+      if (k === "username") username = decodeURIComponent(v || "");
+    });
+    if (!username) return;
+
+    // fetch student info
+    fetch(`http://localhost:3001/student/${encodeURIComponent(username)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("not found");
+        return res.json();
+      })
+      .then((data) => {
+        if (data && (data.fullName || data.name) && (data.faculty)) {
+          setStudentName(data.fullName ?? data.name);
+          setFaculty(data.faculty);
+        }
+      })
+      .catch(() => {
+      });
+  }, []);
+
   const width = "min(372px, 90vw)";
   return (
     <div
@@ -20,7 +49,7 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
         top: 0,
         height: "100vh",
         width,
-        zIndex: 203,
+        zIndex: 300,
         display: "flex",
         flexDirection: "column",
         pointerEvents: "auto",
@@ -53,8 +82,8 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
         <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 8 }}>
           <img src={hcmut_logo} alt="avatar" style={{ width: 85, height: 68, borderRadius: 6 }} />
           <div>
-            <div style={{ fontSize: 20, fontWeight: 700 }}>NGUYỄN VĂN HAI</div>
-            <div style={{ fontSize: 14, opacity: 0.9, marginTop: 4 }}>Khoa Khoa học và Kỹ thuật Máy tính</div>
+            <div style={{ fontSize: 20, fontWeight: 700 }}>{studentName || "Sinh viên"}</div>
+            <div style={{ fontSize: 14, opacity: 0.9, marginTop: 4 }}>{faculty || "Khoa"}</div>
           </div>
         </div>
 

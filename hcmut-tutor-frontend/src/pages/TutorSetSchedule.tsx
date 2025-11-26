@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './TutorSchedule.css';
+import './TutorSetSchedule.css';
 
 // Định nghĩa kiểu dữ liệu cho môn học
 interface ClassSession {

@@ -1,7 +1,7 @@
 import hcmut_logo from "../images/hcmut_logo.png";
 import login_homepic from "../images/login_homepic.png";
 import "../styles/LoginPage.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const LoginPage = (): React.JSX.Element => {
@@ -9,6 +9,41 @@ export const LoginPage = (): React.JSX.Element => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+
+  // detect backend restart and clear client storage/cookies when server changed
+  useEffect(() => {
+    const checkServer = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/server-start", {
+          credentials: "include",
+        });
+        if (!res.ok) return;
+        const json = await res.json();
+        const serverStart = json?.serverStart;
+        const stored = localStorage.getItem("serverStart");
+        if (serverStart && serverStart !== stored) {
+          // clear localStorage fully (or clear specific keys if preferred)
+          try {
+            localStorage.clear();
+          } catch { }
+
+          // clear known cookies set by app
+          const cookiesToClear = ["username", "role", "programRegistered"];
+          cookiesToClear.forEach((c) => {
+            document.cookie = `${c}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+          });
+
+          // store new serverStart so next loads won't clear again
+          try {
+            localStorage.setItem("serverStart", serverStart);
+          } catch { }
+        }
+      } catch (e) {
+        // ignore network errors
+      }
+    };
+    checkServer();
+  }, []);
 
   const handleLogin = async () => {
     const res = await fetch("http://localhost:3001/login", {

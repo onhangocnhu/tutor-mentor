@@ -1,19 +1,15 @@
-import React, { useState } from "react";
-import hcmut_logo from "../images/hcmut_logo.png";
-import last_seen_icon from "../images/last-seen-icon.svg";
-import menu_icon from "../images/menu.png";
-import home_icon from "../images/Home.svg";
+import { useEffect, useState } from "react";
+import last_seen_icon from "../../images/last-seen-icon.svg";
+import home_icon from "../../images/Home.svg";
 import { useNavigate } from "react-router-dom";
-import "./StudentIndexPage.css";
-import SideBarOpen from "../components/SideBarOpen";
+import "../../styles/IndexPage.css";
+import SideBarOpen from "../../components/SideBarOpen";
+import SidebarRail from "../../components/SidebarRail";
+import TopBar from "../../components/TopBar";
 
-export default function StudentIndexPage() {
+export default function PDTIndexPage() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const goToRegisterProgram = () => {
-    navigate("/register-program");
-  };
 
   const formatDateTime = () => {
     const now = new Date();
@@ -28,6 +24,23 @@ export default function StudentIndexPage() {
 
     return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
   };
+
+  useEffect(() => {
+    const cookieRole = document.cookie
+      .split(";")
+      .map((s) => s.trim())
+      .find((s) => s.startsWith("role="))
+      ? document.cookie
+        .split(";")
+        .map((s) => s.trim())
+        .find((s) => s.startsWith("role="))!
+        .split("=")[1]
+      : null;
+
+    if (!cookieRole || decodeURIComponent(cookieRole) !== "pdt") {
+      navigate("/unauthorized");
+    }
+  }, [navigate]);
 
   return (
     // outer full-width background wrapper
@@ -46,38 +59,23 @@ export default function StudentIndexPage() {
                 width: "100vw",
                 height: "100vh",
                 background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 202, // below SideBarOpen (203) and above topbar (201)
+                zIndex: 202, // below SideBarOpen (300) and above topbar (200)
               }}
             />
           )}
 
           {/* collapsed sidebar (always present) */}
-          <aside className="sidebar">
-            <img className="sidebar-avatar" src={hcmut_logo} alt="hcmut logo" />
-          </aside>
+          <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
           {/* render drawer component (separate component) */}
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (BLUE BAR) */}
-          <header className="topbar">
-            <div className="logo-box">
-              <div className="logo-text">Bk</div>
-            </div>
-            <div className="top-title">
-              {/* show top-menu icon only when drawer is closed */}
-              {!menuOpen && (
-                <img
-                  className="top-menu"
-                  src={menu_icon}
-                  alt="menu"
-                  onClick={() => setMenuOpen(true)}
-                  style={{ cursor: "pointer", zIndex: 1100, position: "relative" }}
-                />
-              )}
-            </div>
-          </header>
-
+          {/* HEADER (using TopBar component) */}
+          <TopBar
+            menuOpen={menuOpen}
+            onMenuClick={() => setMenuOpen(true)}
+            onLogoClick={() => navigate("/student-dashboard")}
+          />
           {/* MAIN CONTENT */}
           <main className="content">
             <div className="home-title">
@@ -149,7 +147,6 @@ export default function StudentIndexPage() {
                 </div>
               </div>
             </div>
-
           </main>
         </div>
       </div>

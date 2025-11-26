@@ -2,78 +2,218 @@
   {
     "id": 1,
     "username": "stu1",
-    "password": "123",
+    "password": "1234",
     "role": "student",
-    "name": "Student One"
+    "email": "nhu.onhangoc@hcmut.edu.vn"
   },
   {
     "id": 2,
     "username": "stu2",
     "password": "123",
-    "role": "student",
-    "name": "Student Two"
+    "role": "student"
   },
   {
     "id": 3,
     "username": "stu3",
     "password": "123",
-    "role": "student",
-    "name": "Student Three"
+    "role": "student"
   },
   {
     "id": 4,
     "username": "tutor1",
     "password": "123",
-    "role": "tutor",
-    "name": "Tutor A"
+    "role": "tutor"
   },
   {
     "id": 5,
     "username": "tutor2",
     "password": "123",
-    "role": "tutor",
-    "name": "Tutor B"
+    "role": "tutor"
   },
   {
     "id": 6,
     "username": "tutor3",
     "password": "123",
-    "role": "tutor",
-    "name": "Tutor C"
+    "role": "tutor"
   },
   {
     "id": 7,
     "username": "tutor4",
     "password": "123",
-    "role": "tutor",
-    "name": "Tutor D"
+    "role": "tutor"
   },
   {
     "id": 8,
     "username": "tutor5",
     "password": "123",
-    "role": "tutor",
-    "name": "Tutor E"
+    "role": "tutor"
   },
   {
     "id": 9,
+    "username": "tutor6",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 10,
+    "username": "tutor7",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 11,
+    "username": "tutor8",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 4,
+    "username": "tutor9",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 5,
+    "username": "tutor10",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 6,
+    "username": "tutor11",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 7,
+    "username": "tutor12",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 8,
+    "username": "tutor13",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 9,
+    "username": "tutor14",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 10,
+    "username": "tutor15",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 11,
+    "username": "tutor16",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 4,
+    "username": "tutor17",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 5,
+    "username": "tutor18",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 6,
+    "username": "tutor19",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 7,
+    "username": "tutor20",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 8,
+    "username": "tutor21",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 9,
+    "username": "tutor22",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 10,
+    "username": "tutor23",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 11,
+    "username": "tutor24",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 6,
+    "username": "tutor25",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 7,
+    "username": "tutor26",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 8,
+    "username": "tutor27",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 9,
+    "username": "tutor28",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 10,
+    "username": "tutor29",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 11,
+    "username": "tutor30",
+    "password": "123",
+    "role": "tutor"
+  },
+  {
+    "id": 12,
     "username": "ctsv",
     "password": "123",
-    "role": "ctsv",
-    "name": "Phòng Công tác Sinh viên"
+    "role": "ctsv"
   },
   {
     "id": 10,
     "username": "pdt",
     "password": "123",
-    "role": "pdt",
-    "name": "Phòng Đào tạo"
+    "role": "pdt"
   },
   {
     "id": 11,
     "username": "faculty",
     "password": "123",
-    "role": "faculty",
-    "name": "Khoa Khoa học và Kỹ thuật Máy tính"
+    "role": "faculty"
   }
 ]

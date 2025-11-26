@@ -5,6 +5,10 @@ import RegisterProgramPage from "./pages/RegisterProgramPage";
 import TutorIndexPage from "./pages/TutorIndexPage";
 import PDTIndexPage from "./pages/PDTIndexPage";
 import FacultyIndexPage from "./pages/FacultyIndexPage";
+import SubjectRegistrationPage from "./pages/SubjectRegistrationPage";
+import SubjectTutorListPage from "./pages/SubjectTutorListPage";
+import TutorStudentListPage from "./pages/TutorStudentListPage";
+import TutorStudentUpdatePage from "./pages/TutorStudentUpdatePage";
 
 function App() {
   return (
@@ -19,9 +23,14 @@ function App() {
         {/* <Route path="/ctsv-dashboard" element={<CTSVIndexPage />} /> */}
 
         <Route path="/register-program" element={<RegisterProgramPage />} />
+        <Route path="/register-subject" element={<SubjectRegistrationPage />} />
+        <Route path="/register-subject/tutors" element={<SubjectTutorListPage />} />
+        <Route path="/tutor/students" element={<TutorStudentListPage />} />
+        <Route path="/tutor/update-progress/:id" element={<TutorStudentUpdatePage />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
 
 export default App;

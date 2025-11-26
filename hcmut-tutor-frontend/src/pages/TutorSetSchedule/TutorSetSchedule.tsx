@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './TutorSetSchedule.css';
+import '../../styles/TutorSetSchedule.css'
 
 // Định nghĩa kiểu dữ liệu cho môn học
 interface ClassSession {
@@ -64,7 +64,7 @@ const TutorSchedule: React.FC = () => {
           {/* Phần Lịch dạy - Table */}
           <section className="schedule-section">
             <div className="section-header-bar">Lịch dạy</div>
-            
+
             <div className="table-container">
               <table>
                 <thead>
@@ -106,7 +106,7 @@ const TutorSchedule: React.FC = () => {
           {showAddForm && (
             <section className="add-schedule-form fade-in">
               <h2>Thêm lịch rảnh</h2>
-              
+
               <form className="form-grid">
                 <div className="form-group">
                   <label>Giờ bắt đầu <span className="required">*</span></label>

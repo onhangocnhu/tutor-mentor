@@ -130,7 +130,7 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
               ],
               tutor: [
                 { label: "Thông tin cá nhân", path: "/tutor-profile" },
-                { label: "Thiết lập lịch rảnh", path: "/tutor-availability" },
+                { label: "Thiết lập lịch rảnh", path: "/tutor/set-schedule" },
                 { label: "Quản lý buổi gặp", path: "/tutor-sessions" },
                 { label: "Cổng thư viện", path: "/library" },
                 { label: "Ghi nhận", path: "/tutor/update-progress" },

@@ -10,6 +10,7 @@ import SubjectTutorListPage from "./pages/SubjectRegistration/SubjectTutorListPa
 import TutorStudentListPage from "./pages/UpdateProgress/TutorStudentListPage";
 import TutorStudentUpdatePage from "./pages/UpdateProgress/TutorStudentUpdatePage";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
+import TutorSchedule from "./pages/TutorSetSchedule/TutorSetSchedule";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
         <Route path="/register-subject/tutors" element={<SubjectTutorListPage />} />
         <Route path="/tutor/update-progress" element={<TutorStudentListPage />} />
         <Route path="/tutor/update-progress/:id" element={<TutorStudentUpdatePage />} />
+        <Route path="/tutor/set-schedule" element={<TutorSchedule />} />
+
       </Routes>
     </BrowserRouter>
   );

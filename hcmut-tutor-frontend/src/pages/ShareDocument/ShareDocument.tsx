@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { HeaderSection } from "./HeaderSection";
 import { DocumentSection } from "./UploadForm";
 import { FooterSection } from "./FooterSection";
-import back_icon from"../../images/left_arrow.svg";
 
 
 export const ShareDocumentSection: React.FC = () => {

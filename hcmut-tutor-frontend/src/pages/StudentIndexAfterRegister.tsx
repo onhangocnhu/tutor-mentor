@@ -2,8 +2,7 @@ import hcmut_logo from "../images/hcmut_logo.png"
 import last_seen_icon from "../images/last-seen-icon.svg";
 import menu_icon from "../images/menu.png";
 import home_icon from "../images/Home.svg";
-import "./StudentIndexPage.css";
-
+import "../styles/StudentIndexPage.css"
 export default function StudentIndexAfterRegister() {
   const formatDateTime = () => {
     const now = new Date();

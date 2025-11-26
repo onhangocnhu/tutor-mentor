@@ -11,6 +11,12 @@ import TutorStudentListPage from "./pages/UpdateProgress/TutorStudentListPage";
 import TutorStudentUpdatePage from "./pages/UpdateProgress/TutorStudentUpdatePage";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
 import TutorSchedule from "./pages/TutorSetSchedule/TutorSetSchedule";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
+import ForgotPasswordOTP from "./pages/ForgotPassword/ForgotPasswordOTP"
+import ResetPassword from "./pages/ForgotPassword/ResetPassword"
+import SuccessfulResetPassword from "./pages/ForgotPassword/SuccessfulPasswordReset"
+
+import "./App.css"
 
 function App() {
   return (
@@ -19,6 +25,12 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/forgot-password-otp" element={<ForgotPasswordOTP />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/successful-reset-password" element={<SuccessfulResetPassword />} />
+
         <Route path="/student-dashboard" element={<StudentIndexPage />} />
         <Route path="/tutor-dashboard" element={<TutorIndexPage />} />
         <Route path="/pdt-dashboard" element={<PDTIndexPage />} />
@@ -34,8 +46,7 @@ function App() {
 
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
-
 
 export default App;

@@ -16,7 +16,7 @@
 /* Content Body */
 .content-body {
   padding: 20px 40px;
-
+  width: 95vw;
   background-color: white;
   flex: 1;
 }

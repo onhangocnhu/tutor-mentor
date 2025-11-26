@@ -2,8 +2,9 @@
   {
     "id": 1,
     "username": "stu1",
-    "password": "123",
-    "role": "student"
+    "password": "1234",
+    "role": "student",
+    "email": "nhu.onhangoc@hcmut.edu.vn"
   },
   {
     "id": 2,

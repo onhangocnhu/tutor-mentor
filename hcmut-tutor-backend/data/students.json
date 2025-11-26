@@ -1,0 +1,35 @@
+[
+  {
+    "username": "stu1",
+    "fullName": "Nguyễn Văn A",
+    "studentId": "2312001",
+    "faculty": "Khoa Khoa học và Kỹ thuật Máy tính",
+    "classCode": "MT23KHM1",
+    "email": "a.nguyenvan@hcmut.edu.vn",
+    "degree": "Đại học",
+    "trainingSystem": "Chính quy",
+    "year": "2023"
+  },
+  {
+    "username": "stu2",
+    "fullName": "Lê Thị C",
+    "studentId": "2312002",
+    "faculty": "Khoa Khoa học và Kỹ thuật Máy tính",
+    "classCode": "MT23KHM2",
+    "email": "c.lethi@hcmut.edu.vn",
+    "degree": "Đại học",
+    "trainingSystem": "Chính quy",
+    "year": "2023"
+  },
+  {
+    "username": "stu3",
+    "fullName": "Nguyễn Minh D",
+    "studentId": "2312003",
+    "faculty": "Khoa Khoa học và Kỹ thuật Máy tính",
+    "classCode": "MT23KHM3",
+    "email": "d.nguyenminh@hcmut.edu.vn",
+    "degree": "Đại học",
+    "trainingSystem": "Chính quy",
+    "year": "2023"
+  }
+]

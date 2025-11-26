@@ -1,26 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/UnauthorizedPage.css";
 
 const UnauthorizedPage: React.FC = () => {
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   // read role from cookie and decide redirect target
-  //   const cookie = document.cookie || "";
-  //   let role: string | null = null;
-  //   cookie.split(";").map(s => s.trim()).forEach(pair => {
-  //     const [k, v] = pair.split("=");
-  //     if (k === "role") role = decodeURIComponent(v || "");
-  //   });
-
-  //   const t = setTimeout(() => {
-  //     if (role) navigate(`/${role}-dashboard`);
-  //     else navigate("/login");
-  //   }, 2500);
-
-  //   return () => clearTimeout(t);
-  // }, [navigate]);
 
   const goNow = () => {
     const cookie = document.cookie || "";

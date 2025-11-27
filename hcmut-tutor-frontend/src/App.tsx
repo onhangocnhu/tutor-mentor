@@ -17,6 +17,7 @@ import ResetPassword from "./pages/ForgotPassword/ResetPassword"
 import SuccessfulResetPassword from "./pages/ForgotPassword/SuccessfulPasswordReset"
 
 import "./App.css"
+import StudentProfile from "./pages/StudentProfile/StudentProfile";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/student-profile" element={<StudentProfile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/forgot-password-otp" element={<ForgotPasswordOTP />} />
         <Route path="/reset-password" element={<ResetPassword />} />

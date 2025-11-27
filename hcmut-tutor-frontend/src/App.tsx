@@ -15,6 +15,7 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ForgotPasswordOTP from "./pages/ForgotPassword/ForgotPasswordOTP"
 import ResetPassword from "./pages/ForgotPassword/ResetPassword"
 import SuccessfulResetPassword from "./pages/ForgotPassword/SuccessfulPasswordReset"
+import { ShareDocumentSection } from "./pages/ShareDocument/ShareDocument";
 
 import "./App.css"
 import StudentProfile from "./pages/StudentProfile/StudentProfile";
@@ -44,6 +45,8 @@ function App() {
         <Route path="/tutor/update-progress" element={<TutorStudentListPage />} />
         <Route path="/tutor/update-progress/:id" element={<TutorStudentUpdatePage />} />
         <Route path="/tutor/set-schedule" element={<TutorSchedule />} />
+
+        <Route path="/library/share-document" element={<ShareDocumentSection/>}/>
 
       </Routes>
     </BrowserRouter>

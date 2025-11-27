@@ -1,5 +1,5 @@
 import React from "react";
-import "./Header.css";
+import "../../styles/HeaderLibrary.css";
 import logobachkhoa from "../../images/hcmut_logo.png";
 
 export const HeaderSection: React.FC = () => {

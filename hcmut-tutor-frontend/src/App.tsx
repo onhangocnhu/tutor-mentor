@@ -46,7 +46,7 @@ function App() {
         <Route path="/tutor/update-progress/:id" element={<TutorStudentUpdatePage />} />
         <Route path="/tutor/set-schedule" element={<TutorSchedule />} />
 
-        <Route path="/library/share-document" element={<ShareDocumentSection/>}/>
+        <Route path="/library/share-document" element={<ShareDocumentSection />} />
 
       </Routes>
     </BrowserRouter>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./UploadForm.css";
+import "../../styles/UploadForm.css";
 
 export const DocumentSection: React.FC = () => {
   // --- DoctType state ---
@@ -22,7 +22,7 @@ export const DocumentSection: React.FC = () => {
   const [isAgreed, setIsAgreed] = useState(false);
 
   //---Show the Rules (Modal)
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +46,7 @@ export const DocumentSection: React.FC = () => {
     const file = event.dataTransfer.files?.[0];
     if (file) setSelectedFile(file);
   };
-  
+
   const handleUploadClick = () => {
     if (!isAgreed) return;
     console.log({
@@ -59,7 +59,7 @@ export const DocumentSection: React.FC = () => {
   };
 
   return (
-    
+
     <section className="document-section">
       {/*Title*/}
       <header className="title-header">
@@ -135,7 +135,7 @@ export const DocumentSection: React.FC = () => {
 
           <div className="file-upload-section">
             <label className="file-upload-label">Đính kèm tài liệu</label>
-            
+
             <div
               className={`file-dropzone ${isDragging ? "dragging" : ""}`}
               onDragOver={handleDragOver}
@@ -198,18 +198,18 @@ export const DocumentSection: React.FC = () => {
               2. Nội dung tải lên phải phù hợp với thuần phong mỹ tục, không chứa yếu tố kích động bạo lực, phân biệt chủng tộc, tôn giáo, kỳ thị giới tính, nội dung xúc phạm danh dự – uy tín người khác, hoặc tài liệu mang tính chất thù hằn, đe dọa, quấy rối. Nghiêm cấm đăng tải nội dung nhạy cảm như dữ liệu cá nhân, thông tin bảo mật, bí mật kinh doanh, tài liệu mật của cơ quan – tổ chức nếu không được ủy quyền. Các tệp phải đảm bảo an toàn kỹ thuật, không chứa virus, phần mềm độc hại, mã chạy tự động, hoặc bất kỳ thành phần nào gây nguy hiểm cho hệ thống. <br />
               3. Tài liệu, hình ảnh, số liệu, trích dẫn trong nội dung cần được ghi rõ nguồn và đảm bảo quyền sử dụng hợp pháp. Trong trường hợp phát hiện nội dung vi phạm, hệ thống có quyền gỡ bỏ tài liệu, cảnh báo hoặc khóa tài khoản tùy mức độ nghiêm trọng; đồng thời người dùng có thể bị xử lý theo quy định pháp luật hiện hành. <br />
             </p>
-            <div className="modal-close-btn-container"> 
-            <button
-              className="modal-close-btn"
-              onClick={() => setIsModalOpen(false)}
-            >
-              Đóng
-            </button>
+            <div className="modal-close-btn-container">
+              <button
+                className="modal-close-btn"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Đóng
+              </button>
             </div>
           </div>
         </div>
       )}
-        
+
     </section>
   );
 };

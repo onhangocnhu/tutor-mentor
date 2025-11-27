@@ -1,19 +1,19 @@
 [
   {
     "id": "C138038",
-    "date": "15/9/2025",
+    "date": "15/09/2025",
     "time": "14:00",
     "format": "Trực tuyến",
     "location": "Meet - xoh-dxut-rwp",
     "studentCount": 30,
     "department": "Hệ thống số",
     "status": "Đã diễn ra",
-    "notes": "Buổi gặp thành công",
+    "notes": "Buổi gặp thành công vl",
     "students": []
   },
   {
     "id": "C138037",
-    "date": "15/9/2025",
+    "date": "15/09/2025",
     "time": "14:00",
     "format": "Trực tuyến",
     "location": "Meet - link",
@@ -25,7 +25,7 @@
   },
   {
     "id": "C138036",
-    "date": "15/9/2025",
+    "date": "15/09/2025",
     "time": "14:00",
     "format": "Trực tuyến",
     "location": "Meet - link",
@@ -37,7 +37,7 @@
   },
   {
     "id": "C138035",
-    "date": "15/9/2025",
+    "date": "15/09/2025",
     "time": "14:00",
     "format": "Trực tuyến",
     "location": "Meet - link",
@@ -49,14 +49,38 @@
   },
   {
     "id": "C138034",
-    "date": "15/9/2025",
+    "date": "15/09/2025",
     "time": "14:00",
     "format": "Trực tuyến",
-    "location": "Meet - link",
+    "location": "Meet - link abc",
     "studentCount": 25,
     "department": "Công nghệ phần mềm",
     "status": "Chưa diễn ra",
     "notes": "",
+    "students": []
+  },
+  {
+    "id": "C1764212969783",
+    "date": "27/11/2025",
+    "time": "14:00",
+    "format": "Trực tuyến",
+    "location": "",
+    "studentCount": 30,
+    "department": "Hệ thống số",
+    "status": "Chưa diễn ra",
+    "notes": "",
+    "students": []
+  },
+  {
+    "id": "C1764252710234",
+    "date": "29/11/2025",
+    "time": "16:00",
+    "format": "Trực tuyến",
+    "location": "Meet - hid-dwad-dwd",
+    "studentCount": 30,
+    "department": "PPL",
+    "status": "Chưa diễn ra",
+    "notes": "23",
     "students": []
   }
 ]

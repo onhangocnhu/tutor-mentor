@@ -1,0 +1,160 @@
+.session-form-container {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.session-form-container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1200px) {
+  .form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #666;
+}
+
+.form-group label::after {
+  content: " *";
+  color: #ff6b6b;
+}
+
+.form-group.disabled label::after {
+  content: "";
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group input:disabled,
+.form-group textarea:disabled {
+  background-color: #e8eef6;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.form-group select {
+  border: 2px solid #9db4d4;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.file-attachment {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.attachment-icons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.attachment-icons span {
+  cursor: pointer;
+}
+
+.file-attachment p {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel {
+  background-color: #000;
+  color: white;
+}
+
+.btn-add-student {
+  background-color: #1976d2;
+  color: white;
+}
+
+.btn-add-minutes {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.btn-delete {
+  background-color: #ff6b35;
+  color: white;
+}
+
+.btn-confirm {
+  background-color: #1976d2;
+  color: white;
+}
+
+.form-actions button:hover {
+  opacity: 0.9;
+}

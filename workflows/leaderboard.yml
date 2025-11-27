@@ -1,0 +1,120 @@
+name: Daily Contribution Leaderboard
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # chạy mỗi ngày 00:00 UTC
+  workflow_dispatch:
+
+jobs:
+  leaderboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Collect GitHub activity
+        id: stats
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const repo = context.repo;
+            const since = new Date(Date.now() - 24*60*60*1000).toISOString();
+            const userStats = {};
+
+            // Collect commits
+            const commits = await github.paginate(
+              github.rest.repos.listCommits,
+              { owner: repo.owner, repo: repo.repo, since }
+            );
+            commits.forEach(c => {
+              if (!c.author?.login) return;
+              const u = c.author.login;
+              userStats[u] = userStats[u] || {
+                commits: 0, prs: 0, issues: 0, avatar: c.author.avatar_url
+              };
+              userStats[u].commits++;
+            });
+
+
+            // Collect PRs
+            const prs = await github.paginate(
+              github.rest.pulls.list,
+              { owner: repo.owner, repo: repo.repo, state: "all" }
+            );
+            prs.filter(pr => new Date(pr.created_at) > new Date(since))
+              .forEach(pr => {
+                const u = pr.user.login;
+                userStats[u] = userStats[u] || {
+                  commits: 0, prs: 0, issues: 0, avatar: pr.user.avatar_url
+                };
+                userStats[u].prs++;
+              });
+
+
+            // Collect issues
+            const issues = await github.paginate(
+              github.rest.issues.listForRepo,
+              { owner: repo.owner, repo: repo.repo, state: "all", since }
+            );
+            issues.forEach(i => {
+              if (!i.user?.login) return;
+              const u = i.user.login;
+              userStats[u] = userStats[u] || {
+                commits: 0, prs: 0, issues: 0, avatar: i.user.avatar_url
+              };
+              userStats[u].issues++;
+            });
+
+            return { userStats };
+
+      - name: Generate leaderboard markdown
+        id: gen
+        run: |
+          node - <<'EOF'
+          const fs = require("fs");
+          const stats = JSON.parse(process.env.STATS);
+          const users = stats.userStats;
+
+          const arr = Object.entries(users).map(([user, s]) => {
+            const score = s.commits + s.prs*5 + s.issues*2;
+            return { user, avatar: s.avatar, ...s, score };
+          }).sort((a,b) => b.score - a.score);
+
+          const badge = {
+            0: "🥇 **TOP 1**",
+            1: "🥈 **TOP 2**",
+            2: "🥉 **TOP 3**"
+          };
+
+          let md = "";
+          md += "## 🏆 Daily Contribution Leaderboard\n\n";
+          md += "| Rank | User | Commits | PRs | Issues | Score |\n";
+          md += "|------|-------|---------|-----|--------|--------|\n";
+
+          md += arr.map((s, i) =>
+            `| ${badge[i] || i+1} | <img src="${s.avatar}" width="32" height="32" style="border-radius:50%;"> **${s.user}** | ${s.commits} | ${s.prs} | ${s.issues} | ${s.score} |`
+          ).join("\n");
+
+          fs.writeFileSync("LEAD.md", md);
+          EOF
+        env:
+          STATS: ${{ toJson(steps.stats.outputs.userStats) }}
+
+      - name: Update README.md directly
+        run: |
+          LEADERBOARD=$(cat LEAD.md)
+
+          # Xóa phần cũ nếu có
+          if grep -q "## 🏆 Daily Contribution Leaderboard" README.md; then
+            sed -i '/## 🏆 Daily Contribution Leaderboard/,$d' README.md
+          fi
+
+          echo "" >> README.md
+          echo "$LEADERBOARD" >> README.md
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update daily leaderboard"
+          file_pattern: README.md

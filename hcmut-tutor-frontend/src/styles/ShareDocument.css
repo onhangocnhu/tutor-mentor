@@ -1,0 +1,40 @@
+.page-container {
+  width: 1440px;
+  min-height: 100vh;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-back {
+  margin-top: 100px;
+  margin-left: 20px;
+  align-self: flex-start;
+  background: none;
+  color: #0070b1;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+}
+
+.content-container {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  outline: none;
+}
+.back-icon {
+  width: 20px;     
+  vertical-align: middle;
+  color: #0070b1;
+}
+.btn-back:hover {
+  opacity: 0.8;
+  outline: none;
+}
+.btn-back:focus-visible {
+  outline: none; 
+}

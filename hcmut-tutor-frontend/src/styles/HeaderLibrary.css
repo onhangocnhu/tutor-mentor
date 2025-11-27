@@ -1,0 +1,74 @@
+/* Header.css */
+.header {
+  font-family: 'Inter', sans-serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 80px;
+  background-color: #4F99C4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 50;
+  
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-left img {
+  width: 80px;
+  height: auto;
+}
+
+.header-left h1 {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-right: 50px;
+}
+
+.header-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 8px 12px;
+  transition: color 0.2s;
+}
+
+.header-nav a:hover {
+  color: #032B91;
+}
+.header-nav .share-btn {
+  background-color: #032B91;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+   margin-right: 70px; /* cách lề phải 20px */
+}
+
+.header-nav .share-btn:hover {
+  background-color: #f0f0f0;
+  color: #032B91;
+}
+
+

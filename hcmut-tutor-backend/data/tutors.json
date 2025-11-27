@@ -1,0 +1,302 @@
+[
+  {
+    "username": "tutor1",
+    "fullName": "Nguyễn Văn An",
+    "tutorId": "00011101",
+    "department": "Khoa học Máy tính",
+    "email": "an.nguyen@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 4",
+    "subjectCode": "CO1007",
+    "status": "Active"
+  },
+  {
+    "username": "tutor2",
+    "fullName": "Trần Thị Bình",
+    "tutorId": "00011102",
+    "department": "Khoa học Máy tính",
+    "email": "binh.tran@hcmut.edu.vn",
+    "freeSlots": "Thứ 3, Thứ 5",
+    "subjectCode": "CO1007",
+    "status": "Active"
+  },
+  {
+    "username": "tutor3",
+    "fullName": "Lê Văn Cường",
+    "tutorId": "00011103",
+    "department": "Khoa học Máy tính",
+    "email": "cuong.le@hcmut.edu.vn",
+    "freeSlots": "Thứ 4, Thứ 6",
+    "subjectCode": "CO1007",
+    "status": "Active"
+  },
+  {
+    "username": "tutor4",
+    "fullName": "Phạm Thị Dung",
+    "tutorId": "00011104",
+    "department": "Toán Ứng Dụng",
+    "email": "dung.pham@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 3",
+    "subjectCode": "CO2011",
+    "status": "Active"
+  },
+  {
+    "username": "tutor5",
+    "fullName": "Hoàng Văn Em",
+    "tutorId": "00011105",
+    "department": "Toán Ứng Dụng",
+    "email": "em.hoang@hcmut.edu.vn",
+    "freeSlots": "Thứ 4, Thứ 6",
+    "subjectCode": "CO2011",
+    "status": "Active"
+  },
+  {
+    "username": "tutor6",
+    "fullName": "Ngô Thị Hà",
+    "tutorId": "00011106",
+    "department": "Toán Ứng Dụng",
+    "email": "ha.ngo@hcmut.edu.vn",
+    "freeSlots": "Thứ 3, Thứ 5",
+    "subjectCode": "CO2011",
+    "status": "Active"
+  },
+  {
+    "username": "tutor7",
+    "fullName": "Đặng Văn Huy",
+    "tutorId": "00011107",
+    "department": "Kỹ thuật Phần mềm",
+    "email": "huy.dang@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 5",
+    "subjectCode": "CO3001",
+    "status": "Active"
+  },
+  {
+    "username": "tutor8",
+    "fullName": "Bùi Thị Hoa",
+    "tutorId": "00011108",
+    "department": "Kỹ thuật Phần mềm",
+    "email": "hoa.bui@hcmut.edu.vn",
+    "freeSlots": "Thứ 3, Thứ 4",
+    "subjectCode": "CO3001",
+    "status": "Active"
+  },
+  {
+    "username": "tutor9",
+    "fullName": "Lê Minh Khoa",
+    "tutorId": "00011109",
+    "department": "Kỹ thuật Phần mềm",
+    "email": "khoa.le@hcmut.edu.vn",
+    "freeSlots": "Thứ 6",
+    "subjectCode": "CO3001",
+    "status": "Active"
+  },
+  {
+    "username": "tutor10",
+    "fullName": "Phan Thị Lan",
+    "tutorId": "00011110",
+    "department": "Hệ điều hành",
+    "email": "lan.phan@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 4",
+    "subjectCode": "CO2017",
+    "status": "Active"
+  },
+  {
+    "username": "tutor11",
+    "fullName": "Trần Văn Long",
+    "tutorId": "00011111",
+    "department": "Hệ điều hành",
+    "email": "long.tran@hcmut.edu.vn",
+    "freeSlots": "Thứ 3, Thứ 5",
+    "subjectCode": "CO2017",
+    "status": "Active"
+  },
+  {
+    "username": "tutor12",
+    "fullName": "Nguyễn Thị Mai",
+    "tutorId": "00011112",
+    "department": "Hệ điều hành",
+    "email": "mai.nguyen@hcmut.edu.vn",
+    "freeSlots": "Thứ 4, Thứ 6",
+    "subjectCode": "CO2017",
+    "status": "Active"
+  },
+  {
+    "username": "tutor13",
+    "fullName": "Võ Văn Nam",
+    "tutorId": "00011113",
+    "department": "Mạng máy tính",
+    "email": "nam.vo@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 3",
+    "subjectCode": "CO3093",
+    "status": "Active"
+  },
+  {
+    "username": "tutor14",
+    "fullName": "Nguyễn Thị Oanh",
+    "tutorId": "00011114",
+    "department": "Mạng máy tính",
+    "email": "oanh.nguyen@hcmut.edu.vn",
+    "freeSlots": "Thứ 4, Thứ 5",
+    "subjectCode": "CO3093",
+    "status": "Active"
+  },
+  {
+    "username": "tutor15",
+    "fullName": "Lý Văn Phúc",
+    "tutorId": "00011115",
+    "department": "Mạng máy tính",
+    "email": "phuc.ly@hcmut.edu.vn",
+    "freeSlots": "Thứ 6",
+    "subjectCode": "CO3093",
+    "status": "Active"
+  },
+  {
+    "username": "tutor16",
+    "fullName": "Hoàng Minh Quân",
+    "tutorId": "00011116",
+    "department": "Ngôn ngữ Lập trình",
+    "email": "quan.hoang@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 5",
+    "subjectCode": "CO3005",
+    "status": "Active"
+  },
+  {
+    "username": "tutor17",
+    "fullName": "Đỗ Thị Quỳnh",
+    "tutorId": "00011117",
+    "department": "Ngôn ngữ Lập trình",
+    "email": "quynh.do@hcmut.edu.vn",
+    "freeSlots": "Thứ 3, Thứ 4",
+    "subjectCode": "CO3005",
+    "status": "Active"
+  },
+  {
+    "username": "tutor18",
+    "fullName": "Phạm Văn Sơn",
+    "tutorId": "00011118",
+    "department": "Ngôn ngữ Lập trình",
+    "email": "son.pham@hcmut.edu.vn",
+    "freeSlots": "Thứ 6",
+    "subjectCode": "CO3005",
+    "status": "Active"
+  },
+  {
+    "username": "tutor19",
+    "fullName": "Trương Thị Thu",
+    "tutorId": "00011119",
+    "department": "Cơ sở Dữ liệu",
+    "email": "thu.truong@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 4",
+    "subjectCode": "CO2013",
+    "status": "Active"
+  },
+  {
+    "username": "tutor20",
+    "fullName": "Hồ Văn Tùng",
+    "tutorId": "00011120",
+    "department": "Cơ sở Dữ liệu",
+    "email": "tung.ho@hcmut.edu.vn",
+    "freeSlots": "Thứ 3, Thứ 5",
+    "subjectCode": "CO2013",
+    "status": "Active"
+  },
+  {
+    "username": "tutor21",
+    "fullName": "Lê Thị Uyen",
+    "tutorId": "00011121",
+    "department": "Cơ sở Dữ liệu",
+    "email": "uyen.le@hcmut.edu.vn",
+    "freeSlots": "Thứ 4, Thứ 6",
+    "subjectCode": "CO2013",
+    "status": "Active"
+  },
+  {
+    "username": "tutor22",
+    "fullName": "Nguyễn Văn Vinh",
+    "tutorId": "00011122",
+    "department": "Hệ thống số",
+    "email": "vinh.nguyen@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 3",
+    "subjectCode": "CO1023",
+    "status": "Active"
+  },
+  {
+    "username": "tutor23",
+    "fullName": "Đặng Thị Xoan",
+    "tutorId": "00011123",
+    "department": "Hệ thống số",
+    "email": "xoan.dang@hcmut.edu.vn",
+    "freeSlots": "Thứ 4, Thứ 5",
+    "subjectCode": "CO1023",
+    "status": "Active"
+  },
+  {
+    "username": "tutor24",
+    "fullName": "Phùng Văn Y",
+    "tutorId": "00011124",
+    "department": "Hệ thống số",
+    "email": "y.phung@hcmut.edu.vn",
+    "freeSlots": "Thứ 6",
+    "subjectCode": "CO1023",
+    "status": "Active"
+  },
+  {
+    "username": "tutor25",
+    "fullName": "Vũ Thị Zung",
+    "tutorId": "00011125",
+    "department": "Lập trình Nâng cao",
+    "email": "zung.vu@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 4",
+    "subjectCode": "CO2039",
+    "status": "Active"
+  },
+  {
+    "username": "tutor26",
+    "fullName": "Nguyễn Hữu Anh",
+    "tutorId": "00011126",
+    "department": "Lập trình Nâng cao",
+    "email": "anh.nguyen@hcmut.edu.vn",
+    "freeSlots": "Thứ 3, Thứ 5",
+    "subjectCode": "CO2039",
+    "status": "Active"
+  },
+  {
+    "username": "tutor27",
+    "fullName": "Trần Minh Bình",
+    "tutorId": "00011127",
+    "department": "Lập trình Nâng cao",
+    "email": "binh.tran@hcmut.edu.vn",
+    "freeSlots": "Thứ 6",
+    "subjectCode": "CO2039",
+    "status": "Active"
+  },
+  {
+    "username": "tutor28",
+    "fullName": "Hoàng Thu Cúc",
+    "tutorId": "00011128",
+    "department": "Mạng máy tính",
+    "email": "cuc.hoang@hcmut.edu.vn",
+    "freeSlots": "Thứ 3, Thứ 5",
+    "subjectCode": "CO2017",
+    "status": "Active"
+  },
+  {
+    "username": "tutor29",
+    "fullName": "Bùi Quốc Dũng",
+    "tutorId": "00011129",
+    "department": "Mạng máy tính",
+    "email": "dung.bui@hcmut.edu.vn",
+    "freeSlots": "Thứ 2, Thứ 4",
+    "subjectCode": "CO2017",
+    "status": "Active"
+  },
+  {
+    "username": "tutor30",
+    "fullName": "Lưu Thị Em",
+    "tutorId": "00011130",
+    "department": "Mạng máy tính",
+    "email": "em.luu@hcmut.edu.vn",
+    "freeSlots": "Thứ 4, Thứ 6",
+    "subjectCode": "CO2017",
+    "status": "Active"
+  }
+]

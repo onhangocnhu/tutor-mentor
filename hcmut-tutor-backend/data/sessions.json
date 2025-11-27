@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "id": "C138038",
+    "date": "15/9/2025",
+    "time": "14:00",
+    "format": "Trực tuyến",
+    "location": "Meet - xoh-dxut-rwp",
+    "studentCount": 30,
+    "department": "Hệ thống số",
+    "status": "Đã diễn ra",
+    "notes": "Buổi gặp thành công",
+    "students": []
+  },
+  {
+    "id": "C138037",
+    "date": "15/9/2025",
+    "time": "14:00",
+    "format": "Trực tuyến",
+    "location": "Meet - link",
+    "studentCount": 25,
+    "department": "Nhập môn điện toán",
+    "status": "Đã diễn ra",
+    "notes": "",
+    "students": []
+  },
+  {
+    "id": "C138036",
+    "date": "15/9/2025",
+    "time": "14:00",
+    "format": "Trực tuyến",
+    "location": "Meet - link",
+    "studentCount": 40,
+    "department": "Cấu trúc rời rạc",
+    "status": "Đã diễn ra",
+    "notes": "",
+    "students": []
+  },
+  {
+    "id": "C138035",
+    "date": "15/9/2025",
+    "time": "14:00",
+    "format": "Trực tuyến",
+    "location": "Meet - link",
+    "studentCount": 35,
+    "department": "Kỹ thuật lập trình",
+    "status": "Đã diễn ra",
+    "notes": "",
+    "students": []
+  },
+  {
+    "id": "C138034",
+    "date": "15/9/2025",
+    "time": "14:00",
+    "format": "Trực tuyến",
+    "location": "Meet - link",
+    "studentCount": 25,
+    "department": "Công nghệ phần mềm",
+    "status": "Chưa diễn ra",
+    "notes": "",
+    "students": []
+  }
+]

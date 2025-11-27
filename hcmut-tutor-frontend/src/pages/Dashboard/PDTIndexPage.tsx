@@ -1,10 +1,16 @@
-import hcmut_logo from "../images/hcmut_logo.png"
-import last_seen_icon from "../images/last-seen-icon.svg";
-import menu_icon from "../images/menu.png";
-import home_icon from "../images/Home.svg";
-import "./StudentIndexPage.css";
+import { useEffect, useState } from "react";
+import last_seen_icon from "../../images/last-seen-icon.svg";
+import home_icon from "../../images/Home.svg";
+import { useNavigate } from "react-router-dom";
+import "../../styles/IndexPage.css";
+import SideBarOpen from "../../components/SideBarOpen";
+import SidebarRail from "../../components/SidebarRail";
+import TopBar from "../../components/TopBar";
 
-export default function StudentIndexAfterRegister() {
+export default function PDTIndexPage() {
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const formatDateTime = () => {
     const now = new Date();
 
@@ -19,35 +25,57 @@ export default function StudentIndexAfterRegister() {
     return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
   };
 
+  useEffect(() => {
+    const cookieRole = document.cookie
+      .split(";")
+      .map((s) => s.trim())
+      .find((s) => s.startsWith("role="))
+      ? document.cookie
+        .split(";")
+        .map((s) => s.trim())
+        .find((s) => s.startsWith("role="))!
+        .split("=")[1]
+      : null;
+
+    if (!cookieRole || decodeURIComponent(cookieRole) !== "pdt") {
+      navigate("/unauthorized");
+    }
+  }, [navigate]);
+
   return (
     // outer full-width background wrapper
     <div className="page-outer">
       {/* inner centered container to prevent large white gutter on the right */}
       <div className="page-inner">
         <div className="student-page">
-          {/* SIDEBAR */}
-          <aside className="sidebar">
-            <img
-              className="sidebar-avatar"
-              src={hcmut_logo}
-              alt="hcmut logo"
+          {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
+          {menuOpen && (
+            <div
+              onClick={() => setMenuOpen(false)}
+              style={{
+                position: "fixed",
+                left: 0,
+                top: 0,
+                width: "100vw",
+                height: "100vh",
+                background: "rgba(0, 0, 0, 0.5)",
+                zIndex: 202, // below SideBarOpen (300) and above topbar (200)
+              }}
             />
-          </aside>
+          )}
 
-          {/* HEADER (BLUE BAR) */}
-          <header className="topbar">
-            <div className="logo-box">
-              <div className="logo-text">Bk</div>
-            </div>
-            <div className="top-title">
-              <img
-                className="top-menu"
-                src={menu_icon}
-                alt="menu"
-              />
-            </div>
-          </header>
+          {/* collapsed sidebar (always present) */}
+          <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
+          {/* render drawer component (separate component) */}
+          <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
+
+          {/* HEADER (using TopBar component) */}
+          <TopBar
+            menuOpen={menuOpen}
+            onMenuClick={() => setMenuOpen(true)}
+            onLogoClick={() => navigate("/student-dashboard")}
+          />
           {/* MAIN CONTENT */}
           <main className="content">
             <div className="home-title">

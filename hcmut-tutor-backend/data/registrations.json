@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "registerTime": "2025-11-26T11:03:24.752Z",
+    "status": "registered",
+    "subjectCode": "CO1007",
+    "subjectName": "Cấu trúc Rời rạc cho Khoa học Máy tính",
+    "student": {
+      "username": "stu1",
+      "fullName": "Nguyễn Văn A",
+      "studentId": "2312001",
+      "email": "a.nguyenvan@hcmut.edu.vn",
+      "classCode": "MT23KHM1",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor1",
+      "fullName": "Nguyễn Văn An",
+      "tutorId": "00011101"
+    }
+  },
+  {
+    "id": 2,
+    "registerTime": "2025-11-26T11:03:42.373Z",
+    "status": "registered",
+    "subjectCode": "CO2011",
+    "subjectName": "Mô hình hóa Toán học",
+    "student": {
+      "username": "stu1",
+      "fullName": "Nguyễn Văn A",
+      "studentId": "2312001",
+      "email": "a.nguyenvan@hcmut.edu.vn",
+      "classCode": "MT23KHM1",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor4",
+      "fullName": "Phạm Thị Dung",
+      "tutorId": "00011104"
+    }
+  },
+  {
+    "id": 3,
+    "registerTime": "2025-11-26T11:03:53.847Z",
+    "status": "registered",
+    "subjectCode": "CO3001",
+    "subjectName": "Công nghệ Phần mềm",
+    "student": {
+      "username": "stu1",
+      "fullName": "Nguyễn Văn A",
+      "studentId": "2312001",
+      "email": "a.nguyenvan@hcmut.edu.vn",
+      "classCode": "MT23KHM1",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor7",
+      "fullName": "Đặng Văn Huy",
+      "tutorId": "00011107"
+    }
+  },
+  {
+    "id": 4,
+    "registerTime": "2025-11-26T11:03:58.878Z",
+    "status": "registered",
+    "subjectCode": "CO2017",
+    "subjectName": "Hệ điều hành",
+    "student": {
+      "username": "stu1",
+      "fullName": "Nguyễn Văn A",
+      "studentId": "2312001",
+      "email": "a.nguyenvan@hcmut.edu.vn",
+      "classCode": "MT23KHM1",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor10",
+      "fullName": "Phan Thị Lan",
+      "tutorId": "00011110"
+    }
+  },
+  {
+    "id": 5,
+    "registerTime": "2025-11-26T12:07:31.758Z",
+    "status": "registered",
+    "subjectCode": "CO1007",
+    "subjectName": "Cấu trúc Rời rạc cho Khoa học Máy tính",
+    "student": {
+      "username": "stu2",
+      "fullName": "Lê Thị C",
+      "studentId": "2312002",
+      "email": "c.lethi@hcmut.edu.vn",
+      "classCode": "MT23KHM2",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor2",
+      "fullName": "Trần Thị Bình",
+      "tutorId": "00011102"
+    }
+  },
+  {
+    "id": 6,
+    "registerTime": "2025-11-26T12:07:39.371Z",
+    "status": "registered",
+    "subjectCode": "CO2017",
+    "subjectName": "Hệ điều hành",
+    "student": {
+      "username": "stu2",
+      "fullName": "Lê Thị C",
+      "studentId": "2312002",
+      "email": "c.lethi@hcmut.edu.vn",
+      "classCode": "MT23KHM2",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor10",
+      "fullName": "Phan Thị Lan",
+      "tutorId": "00011110"
+    }
+  },
+  {
+    "id": 7,
+    "registerTime": "2025-11-26T12:07:50.452Z",
+    "status": "registered",
+    "subjectCode": "CO2011",
+    "subjectName": "Mô hình hóa Toán học",
+    "student": {
+      "username": "stu2",
+      "fullName": "Lê Thị C",
+      "studentId": "2312002",
+      "email": "c.lethi@hcmut.edu.vn",
+      "classCode": "MT23KHM2",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor4",
+      "fullName": "Phạm Thị Dung",
+      "tutorId": "00011104"
+    }
+  },
+  {
+    "id": 8,
+    "registerTime": "2025-11-26T12:07:59.810Z",
+    "status": "registered",
+    "subjectCode": "CO1007",
+    "subjectName": "Cấu trúc Rời rạc cho Khoa học Máy tính",
+    "student": {
+      "username": "stu2",
+      "fullName": "Lê Thị C",
+      "studentId": "2312002",
+      "email": "c.lethi@hcmut.edu.vn",
+      "classCode": "MT23KHM2",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor1",
+      "fullName": "Nguyễn Văn An",
+      "tutorId": "00011101"
+    }
+  }
+]

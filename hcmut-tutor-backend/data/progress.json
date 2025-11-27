@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "createdAt": "2025-11-26T12:06:51.578Z",
+    "registrationId": 1,
+    "student": {
+      "username": "stu1",
+      "fullName": "Nguyễn Văn A",
+      "studentId": "2312001",
+      "email": "a.nguyenvan@hcmut.edu.vn",
+      "classCode": "MT23KHM1",
+      "faculty": "Khoa Khoa học và Kỹ thuật Máy tính"
+    },
+    "tutor": {
+      "username": "tutor1",
+      "fullName": "Nguyễn Văn An",
+      "tutorId": "00011101"
+    },
+    "subjectCode": "CO1007",
+    "subjectName": "Cấu trúc Rời rạc cho Khoa học Máy tính",
+    "note": "học tốt"
+  }
+]

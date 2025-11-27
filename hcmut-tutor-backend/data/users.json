@@ -2,78 +2,253 @@
   {
     "id": 1,
     "username": "stu1",
-    "password": "123",
+    "password": "1234",
     "role": "student",
-    "name": "Student One"
+    "email": "nhu.onhangoc@hcmut.edu.vn"
   },
   {
     "id": 2,
     "username": "stu2",
     "password": "123",
     "role": "student",
-    "name": "Student Two"
+    "email": "c.lethi@hcmut.edu.vn"
   },
   {
     "id": 3,
     "username": "stu3",
     "password": "123",
     "role": "student",
-    "name": "Student Three"
+    "email": "d.nguyenminh@hcmut.edu.vn"
   },
   {
     "id": 4,
     "username": "tutor1",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor A"
+    "email": "an.nguyen@hcmut.edu.vn"
   },
   {
     "id": 5,
     "username": "tutor2",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor B"
+    "email": "binh.tran@hcmut.edu.vn"
   },
   {
     "id": 6,
     "username": "tutor3",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor C"
+    "email": "cuong.le@hcmut.edu.vn"
   },
   {
     "id": 7,
     "username": "tutor4",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor D"
+    "email": "dung.pham@hcmut.edu.vn"
   },
   {
     "id": 8,
     "username": "tutor5",
     "password": "123",
     "role": "tutor",
-    "name": "Tutor E"
+    "email": "em.hoang@hcmut.edu.vn"
   },
   {
     "id": 9,
+    "username": "tutor6",
+    "password": "123",
+    "role": "tutor",
+    "email": "ha.ngo@hcmut.edu.vn"
+  },
+  {
+    "id": 10,
+    "username": "tutor7",
+    "password": "123",
+    "role": "tutor",
+    "email": "huy.dang@hcmut.edu.vn"
+  },
+  {
+    "id": 11,
+    "username": "tutor8",
+    "password": "123",
+    "role": "tutor",
+    "email": "hoa.bui@hcmut.edu.vn"
+  },
+  {
+    "id": 4,
+    "username": "tutor9",
+    "password": "123",
+    "role": "tutor",
+    "email": "khoa.le@hcmut.edu.vn"
+  },
+  {
+    "id": 5,
+    "username": "tutor10",
+    "password": "123",
+    "role": "tutor",
+    "email": "lan.phan@hcmut.edu.vn"
+  },
+  {
+    "id": 6,
+    "username": "tutor11",
+    "password": "123",
+    "role": "tutor",
+    "email": "long.tran@hcmut.edu.vn"
+  },
+  {
+    "id": 7,
+    "username": "tutor12",
+    "password": "123",
+    "role": "tutor",
+    "email": "mai.nguyen@hcmut.edu.vn"
+  },
+  {
+    "id": 8,
+    "username": "tutor13",
+    "password": "123",
+    "role": "tutor",
+    "email": "nam.vo@hcmut.edu.vn"
+  },
+  {
+    "id": 9,
+    "username": "tutor14",
+    "password": "123",
+    "role": "tutor",
+    "email": "oanh.nguyen@hcmut.edu.vn"
+  },
+  {
+    "id": 10,
+    "username": "tutor15",
+    "password": "123",
+    "role": "tutor",
+    "email": "phuc.ly@hcmut.edu.vn"
+  },
+  {
+    "id": 11,
+    "username": "tutor16",
+    "password": "123",
+    "role": "tutor",
+    "email": "quan.hoang@hcmut.edu.vn"
+  },
+  {
+    "id": 4,
+    "username": "tutor17",
+    "password": "123",
+    "role": "tutor",
+    "email": "quynh.do@hcmut.edu.vn"
+  },
+  {
+    "id": 5,
+    "username": "tutor18",
+    "password": "123",
+    "role": "tutor",
+    "email": "son.pham@hcmut.edu.vn"
+  },
+  {
+    "id": 6,
+    "username": "tutor19",
+    "password": "123",
+    "role": "tutor",
+    "email": "thu.truong@hcmut.edu.vn"
+  },
+  {
+    "id": 7,
+    "username": "tutor20",
+    "password": "123",
+    "role": "tutor",
+    "email": "tung.ho@hcmut.edu.vn"
+  },
+  {
+    "id": 8,
+    "username": "tutor21",
+    "password": "123",
+    "role": "tutor",
+    "email": "uyen.le@hcmut.edu.vn"
+  },
+  {
+    "id": 9,
+    "username": "tutor22",
+    "password": "123",
+    "role": "tutor",
+    "email": "vinh.nguyen@hcmut.edu.vn"
+  },
+  {
+    "id": 10,
+    "username": "tutor23",
+    "password": "123",
+    "role": "tutor",
+    "email": "xoan.dang@hcmut.edu.vn"
+  },
+  {
+    "id": 11,
+    "username": "tutor24",
+    "password": "123",
+    "role": "tutor",
+    "email": "y.phung@hcmut.edu.vn"
+  },
+  {
+    "id": 6,
+    "username": "tutor25",
+    "password": "123",
+    "role": "tutor",
+    "email": "zung.vu@hcmut.edu.vn"
+  },
+  {
+    "id": 7,
+    "username": "tutor26",
+    "password": "123",
+    "role": "tutor",
+    "email": "anh.nguyen@hcmut.edu.vn"
+  },
+  {
+    "id": 8,
+    "username": "tutor27",
+    "password": "123",
+    "role": "tutor",
+    "email": "binh.tran@hcmut.edu.vn"
+  },
+  {
+    "id": 9,
+    "username": "tutor28",
+    "password": "123",
+    "role": "tutor",
+    "email": "cuc.hoang@hcmut.edu.vn"
+  },
+  {
+    "id": 10,
+    "username": "tutor29",
+    "password": "123",
+    "role": "tutor",
+    "email": "dung.bui@hcmut.edu.vn"
+  },
+  {
+    "id": 11,
+    "username": "tutor30",
+    "password": "123",
+    "role": "tutor",
+    "email": "em.luu@hcmut.edu.vn"
+  },
+  {
+    "id": 12,
     "username": "ctsv",
     "password": "123",
     "role": "ctsv",
-    "name": "Phòng Công tác Sinh viên"
+    "email": "ctsv@hcmut.edu.vn"
   },
   {
     "id": 10,
     "username": "pdt",
     "password": "123",
     "role": "pdt",
-    "name": "Phòng Đào tạo"
+    "email": "pdt@hcmut.edu.vn"
   },
   {
     "id": 11,
     "username": "faculty",
     "password": "123",
     "role": "faculty",
-    "name": "Khoa Khoa học và Kỹ thuật Máy tính"
+    "email": "faculty@hcmut.edu.vn"
   }
 ]

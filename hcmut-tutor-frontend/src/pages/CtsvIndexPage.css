@@ -1,0 +1,626 @@
+/* Áp dụng font cho toàn bộ body */
+body, html, .page-outer, .page-inner, .content, .lookup-card, .result-one-card, .result-all-card {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Nếu bạn muốn ưu tiên font Inter cho tất cả thẻ con */
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+/* PAGE LAYOUT */
+.page-outer {
+  width: 100%;
+  min-height: 100dvh;
+  background: #ecf0f5;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.page-inner {
+  width: 100%;
+  max-width: 4096px;
+  position: relative;
+  min-height: 100dvh;
+}
+
+.student-page {
+  width: 100vw;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+}
+
+/* ====================== SIDEBAR ====================== */
+.sidebar {
+  width: 70px;
+  background: #222d32;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.35s ease;
+  overflow: hidden;
+  position: fixed;
+  justify-content: flex-start;   /* 👈 đảm bảo nội dung dính lên top */
+  align-items: center;      
+  left: 0;
+  top: 0;
+  height: calc(100vh - 70px);
+  z-index: 1000;
+}
+
+.sidebar.open {
+  width: 280px;
+}
+
+.sidebar-avatar {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #b8c7ce;
+  user-select: none;
+  transition: background 0.25s ease;
+}
+
+.sidebar-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.sidebar-item.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-icon {
+  font-size: 0px;
+  width: 0px;
+  flex-shrink: 0;
+}
+
+/* Ẩn text & chevron ở sidebar thu gọn */
+.sidebar-text,
+.chevron {
+  opacity: 0;
+  white-space: nowrap;
+  margin-left: 5px;
+  transition: opacity 0.25s ease;
+  font-size: 14px;
+  color: #b8c7ce;
+}
+
+.sidebar.open .sidebar-text,
+.sidebar.open .chevron {
+  opacity: 1;
+}
+
+/* Chevron (mũi tên mở submenu) */
+.chevron {
+  margin-left: auto;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.chevron.open {
+  transform: rotate(90deg);
+}
+
+/* SUBMENU */
+.submenu {
+  background: rgba(255, 255, 255, 0.05);
+  padding-left: 30px;
+  overflow: hidden;
+}
+
+.submenu-item {
+  padding: 10px 0;
+  font-size: 14px;
+  color: #d5d5d5;
+  cursor: pointer;
+}
+
+.submenu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+
+/* ====================== HEADER ====================== */
+.topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 70px;
+  background: #3c8dbc;
+  display: flex;
+  align-items: center;
+  z-index: 2000;
+}
+
+.top-menu {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.logo-box {
+  width: 70px;
+  height: 70px;
+  background: #367fa9;
+  display: flex;
+  align-items: center;
+  transition: width 0.35s ease;
+}
+
+.logo-box.open {
+  width: 280px;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+}
+
+.top-title {
+  margin-left: 20px;
+  font-size: 36px;
+  font-weight: 700;
+  color: white;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: 16px;
+}
+
+.menu-btn img {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0) invert(1);
+}
+
+/* ====================== MAIN CONTENT ====================== */
+.content {
+  margin-left: 70px;   /* đúng width của sidebar khi đóng */
+  margin-top: 100px;
+  padding: 10px 40px;
+  transition: margin-left 0.35s ease;
+}
+
+.sidebar.open ~ .content {
+  margin-left: 280px; /* đúng width khi mở */
+}
+
+
+.home-title {
+  width: 719px;
+  height: 38px;
+  color: #000;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+/* BREADCRUMB */
+.breadcrumb-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  font-size: 16px;
+  color: #333;
+}
+
+.home-logo {
+  width: 34px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* CHART CARD */
+.chart-card {
+  background: white;
+  flex: 1 1 auto;
+  min-width: 420px;
+  padding: 20px;
+  border-top: 3px solid #3c8dbc;
+}
+
+.chart-header {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* BARCHART */
+.chart {
+  position: relative;
+  padding-left: 40px;
+  overflow: visible;
+  white-space: normal;
+}
+
+.chart-y {
+  position: absolute;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chart-y:nth-child(1) { top: 50px; }
+.chart-y:nth-child(2) { top: 100px; }
+.chart-y:nth-child(3) { top: 150px; }
+
+.chart-bars {
+  display: flex;
+  gap: 50px;
+  align-items: flex-end;
+  height: 160px;
+  margin-top: 20px;
+  width: calc(100% - 40px);
+  box-sizing: border-box;
+}
+
+.chart-bars .bar {
+  flex: 1;
+  min-width: 36px;
+  background: red;
+}
+
+.chart-x {
+  display: flex;
+  gap: 48px;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  width: calc(100% - 40px);
+  box-sizing: border-box;
+}
+
+.chart-x > div {
+  flex: 1;
+  text-align: center;
+}
+
+/* LAST LOGIN CARD */
+.last-login-wrapper {
+  flex: 0 0 512px;
+  min-width: 260px;
+  max-width: 512px;
+  height: 115px;
+  background: #4ac0f0;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 6px;
+  gap: 16px;
+}
+
+.last-login-card {
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.last-login-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.last-login-icon-box {
+  width: 115px;
+  height: 118px;
+  background: #3B9AC0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.last-login-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.last-login-time {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.last-login-count {
+  font-size: 16px;
+  margin-top: 6px;
+}
+
+/* REGISTER BUTTON */
+.register-btn {
+  display: flex;
+  width: 319px;
+  height: 43px;
+  background: #0073B7;
+  color: white;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 750;
+  justify-content: center;
+}
+
+/* USAGE ROW */
+.usage-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Khối chứa logo + text */
+.iden {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;       /* khoảng cách giữa logo và chữ */
+  padding: 4px 12px; /* giảm padding xung quanh */
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Chữ bên phải logo */
+.iden-inner {
+  display: flex;
+  flex-direction: column;
+  white-space: normal;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: 0.25s ease;
+  color: white;
+  gap: 0;             /* flex gap */
+  line-height: 1.2;   /* khoảng cách dòng */
+  word-wrap: break-word;
+}
+
+.iden-inner h3,
+.iden-inner p {
+  margin: 0;          /* loại bỏ margin mặc định của h3 và p */
+  padding: 0;
+}
+
+
+/* Sidebar mở → hiện chữ */
+.sidebar.open .iden-inner {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Sidebar đóng → ẩn chữ hoàn toàn */
+.sidebar:not(.open) .iden-inner {
+  width: 0;
+  overflow: hidden;
+}
+
+
+/* result one */
+/* Khối trắng chính */
+.lookup-card, .result-one-card, .result-all-card {
+  width: 1212px;
+  background: white;
+  padding: 30px 40px;
+  margin-top: 20px;
+  border: 1px solid #F4F4F4;
+  border-radius: 5px;
+  position: relative;
+}
+
+/* Tiêu đề của khối */
+.lookup-card-title, .result-one-card-title, .result-all-card-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+/* Form tra cứu */
+.lookup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Hàng label + input */
+.lookup-form-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lookup-form-row label {
+  width: 188px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #000;
+}
+
+.lookup-form-row input {
+  flex: 1;
+  height: 31px;
+  padding: 5px 10px;
+  border: 1px solid #D2D6DE;
+  background: #EEEEEE;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Nút tra cứu */
+.lookup-btn, .download-btn {
+  width: 150px;
+  height: 43px;
+  background: #3C8DBC;
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+/* Wrapper cho dropdown */
+.custom-select-wrapper {
+  position: relative;
+  flex: 1; /* => chiếm cùng không gian với input */
+}
+
+.lookup-input {
+  width: 100%;
+  height: 42.5px; /* giống input */
+  padding: 5px 30px; /* padding phải rộng để tránh chồng mũi tên */
+  font-family: Inter, sans-serif;
+  font-size: 14px; /* giống input */
+  color: #636262;
+  background: #EEEEEE;
+  border: 1px solid #D2D6DE;
+  border-radius: 4px; /* giống input */
+  outline: none;
+  appearance: none; /* ẩn mũi tên mặc định */
+  box-sizing: border-box;
+}
+
+/* Mũi tên bên trong */
+.custom-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 12px;
+  color: #636262;
+}
+
+.lookup-error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  background: rgba(213, 0, 0, 0.8); /* đỏ, trong suốt */
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 3000;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.lookup-error.hide {
+  opacity: 0;
+}
+
+.lookup-result {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.result-item {
+  width: calc(50% - 15px); /* 2 cột, responsive */
+  margin-bottom: 15px;
+}
+
+.result-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.result-value {
+  display: block;
+  background: #f0f0f0; /* ô màu xám */
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: 400;
+}
+
+ /* result-all */
+ .result-table {
+  width: 100%;
+  border-collapse: collapse; /* Gộp border */
+  margin-top: 10px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid #888; /* border cho từng ô */
+  padding: 8px 12px;      /* khoảng cách bên trong ô */
+  text-align: center;
+}
+
+.result-table th {
+  background-color: #f0f0f0; /* màu nền header */
+  font-weight: bold;
+}
+
+.result-table tr:nth-child(even) {
+  background-color: #fafafa; /* màu xen kẽ dòng */
+}
+
+.result-table tr:hover {
+  background-color: #eaeaea; /* highlight khi hover */
+}
+.result-one-card-header, .result-all-card-header {
+  display: flex;
+  justify-content: space-between; /* tiêu đề ở trái, nút ở phải */
+  align-items: center; /* căn giữa theo chiều dọc */
+  margin-bottom: 10px; /* khoảng cách với nội dung */
+}
+
+.download-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+

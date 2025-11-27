@@ -1,0 +1,58 @@
+[
+  {
+    "studentId": "1234567",
+    "semester": "Học kỳ 1 năm học 2024-2025",
+    "name": "Nguyen Van A",
+    "faculty": "Khoa Khoa học và Kỹ thuật máy tính",
+    "classCode": "MT23KHM3",
+    "email": "a.nguyen@hcmut.edu.vn",
+    "educationLevel": "Đại học",
+    "trainingType": "Chính quy",
+    "programYear": "2024",
+    "evaluationResult": "Hoàn thành tốt",
+    "score": "10",
+    "subjectCount": "5"
+  },
+  {
+    "studentId": "7654321",
+    "semester": "Học kỳ 1 năm học 2024-2025",
+    "name": "Tran Van B",
+    "faculty": "Khoa Khoa học và Kỹ thuật máy tính",
+    "classCode": "MT23KHM1",
+    "email": "b.tran@hcmut.edu.vn",
+    "educationLevel": "Đại học",
+    "trainingType": "Chính quy",
+    "programYear": "2024",
+    "evaluationResult": "Hoàn thành tốt",
+    "score": "5",
+    "subjectCount": "2"
+  },
+  {
+    "studentId": "1234567",
+    "semester": "Học kỳ 2 năm học 2024-2025",
+    "name": "Nguyen Van A",
+    "faculty": "Khoa Khoa học và Kỹ thuật máy tính",
+    "classCode": "MT23KHM3",
+    "email": "a.nguyen@hcmut.edu.vn",
+    "educationLevel": "Đại học",
+    "trainingType": "Chính quy",
+    "programYear": "2024",
+    "evaluationResult": "Hoàn thành tốt",
+    "score": "5",
+    "subjectCount": "3"
+  },
+  {
+    "studentId": "1234569",
+    "semester": "Học kỳ 2 năm học 2024-2025",
+    "name": "Phan Thi C",
+    "faculty": "Khoa Khoa học và Kỹ thuật máy tính",
+    "classCode": "MT23KHM3",
+    "email": "a.nguyen@hcmut.edu.vn",
+    "educationLevel": "Đại học",
+    "trainingType": "Chính quy",
+    "programYear": "2024",
+    "evaluationResult": "Hoàn thành xuất sắc",
+    "score": "92",
+    "subjectCount": "6"
+  }
+]

@@ -18,12 +18,13 @@ import SuccessfulResetPassword from "./pages/ForgotPassword/SuccessfulPasswordRe
 import { ShareDocumentSection } from "./pages/ShareDocument/ShareDocument";
 
 import "./App.css"
-import StudentProfile from "./pages/StudentProfile/StudentProfile";
+import StudentProfile from "./pages/Profile/StudentProfile";
 import ViewReport from "./pages/ViewReport/ViewReportPage";
 import StudentReviewsPage from "./pages/ViewReport/StudentReviewsPage";
 import TutorReviewsPage from "./pages/ViewReport/TutorReviewsPage";
 import StudentReviewsSearch from "./pages/ViewReport/StudentReviewsSearch";
 import TutorReviewsSearch from "./pages/ViewReport/TutorReviewsSearch";
+import TutorProfile from "./pages/Profile/TutorProfile";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/student-profile" element={<StudentProfile />} />
+
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/forgot-password-otp" element={<ForgotPasswordOTP />} />
         <Route path="/reset-password" element={<ResetPassword />} />
@@ -43,6 +44,9 @@ function App() {
         <Route path="/pdt-dashboard" element={<PDTIndexPage />} />
         <Route path="/faculty-dashboard" element={<FacultyIndexPage />} />
         {/* <Route path="/ctsv-dashboard" element={<CTSVIndexPage />} /> */}
+
+        <Route path="/student-profile" element={<StudentProfile />} />
+        <Route path="/tutor-profile" element={<TutorProfile />} />
 
         <Route path="/register-program" element={<RegisterProgramPage />} />
         <Route path="/register-subject" element={<SubjectRegistrationPage />} />

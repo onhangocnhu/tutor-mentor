@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SidebarRail from '../../components/SidebarRail';
 import TopBar from '../../components/TopBar';
 import SideBarOpen from '../../components/SideBarOpen';
-import '../../styles/StudentProfile.css';
+import '../../styles/Profile.css';
 
 interface StudentInfo {
   fullName: string;
@@ -96,7 +96,7 @@ const StudentProfile: React.FC = () => {
       <main className="main-content">
         <div className="content-body">
           <div className="page-title-section profile-title">
-            <h1>Thông tin sinh viên</h1>
+            <h1 style={{ fontWeight: 700 }}>Thông tin sinh viên</h1>
             <span className="update-info">Thời điểm cập nhật gần nhất: {studentData.lastUpdate}</span>
           </div>
 

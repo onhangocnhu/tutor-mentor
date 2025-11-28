@@ -25,7 +25,7 @@ const DepartmentCard: React.FC<{ name: string; icon: React.ReactNode; onClick: (
     <div className="text-3xl mb-3">
       {icon}
     </div>
-    <div className="text-center text-black text-sm font-normal font-['Be_Vietnam_Pro'] leading-5">
+    <div className="text-center text-black text-sm font-normal font-['Inter'] leading-5">
       {name}
     </div>
   </div>
@@ -38,6 +38,7 @@ const LibraryHomePage: React.FC = () => {
   const [newestBooks, setNewestBooks] = useState<Document[]>([]);
   const [savedDocIds, setSavedDocIds] = useState<string[]>([]);
   const [borrowedDocIds, setBorrowedDocIds] = useState<string[]>([]);
+  const [downloadedDocIds, setDownloadedDocIds] = useState<string[]>([]); // Documents that have been returned/downloaded
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
@@ -57,6 +58,17 @@ const LibraryHomePage: React.FC = () => {
   const [expandNewest, setExpandNewest] = useState(false);
 
   const userId = "student001";
+
+  // Helper function to determine user's status for a document
+  const getUserDocumentStatus = (docId: string): "available" | "borrowed" | "downloaded" => {
+    if (borrowedDocIds.includes(docId)) {
+      return "borrowed";
+    }
+    if (downloadedDocIds.includes(docId)) {
+      return "downloaded";
+    }
+    return "available";
+  };
 
   const popularTags = ["Giải tích 2", "Vật lý đại cương 1", "Đại số tuyến tính"];
 
@@ -84,12 +96,13 @@ const LibraryHomePage: React.FC = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [recommendedRes, mostViewedRes, newestRes, savedRes, borrowedRes] = await Promise.all([
+      const [recommendedRes, mostViewedRes, newestRes, savedRes, borrowedRes, historyRes] = await Promise.all([
         fetch(`${API_BASE}/library/recommended`),
         fetch(`${API_BASE}/library/most-viewed`),
         fetch(`${API_BASE}/library/newest`),
         fetch(`${API_BASE}/library/saved?userId=${userId}`),
         fetch(`${API_BASE}/library/borrowed?userId=${userId}`),
+        fetch(`${API_BASE}/library/borrow-history?userId=${userId}`),
       ]);
 
       const recommended = await recommendedRes.json();
@@ -97,6 +110,7 @@ const LibraryHomePage: React.FC = () => {
       const newest = await newestRes.json();
       const saved = await savedRes.json();
       const borrowed = await borrowedRes.json();
+      const history = await historyRes.json();
 
       if (recommended.success) setRecommendedBooks(recommended.documents);
       if (mostViewed.success) setMostViewedBooks(mostViewed.documents);
@@ -106,6 +120,13 @@ const LibraryHomePage: React.FC = () => {
       }
       if (borrowed.success) {
         setBorrowedDocIds(borrowed.borrowed.map((b: { documentId: string }) => b.documentId));
+      }
+      if (history.success) {
+        // Get documents that have been returned (downloaded)
+        const returnedDocs = history.history
+          .filter((h: { status: string }) => h.status === "returned")
+          .map((h: { documentId: string }) => h.documentId);
+        setDownloadedDocIds(returnedDocs);
       }
     } catch (error) {
       console.error("Error fetching library data:", error);
@@ -202,6 +223,20 @@ const LibraryHomePage: React.FC = () => {
     }
   };
 
+  // Handler to update rating in local state after user rates a document
+  const handleRatingUpdate = (documentId: string, newRating: number, newRatingCount: number) => {
+    const updateBooks = (books: Document[]) =>
+      books.map((book) =>
+        book.id === documentId
+          ? { ...book, rating: newRating, ratingCount: newRatingCount }
+          : book
+      );
+    
+    setRecommendedBooks(updateBooks(recommendedBooks));
+    setMostViewedBooks(updateBooks(mostViewedBooks));
+    setNewestBooks(updateBooks(newestBooks));
+  };
+
   const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(`/library/search?q=${encodeURIComponent(searchQuery)}`);
@@ -218,7 +253,7 @@ const LibraryHomePage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="w-full min-h-screen relative bg-white overflow-hidden">
+      <div className="library-page w-full min-h-screen relative bg-white overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
         <HeaderSection />
         <div className="pt-[200px] text-center text-2xl">Đang tải...</div>
         <FooterSection />
@@ -227,7 +262,7 @@ const LibraryHomePage: React.FC = () => {
   }
 
   return (
-    <div className="w-full min-h-screen relative bg-white overflow-hidden">
+    <div className="library-page w-full min-h-screen relative bg-white overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
       <HeaderSection />
 
       {/* Hero Banner with Slideshow */}
@@ -323,10 +358,10 @@ const LibraryHomePage: React.FC = () => {
         {/* Gợi ý cho bạn */}
         <section className="flex flex-col gap-4">
           <div className="flex justify-between items-start">
-            <div className="text-slate-800 text-2xl font-normal font-['Be_Vietnam_Pro'] leading-8">
+            <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">
               Gợi ý cho bạn ({recommendedBooks.length})
             </div>
-            {recommendedBooks.length > 5 && (
+            {recommendedBooks.length >= 5 && (
               <button 
                 onClick={() => setExpandRecommended(!expandRecommended)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
@@ -337,7 +372,7 @@ const LibraryHomePage: React.FC = () => {
               </button>
             )}
           </div>
-          <div className="flex justify-center items-center gap-10 flex-wrap">
+          <div className="grid grid-cols-5 gap-6 justify-items-start">
             {(expandRecommended ? recommendedBooks : recommendedBooks.slice(0, 5)).map((book) => (
               <BookCard
                 key={book.id}
@@ -346,6 +381,7 @@ const LibraryHomePage: React.FC = () => {
                 onSave={() => handleSaveBook(book.id)}
                 onViewFile={() => handleViewFile(book)}
                 isSaved={savedDocIds.includes(book.id)}
+                userStatus={getUserDocumentStatus(book.id)}
               />
             ))}
           </div>
@@ -354,10 +390,10 @@ const LibraryHomePage: React.FC = () => {
         {/* Được xem nhiều nhất */}
         <section className="flex flex-col gap-4">
           <div className="flex justify-between items-start">
-            <div className="text-slate-800 text-2xl font-normal font-['Be_Vietnam_Pro'] leading-8">
+            <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">
               Được xem nhiều nhất ({mostViewedBooks.length})
             </div>
-            {mostViewedBooks.length > 5 && (
+            {mostViewedBooks.length >= 5 && (
               <button 
                 onClick={() => setExpandMostViewed(!expandMostViewed)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
@@ -368,7 +404,7 @@ const LibraryHomePage: React.FC = () => {
               </button>
             )}
           </div>
-          <div className="flex justify-center items-center gap-10 flex-wrap">
+          <div className="grid grid-cols-5 gap-6 justify-items-start">
             {(expandMostViewed ? mostViewedBooks : mostViewedBooks.slice(0, 5)).map((book) => (
               <BookCard
                 key={book.id}
@@ -377,6 +413,7 @@ const LibraryHomePage: React.FC = () => {
                 onSave={() => handleSaveBook(book.id)}
                 onViewFile={() => handleViewFile(book)}
                 isSaved={savedDocIds.includes(book.id)}
+                userStatus={getUserDocumentStatus(book.id)}
               />
             ))}
           </div>
@@ -385,10 +422,10 @@ const LibraryHomePage: React.FC = () => {
         {/* Mới cập nhật */}
         <section className="flex flex-col gap-4">
           <div className="flex justify-between items-start">
-            <div className="text-slate-800 text-2xl font-normal font-['Be_Vietnam_Pro'] leading-8">
+            <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">
               Mới cập nhật ({newestBooks.length})
             </div>
-            {newestBooks.length > 5 && (
+            {newestBooks.length >= 5 && (
               <button 
                 onClick={() => setExpandNewest(!expandNewest)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
@@ -399,7 +436,7 @@ const LibraryHomePage: React.FC = () => {
               </button>
             )}
           </div>
-          <div className="flex justify-center items-center gap-10 flex-wrap">
+          <div className="grid grid-cols-5 gap-6 justify-items-start">
             {(expandNewest ? newestBooks : newestBooks.slice(0, 5)).map((book) => (
               <BookCard
                 key={book.id}
@@ -408,6 +445,7 @@ const LibraryHomePage: React.FC = () => {
                 onSave={() => handleSaveBook(book.id)}
                 onViewFile={() => handleViewFile(book)}
                 isSaved={savedDocIds.includes(book.id)}
+                userStatus={getUserDocumentStatus(book.id)}
               />
             ))}
           </div>
@@ -417,7 +455,7 @@ const LibraryHomePage: React.FC = () => {
       {/* Duyệt theo Khoa/Bộ môn */}
       <div className="w-full max-w-[1300px] mx-auto mt-16 mb-16 flex flex-col justify-center items-center gap-7 px-4">
         <div className="p-2.5 inline-flex justify-center items-center gap-2.5">
-          <div className="text-center text-black text-2xl font-normal font-['Be_Vietnam_Pro'] leading-8">Duyệt theo Khoa/Bộ môn</div>
+          <div className="text-center text-black text-2xl font-normal font-['Inter'] leading-8">Duyệt theo Khoa/Bộ môn</div>
         </div>
         <div className="w-full flex justify-center items-stretch gap-4 flex-nowrap overflow-x-auto">
           {departments.map((dept) => (
@@ -444,6 +482,7 @@ const LibraryHomePage: React.FC = () => {
           onViewFile={() => selectedBook && handleViewFile(selectedBook)}
           isSaved={selectedBook ? savedDocIds.includes(selectedBook.id) : false}
           isBorrowed={selectedBook ? borrowedDocIds.includes(selectedBook.id) : false}
+          onRatingUpdate={handleRatingUpdate}
         />
       ) : (
         <BookDetailModal

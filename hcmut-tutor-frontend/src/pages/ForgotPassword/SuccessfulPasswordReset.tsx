@@ -11,7 +11,7 @@ export const SuccessfulResetPassword = (): React.JSX.Element => {
 
       {/* LEFT SIDE IMAGE (50%) */}
       <div className="flex-1 h-full">
-        <img 
+        <img
           src={login_homepic}
           alt="Login background"
           className="w-full h-full object-cover"
@@ -42,7 +42,7 @@ export const SuccessfulResetPassword = (): React.JSX.Element => {
             {/*Back Button */}
             <button
               onClick={() => navigate("/")}
-              className="w-full py-3 bg-blue-600 text-white rounded-md font-bold hover:bg-gray-700"
+              className="w-full py-3 bg-blue-600 text-white rounded-md font-bold hover:bg-gray-700 cursor-pointer"
             >
               Quay lại trang đăng nhập
             </button>

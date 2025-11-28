@@ -206,14 +206,14 @@ export const LoginPage = (): React.JSX.Element => {
                     />
                   </button>
 
-                  <span className="text-xs text-zinc-900">Ghi nhớ lần này</span>
+                  <span className="text-xs text-zinc-900 cursor-pointer">Ghi nhớ lần này</span>
                 </div>
 
 
                 {/* Forgot password */}
                 <button
                   onClick={() => navigate("/forgot-password")}
-                  className="text-blue-600 text-xs">Quên mật khẩu?
+                  className="text-blue-600 text-xs cursor-pointer">Quên mật khẩu?
                 </button>
               </div>
 
@@ -223,7 +223,7 @@ export const LoginPage = (): React.JSX.Element => {
             {/* Login Button */}
             <button
               onClick={handleLogin}
-              className="w-full py-3 bg-blue-600 text-white rounded-md font-bold hover:bg-blue-700"
+              className="w-full py-3 bg-blue-600 text-white rounded-md font-bold hover:bg-blue-700 cursor-pointer"
             >
               Đăng nhập
             </button>

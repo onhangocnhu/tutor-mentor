@@ -134,7 +134,6 @@
 .breadcrumb-row {
   display: flex;
   justify-content: flex-end;
-  /* đẩy breadcrumb sang phải */
   width: 100%;
 }
 
@@ -260,6 +259,7 @@
 .last-login-card {
   color: white;
   display: flex;
+  background-color: #4ac0f0;
   flex-direction: column;
 }
 

@@ -185,7 +185,7 @@ const ForgotPasswordOTP = (): React.JSX.Element => {
               onClick={() => {
                 navigate("/");
               }}
-              className="w-full py-3 bg-gray-500 text-white rounded-md font-bold hover:bg-gray-600"
+              className="w-full py-3 bg-gray-500 text-white rounded-md font-bold hover:bg-gray-600 cursor-pointer"
             >
               Quay lại trang đăng nhập
             </button>

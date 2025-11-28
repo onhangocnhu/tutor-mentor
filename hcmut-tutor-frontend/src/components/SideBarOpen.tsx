@@ -30,7 +30,7 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
 
     if (cookieRole === "ctsv") {
       setFullName("Phòng Công tác sinh viên");
-      setFaculty("Bách khoa"); // optional
+      setFaculty("Bách khoa");
       return;
     }
     if (cookieRole === "pdt") {
@@ -136,7 +136,7 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
                 { label: "Ghi nhận", path: "/tutor/update-progress" },
               ],
               pdt: [
-                { label: "Báo cáo tổng quan", path: "/pdt-reports" },
+                { label: "Báo cáo tổng quan", path: "/view-reports" },
                 { label: "Cổng thư viện", path: "/library" },
               ],
               faculty: [

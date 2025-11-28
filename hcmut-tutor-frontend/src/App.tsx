@@ -19,6 +19,11 @@ import { ShareDocumentSection } from "./pages/ShareDocument/ShareDocument";
 
 import "./App.css"
 import StudentProfile from "./pages/StudentProfile/StudentProfile";
+import ViewReport from "./pages/ViewReport/ViewReportPage";
+import StudentReviewsPage from "./pages/ViewReport/StudentReviewsPage";
+import TutorReviewsPage from "./pages/ViewReport/TutorReviewsPage";
+import StudentReviewsSearch from "./pages/ViewReport/StudentReviewsSearch";
+import TutorReviewsSearch from "./pages/ViewReport/TutorReviewsSearch";
 
 function App() {
   return (
@@ -42,9 +47,17 @@ function App() {
         <Route path="/register-program" element={<RegisterProgramPage />} />
         <Route path="/register-subject" element={<SubjectRegistrationPage />} />
         <Route path="/register-subject/tutors" element={<SubjectTutorListPage />} />
+
         <Route path="/tutor/update-progress" element={<TutorStudentListPage />} />
         <Route path="/tutor/update-progress/:id" element={<TutorStudentUpdatePage />} />
         <Route path="/tutor/set-schedule" element={<TutorSchedule />} />
+
+        <Route path="/view-reports" element={<ViewReport />} />
+        <Route path="/student-reviews" element={<StudentReviewsPage />} />
+        <Route path="/student-reviews/search" element={<StudentReviewsSearch />} />
+        <Route path="/tutor-reviews" element={<TutorReviewsPage />} />
+        <Route path="/tutor-reviews/search" element={<TutorReviewsSearch />} />
+
 
         <Route path="/library/share-document" element={<ShareDocumentSection />} />
 

@@ -6,6 +6,7 @@ import "../../styles/IndexPage.css";
 import SideBarOpen from "../../components/SideBarOpen";
 import SidebarRail from "../../components/SidebarRail";
 import TopBar from "../../components/TopBar";
+import { formatDateTime } from "../../utils/FormatDateTime";
 
 export default function StudentIndexPage() {
   const navigate = useNavigate();
@@ -14,20 +15,6 @@ export default function StudentIndexPage() {
 
   const goToRegisterProgram = () => {
     navigate("/register-program");
-  };
-
-  const formatDateTime = () => {
-    const now = new Date();
-
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const seconds = String(now.getSeconds()).padStart(2, "0");
-
-    return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
   };
 
   useEffect(() => {

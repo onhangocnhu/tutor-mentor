@@ -9,26 +9,26 @@ export const ForgotPassword = (): React.JSX.Element => {
   const navigate = useNavigate();
 
   const handleForgotPassword = async () => {
-		try{
-			const res = await fetch("http://localhost:3001/forgot-password", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ username, email }),
-			});
-	
-			if(!res.ok){
-				throw new Error("Sai tài khoản hoặc email!");
-			}
+    try {
+      const res = await fetch("http://localhost:3001/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Sai tài khoản hoặc email!");
+      }
       localStorage.setItem("reset-password-username", username);
       localStorage.setItem("reset-password-email", email);
-      
+
       navigate("/forgot-password-otp");
-		}
-		catch(error){
-			console.error("Lỗi quên mật khẩu: ", error);
-		}
+    }
+    catch (error) {
+      console.error("Lỗi quên mật khẩu: ", error);
+    }
   };
 
   return (
@@ -36,7 +36,7 @@ export const ForgotPassword = (): React.JSX.Element => {
 
       {/* LEFT SIDE IMAGE (50%) */}
       <div className="flex-1 h-full">
-        <img 
+        <img
           src={login_homepic}
           alt="Login background"
           className="w-full h-full object-cover"
@@ -93,8 +93,8 @@ export const ForgotPassword = (): React.JSX.Element => {
 
             {/* Next Button */}
             <button
-							onClick={handleForgotPassword}
-              className="w-full py-3 bg-blue-600 text-white rounded-md font-bold hover:bg-blue-700"
+              onClick={handleForgotPassword}
+              className="w-full py-3 bg-blue-600 text-white rounded-md font-bold hover:bg-blue-700 cursor-pointer"
             >
               Tiếp theo
             </button>
@@ -102,7 +102,7 @@ export const ForgotPassword = (): React.JSX.Element => {
             {/*Back Button */}
             <button
               onClick={() => navigate("/")}
-              className="w-full py-3 bg-gray-600 text-white rounded-md font-bold hover:bg-gray-700"
+              className="w-full py-3 bg-gray-600 text-white rounded-md font-bold hover:bg-gray-700 cursor-pointer"
             >
               Quay lại trang đăng nhập
             </button>

@@ -14,31 +14,31 @@ export const ResetPassword = (): React.JSX.Element => {
   const navigate = useNavigate();
 
   const handleResetPassword = async () => {
-    if(newPassword !== confirmedNewPassword){
+    if (newPassword !== confirmedNewPassword) {
       alert("Xác nhận mật khẩu mới chưa đúng!")
       return;
     }
-		try{
+    try {
       const username = localStorage.getItem("reset-password-username")
-			const res = await fetch("http://localhost:3001/reset-password", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ username, newPassword }),
-			});
-	
-			if(!res.ok){
-				throw new Error("Mật khẩu mới không đúng định dạng!");
-			}
+      const res = await fetch("http://localhost:3001/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, newPassword }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Mật khẩu mới không đúng định dạng!");
+      }
       localStorage.removeItem("reset-password-username");
       localStorage.removeItem("reset-password-email");
-      
-			navigate("/successful-reset-password");
-		}
-		catch(error){
-			console.error("Lỗi quên mật khẩu: ", error);
-		}
+
+      navigate("/successful-reset-password");
+    }
+    catch (error) {
+      console.error("Lỗi quên mật khẩu: ", error);
+    }
   };
 
   return (
@@ -46,7 +46,7 @@ export const ResetPassword = (): React.JSX.Element => {
 
       {/* LEFT SIDE IMAGE (50%) */}
       <div className="flex-1 h-full">
-        <img 
+        <img
           src={login_homepic}
           alt="Login background"
           className="w-full h-full object-cover"
@@ -128,8 +128,8 @@ export const ResetPassword = (): React.JSX.Element => {
 
             {/* Next Button */}
             <button
-							onClick={handleResetPassword}
-              className="w-full py-3 bg-blue-600 text-white rounded-md font-bold hover:bg-blue-700"
+              onClick={handleResetPassword}
+              className="w-full py-3 bg-blue-600 text-white rounded-md font-bold hover:bg-blue-700 cursor-pointer"
             >
               Tiếp theo
             </button>
@@ -137,7 +137,7 @@ export const ResetPassword = (): React.JSX.Element => {
             {/*Back Button */}
             <button
               onClick={() => navigate("/")}
-              className="w-full py-3 bg-gray-600 text-white rounded-md font-bold hover:bg-gray-700"
+              className="w-full py-3 bg-gray-600 text-white rounded-md font-bold hover:bg-gray-700 cursor-pointer"
             >
               Quay lại trang đăng nhập
             </button>

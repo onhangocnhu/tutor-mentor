@@ -9,6 +9,13 @@ import SideBarOpen from "../../components/SideBarOpen"
 import SidebarRail from "../../components/SidebarRail"
 import TopBar from "../../components/TopBar"
 
+type Student = {
+  studentId: string;
+  classCode: string;
+  fullName: string;
+  email: string;
+};
+
 interface Session {
   id: string
   date: string
@@ -21,10 +28,12 @@ interface Session {
   department: string
   status: string
   notes: string
-  students: string[],
+  students: Student[] | [],
   duration: number | null,
   actualParticipants: number | null,
 }
+
+
 
 export default function EditSessionPage() {
   const { id } = useParams()

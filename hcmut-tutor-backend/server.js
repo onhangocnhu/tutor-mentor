@@ -618,6 +618,49 @@ app.get("/registrations", (req, res) => {
   }
 });
 
+app.get("/students-reg", (req, res) => {
+  try {
+    const cookieHeader = req.get("Cookie") || "";
+    let cookieUser = null;
+    let cookieRole = null;
+
+    cookieHeader.split(";").map(c => c.trim()).forEach(pair => {
+      const [k, v] = pair.split("=");
+      if (k === "username") cookieUser = decodeURIComponent(v || "");
+      if (k === "role") cookieRole = decodeURIComponent(v || "");
+    });
+
+    // must be tutor
+    if (cookieRole !== "tutor") {
+      return res.status(403).json({ success: false, message: "Not tutor" });
+    }
+
+    const tutorUsername = cookieUser;
+    const regs = loadRegistrations();
+
+    // lấy các student ứng với tutor
+    const students = regs
+      .filter(r => r.tutor.username === tutorUsername)
+      .map(r => r.student);
+
+    // loại duplicate student
+    const uniqueStudents = Array.from(
+      new Map(students.map(s => [s.username, s])).values()
+    );
+
+    return res.json({
+      success: true,
+      students: uniqueStudents,
+    });
+
+  } catch (err) {
+    console.error("GET /students error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+
+
 // save student progress (from tutor)
 app.post("/student-progress", (req, res) => {
   try {

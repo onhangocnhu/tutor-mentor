@@ -8,6 +8,12 @@ import "../styles/SessionForm.css"
 import AddMeetingReport from "./AddMeetingReport"
 import StudentListPage from "../pages/Sessions/StudentListPage"
 
+type Student = {
+  studentId: string;
+  classCode: string;
+  fullName: string;
+  email: string;
+};
 interface Session {
   id: string
   date: string
@@ -20,7 +26,7 @@ interface Session {
   department: string
   status: string
   notes: string
-  students: string[],
+  students: Student[],
   duration: number | null,
   actualParticipants: number | null,
 }
@@ -233,18 +239,19 @@ export default function SessionForm({ onSave, onCancel, initialData }: SessionFo
 
 
       {showStudentList && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg- bg-opacity-50">
-          <div className="bg-white w-full max-w-5xl max-h-[90vh] overflow-auto rounded-lg shadow-lg relative p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="relative bg-white rounded-lg shadow-xl w-[85%] max-w-[1500px] max-h-[80vh] p-6 mx-auto flex flex-col">
+            {/* Nút đóng */}
             <button
-              onClick={handleCloseStudentList}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold"
-            >
-              ✖
+              onClick={() => handleCloseStudentList()}
+              className="absolute top-10 right-10 text-black-500 hover:text-black-700 text-5xl font-bold cursor-pointer">
+              ⨯
             </button>
-            <StudentListPage />
+                <StudentListPage />
           </div>
         </div>
       )}
+
 
     </div>
   )

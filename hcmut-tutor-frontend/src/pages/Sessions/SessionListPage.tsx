@@ -17,8 +17,15 @@ interface Session {
   department: string
   status: string
   notes: string
-  students: string[]
+  students: Student[]
 }
+
+type Student = {
+  studentId: string;
+  classCode: string;
+  fullName: string;
+  email: string;
+};
 
 export default function SessionListPage() {
   const [sessions, setSessions] = useState<Session[]>([])

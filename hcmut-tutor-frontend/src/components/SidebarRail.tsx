@@ -10,7 +10,7 @@ type SidebarRailProps = {
 
 const SidebarRail: React.FC<SidebarRailProps> = ({ wrapperClass = "sidebar", imgClass = "sidebar-avatar", onClick, alt = "hcmut logo" }) => {
   return (
-    <aside className={wrapperClass} onClick={onClick} role="complementary" aria-hidden={false}>
+    <aside className={wrapperClass} onClick={onClick} role="complementary" aria-hidden={false} style={{position: "fixed", top: 0, left: 0, height: "100%", zIndex: 100}}>
       <img className={imgClass} src={hcmut_logo} alt={alt} />
     </aside>
   );

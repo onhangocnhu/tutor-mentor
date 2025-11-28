@@ -1,0 +1,149 @@
+.search-page {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* left sidebar (title + small avatar) */
+.search-sidebar {
+  min-width: 220px;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.search-sidebar__title {
+  background: #0073B7;
+  color: #fff;
+  padding: 12px;
+  font-weight: 900;
+  text-align: center;
+  border-radius: 6px;
+  width: 300px;
+}
+
+.search-sidebar__avatar {
+  width: 45px;
+  height: 45px;
+  background: #0073B7;
+  border-radius: 9999px;
+  margin-left: 12px;
+}
+
+/* main area */
+.search-main {
+  flex: 1 1 0;
+}
+
+.search-header h2 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+/* card and outline */
+.search-card {
+  background: white;
+  border-radius: 4px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.search-card__meta {
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.search-card__outline {
+  border: 2px solid #E5DFDF;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 12px 20px;
+  align-items: start;
+}
+
+/* rows */
+.detail-row {
+  display: contents;
+}
+
+.detail-row label {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.detail-row .detail-value {
+  min-height: 40px;
+  background: #D7D7D7;
+  border: 1px solid #D2D6DE;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.detail-row--large .detail-value {
+  min-height: 100px;
+  white-space: pre-wrap;
+}
+
+/* pagination / meta */
+.search-pagination {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.page-btn {
+  background: transparent;
+  border: 1px solid #D2D6DE;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.page-number {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+/* breadcrumb */
+.breadcrumb-link {
+  text-decoration: none;
+  color: inherit;
+  transition: text-decoration-color 0.15s ease, text-decoration-thickness 0.15s ease;
+}
+
+.breadcrumb-link:hover,
+.breadcrumb-link:focus {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(0, 0, 0, 0.6);
+  outline: none;
+}
+
+/* responsive */
+@media (max-width: 1000px) {
+  .search-page {
+    flex-direction: column;
+  }
+
+  .search-card__outline {
+    grid-template-columns: 1fr;
+  }
+
+  .search-sidebar {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .right-column {
+    width: 100%;
+  }
+}

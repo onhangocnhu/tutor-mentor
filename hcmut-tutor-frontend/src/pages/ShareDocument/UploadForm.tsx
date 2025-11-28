@@ -15,8 +15,21 @@ export const DocumentSection: React.FC = () => {
   const [documentName, setDocumentName] = useState("");
   const [author, setAuthor] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+
+  const languageOptions = [
+    { id: "", label: "-- Chọn ngôn ngữ --" },
+    { id: "Tiếng Việt", label: "Tiếng Việt" },
+    { id: "Tiếng Anh", label: "Tiếng Anh" },
+    { id: "Tiếng Trung", label: "Tiếng Trung" },
+    { id: "Tiếng Pháp", label: "Tiếng Pháp" },
+    { id: "Tiếng Nhật", label: "Tiếng Nhật" },
+    { id: "Tiếng Hàn", label: "Tiếng Hàn" },
+    { id: "Tiếng Nga", label: "Tiếng Nga" },
+    { id: "Tiếng Đức", label: "Tiếng Đức" },
+  ];
 
   //--- Agree with the Rules ---
   const [isAgreed, setIsAgreed] = useState(false);
@@ -53,6 +66,7 @@ export const DocumentSection: React.FC = () => {
       documentName,
       author,
       releaseYear,
+      selectedLanguage,
       selectedDocumentType,
       file: selectedFile,
     });
@@ -131,6 +145,22 @@ export const DocumentSection: React.FC = () => {
               onChange={(e) => setReleaseYear(e.target.value)}
               placeholder="Nhập năm xuất bản"
             />
+          </div>
+
+          <div className="info-row">
+            <label htmlFor="language">Ngôn ngữ</label>
+            <select
+              id="language"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+              className="language-select"
+            >
+              {languageOptions.map((lang) => (
+                <option key={lang.id} value={lang.id}>
+                  {lang.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="file-upload-section">

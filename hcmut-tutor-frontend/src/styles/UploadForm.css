@@ -131,6 +131,27 @@
   outline: none;
 }
 
+/* ===== LANGUAGE SELECT ===== */
+.info-row select,
+.language-select {
+  border: 1px solid #b2adad;
+  background-color: white;
+  color: rgb(7, 7, 7);
+  padding: 10px;
+  border-radius: 7px;
+  font-size: 15px;
+  transition: border 0.2s;
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.info-row select:focus,
+.language-select:focus {
+  border-color: #0070b1;
+  outline: none;
+}
+
 /* ===== FILE SECTION ===== */
 .file-upload-section label {
   color: #3b3b3b;

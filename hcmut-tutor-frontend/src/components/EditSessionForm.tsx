@@ -15,10 +15,14 @@ interface Session {
   format: string
   location: string
   studentCount: number
+  tutor: string,
+  report: boolean,
   department: string
   status: string
   notes: string
-  students: string[]
+  students: string[],
+  duration: number | null,
+  actualParticipants: number | null,
 }
 
 interface SessionFormProps {
@@ -36,13 +40,16 @@ export default function SessionForm({ onSave, onCancel, initialData }: SessionFo
       format: "Trực tuyến",
       location: "",
       studentCount: 30,
+      tutor: "Tên tutor",
+      report: false,
       department: "Hệ thống số",
       status: "Chưa diễn ra",
       notes: "",
       students: [],
+      duration: 0,
+      actualParticipants: 0
     },
   )
-
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
   const [showMeetingReportModal, setShowMeetingReportModal] = useState(false);
@@ -54,11 +61,15 @@ export default function SessionForm({ onSave, onCancel, initialData }: SessionFo
   const handleOpenStudentList = () => setShowStudentList(true);
   const handleCloseStudentList = () => setShowStudentList(false);
 
-  const handleSubmitMeetingReport = (payload: { content: string; results: string; next: string }) => {
-    console.log("Biên bản mới:", payload);
-    alert("Đã thêm biên bản thành công!");
-    setShowMeetingReportModal(false); // đóng modal sau khi submit
+  // const handleSubmitMeetingReport = (payload: { content: string; results: string; next: string }) => {
+  //   console.log("Biên bản mới:", payload);
+  //   alert("Đã thêm biên bản thành công!");
+  //   setShowMeetingReportModal(false); // đóng modal sau khi submit
+  // };
+  const handleSubmitMeetingReport = (file: File | null) => {
+  console.log("File được chọn:", file);
   };
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -198,11 +209,28 @@ export default function SessionForm({ onSave, onCancel, initialData }: SessionFo
       )}
 
       {showMeetingReportModal && (
-        <AddMeetingReport
-          onClose={handleCloseMeetingReport}
-          onSubmit={handleSubmitMeetingReport}
-        />
+      <AddMeetingReport
+        onClose={handleCloseMeetingReport}
+        onSubmit={handleSubmitMeetingReport}
+        meetingInfo={{
+          id: formData.id,
+          time: formData.time,
+          date: formData.date,
+          method: formData.format,
+          location: formData.location,
+          department: formData.department,
+          registered: formData.studentCount, 
+          maxParticipants: formData.studentCount, 
+          topic: formData.notes || "Chưa có chủ đề",
+          tutorName: formData.tutor, 
+          actualParticipants: formData.actualParticipants, 
+          duration: formData.duration,
+          report: formData.report
+
+        }}
+      />
       )}
+
 
       {showStudentList && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg- bg-opacity-50">

@@ -16,10 +16,14 @@ interface Session {
   format: string
   location: string
   studentCount: number
+  tutor: string,
+  report: boolean,
   department: string
   status: string
   notes: string
-  students: string[]
+  students: string[],
+  duration: number | null,
+  actualParticipants: number | null,
 }
 
 export default function EditSessionPage() {
@@ -96,6 +100,7 @@ export default function EditSessionPage() {
       )}
 
       {/* Collapsed sidebar (luôn hiện) */}
+      
       <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
       {/* Drawer sidebar khi menu mở */}

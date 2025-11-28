@@ -9,6 +9,10 @@
     "department": "Hệ thống số",
     "status": "Đã diễn ra",
     "notes": "Buổi gặp thành công vl",
+    "tutor": "Nguyễn Văn An",
+    "report": false,
+    "duration": null,
+    "actualParticipants": null,
     "students": []
   },
   {
@@ -21,6 +25,10 @@
     "department": "Nhập môn điện toán",
     "status": "Đã diễn ra",
     "notes": "",
+    "tutor": "Nguyễn Văn An",
+    "report": false,
+    "duration": null,
+    "actualParticipants": null,
     "students": []
   },
   {
@@ -33,6 +41,10 @@
     "department": "Cấu trúc rời rạc",
     "status": "Đã diễn ra",
     "notes": "",
+    "tutor": "Nguyễn Văn An",
+    "report": false,
+    "duration": null,
+    "actualParticipants": null,
     "students": []
   },
   {
@@ -45,6 +57,10 @@
     "department": "Kỹ thuật lập trình",
     "status": "Đã diễn ra",
     "notes": "",
+    "tutor": "Nguyễn Văn An",
+    "report": false,
+    "duration": null,
+    "actualParticipants": null,
     "students": []
   },
   {
@@ -57,6 +73,10 @@
     "department": "Công nghệ phần mềm",
     "status": "Chưa diễn ra",
     "notes": "",
+    "tutor": "Nguyễn Văn An",
+    "report": false,
+    "duration": null,
+    "actualParticipants": null,
     "students": []
   },
   {
@@ -69,6 +89,10 @@
     "department": "Hệ thống số",
     "status": "Chưa diễn ra",
     "notes": "",
+    "tutor": "Nguyễn Văn An",
+    "report": false,
+    "duration": null,
+    "actualParticipants": null,
     "students": []
   },
   {
@@ -78,9 +102,13 @@
     "format": "Trực tuyến",
     "location": "Meet - hid-dwad-dwd",
     "studentCount": 30,
-    "department": "PPL",
+    "department": "Hệ cơ sở dữ liệu",
     "status": "Chưa diễn ra",
-    "notes": "23",
+    "notes": "Parser",
+    "tutor": "Nguyễn Văn An",
+    "report": true,
+    "duration": 4,
+    "actualParticipants": 5,
     "students": []
   }
 ]

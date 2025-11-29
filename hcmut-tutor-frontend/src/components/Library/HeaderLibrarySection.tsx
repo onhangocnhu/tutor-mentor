@@ -6,7 +6,7 @@ import logobachkhoa from "../../images/hcmut_logo.png";
 export const HeaderSection: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const navigationItems = [
     { label: "Trang chủ", href: "/library" },
     { label: "Tìm kiếm", href: "/library/search" },
@@ -15,7 +15,17 @@ export const HeaderSection: React.FC = () => {
   ];
 
   const handleBackToSystem = () => {
-    navigate("/student-dashboard");
+    // read role from cookie and navigate to corresponding dashboard
+    const rolePair = document.cookie
+      .split(";")
+      .map((s) => s.trim())
+      .find((s) => s.startsWith("role="));
+    const role = rolePair ? decodeURIComponent(rolePair.split("=")[1]) : null;
+    if (role) {
+      navigate(`/${role}-dashboard`);
+    } else {
+      navigate("/unauthorized");
+    }
   };
 
   const isActive = (href: string) => {
@@ -35,8 +45,8 @@ export const HeaderSection: React.FC = () => {
 
         <nav className="header-nav">
           {navigationItems.map((item, index) => (
-            <a 
-              key={index} 
+            <a
+              key={index}
               href={item.href}
               className={isActive(item.href) ? "active" : ""}
             >
@@ -49,9 +59,9 @@ export const HeaderSection: React.FC = () => {
           </a>
         </nav>
       </header>
-      
+
       {/* Nút quay về hệ thống quản lý */}
-      <button 
+      <button
         onClick={handleBackToSystem}
         className="back-to-system-btn"
       >

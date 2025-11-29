@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import "../../styles/ShareDocument.css";
 import { useNavigate } from "react-router-dom";
-import { HeaderSection } from "./HeaderLibrarySection";
+import { HeaderSection } from "../../components/Library/HeaderLibrarySection";
+import { FooterSection } from "../../components/Library/FooterLibrarySection";
 import { DocumentSection } from "./UploadForm";
-import { FooterSection } from "./FooterLibrarySection";
 
-
-export const ShareDocumentSection: React.FC = () => {
+const ShareDocumentSection: React.FC = () => {
   const navigate = useNavigate();
 
   // Share document only for user with roles
@@ -88,3 +87,5 @@ export const ShareDocumentSection: React.FC = () => {
     </div>
   );
 };
+
+export default ShareDocumentSection;

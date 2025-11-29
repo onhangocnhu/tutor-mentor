@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { DocumentRulesModal } from "../../components/Library";
-import { HeaderSection } from "../ShareDocument/HeaderLibrarySection";
-import { FooterSection } from "../ShareDocument/FooterLibrarySection";
+import { HeaderSection } from "../../components/Library/HeaderLibrarySection";
+import { FooterSection } from "../../components/Library/FooterLibrarySection";
 
 const API_BASE = "http://localhost:3001";
 
@@ -311,7 +311,7 @@ const ShareDocsPage: React.FC = () => {
                 onChange={handleFileSelect}
                 accept=".pdf"
               />
-              <button 
+              <button
                 className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 onClick={handleBrowseClick}
               >
@@ -341,7 +341,7 @@ const ShareDocsPage: React.FC = () => {
           {submitting && uploadProgress > 0 && (
             <div className="mb-6">
               <div className="w-full bg-gray-200 rounded-full h-3">
-                <div 
+                <div
                   className="bg-blue-600 h-3 rounded-full transition-all duration-300"
                   style={{ width: `${uploadProgress}%` }}
                 />
@@ -374,11 +374,10 @@ const ShareDocsPage: React.FC = () => {
             </label>
 
             <button
-              className={`px-8 py-3 rounded-lg font-semibold text-white transition-colors ${
-                isFormValid && !submitting
-                  ? 'bg-blue-800 hover:bg-blue-900'
-                  : 'bg-gray-400 cursor-not-allowed'
-              }`}
+              className={`px-8 py-3 rounded-lg font-semibold text-white transition-colors ${isFormValid && !submitting
+                ? 'bg-blue-800 hover:bg-blue-900'
+                : 'bg-gray-400 cursor-not-allowed'
+                }`}
               disabled={!isFormValid || submitting}
               onClick={handleSubmit}
             >

@@ -19,7 +19,6 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ForgotPasswordOTP from "./pages/ForgotPassword/ForgotPasswordOTP"
 import ResetPassword from "./pages/ForgotPassword/ResetPassword"
 import SuccessfulResetPassword from "./pages/ForgotPassword/SuccessfulPasswordReset"
-import { ShareDocumentSection } from "./pages/ShareDocument/ShareDocument";
 
 // Library Pages
 import {
@@ -28,6 +27,7 @@ import {
   MyDocsPage,
   HistoryPage,
   ShareDocsPage,
+  ShareDocumentSection,
 } from "./pages/Library";
 
 import StudentProfile from "./pages/Profile/StudentProfile";

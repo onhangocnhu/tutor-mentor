@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { HeaderSection } from "../ShareDocument/HeaderLibrarySection";
-import { FooterSection } from "../ShareDocument/FooterLibrarySection";
+import { HeaderSection } from "../../components/Library/HeaderLibrarySection";
+import { FooterSection } from "../../components/Library/FooterLibrarySection";
 import { BookCard, BookDetailModal, UploadedDocumentModal, PdfPreviewModal } from "../../components/Library";
 import "../../styles/Library.css";
 
@@ -69,12 +69,12 @@ const MyDocsPage: React.FC = () => {
   const [savedDocIds, setSavedDocIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   // Modal states
   const [selectedBook, setSelectedBook] = useState<Document | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [borrowedDocIds, setBorrowedDocIds] = useState<string[]>([]);
-  
+
   // PDF Preview states
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [previewFilePath, setPreviewFilePath] = useState("");
@@ -136,7 +136,7 @@ const MyDocsPage: React.FC = () => {
   const handleBookClick = async (book: Document) => {
     setSelectedBook(book);
     setIsModalOpen(true);
-    
+
     // Increment view count
     try {
       await fetch(`${API_BASE}/library/documents/${book.id}/view`, {
@@ -303,7 +303,7 @@ const MyDocsPage: React.FC = () => {
               Tài liệu đã lưu ({filterDocuments(savedDocs, searchQuery).length})
             </div>
             {filterDocuments(savedDocs, searchQuery).length > 5 && (
-              <button 
+              <button
                 onClick={() => setExpandSaved(!expandSaved)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center hover:bg-blue-900 transition-colors"
               >
@@ -345,7 +345,7 @@ const MyDocsPage: React.FC = () => {
               Tài liệu đang mượn ({filterDocuments(borrowedDocs, searchQuery).length})
             </div>
             {filterDocuments(borrowedDocs, searchQuery).length > 5 && (
-              <button 
+              <button
                 onClick={() => setExpandBorrowed(!expandBorrowed)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center hover:bg-blue-900 transition-colors"
               >
@@ -388,7 +388,7 @@ const MyDocsPage: React.FC = () => {
               Tài liệu đã tải về ({filterDocuments(downloadedDocs, searchQuery).length})
             </div>
             {filterDocuments(downloadedDocs, searchQuery).length > 5 && (
-              <button 
+              <button
                 onClick={() => setExpandDownloaded(!expandDownloaded)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center hover:bg-blue-900 transition-colors"
               >

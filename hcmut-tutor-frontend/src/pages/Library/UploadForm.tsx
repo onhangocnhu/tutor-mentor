@@ -243,3 +243,5 @@ export const DocumentSection: React.FC = () => {
     </section>
   );
 };
+
+export default DocumentSection;

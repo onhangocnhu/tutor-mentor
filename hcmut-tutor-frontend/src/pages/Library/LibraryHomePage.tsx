@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { HeaderSection } from "../ShareDocument/HeaderLibrarySection";
-import { FooterSection } from "../ShareDocument/FooterLibrarySection";
+import { HeaderSection } from "../../components/Library/HeaderLibrarySection";
+import { FooterSection } from "../../components/Library/FooterLibrarySection";
 import { BookCard, UploadedDocumentModal, BookDetailModal, PdfPreviewModal } from "../../components/Library";
 import type { Document, UploadedDocument } from "../../components/Library";
 import "../../styles/Library.css";
@@ -12,13 +12,13 @@ const API_BASE = "http://localhost:3001";
 // You need to save the 3 banner images as banner1.jpg, banner2.jpg, banner3.jpg in src/images/library/
 const bannerImages = [
   "/src/images/library/banner1.jpg",
-  "/src/images/library/banner2.jpg", 
+  "/src/images/library/banner2.jpg",
   "/src/images/library/banner3.jpg"
 ];
 
 // Department Card Component
 const DepartmentCard: React.FC<{ name: string; icon: React.ReactNode; onClick: () => void }> = ({ name, icon, onClick }) => (
-  <div 
+  <div
     className="min-w-[180px] w-[180px] h-32 flex flex-col items-center justify-center bg-white rounded-xl shadow-[0px_4px_6px_0px_rgba(0,0,0,0.10)] cursor-pointer hover:shadow-lg transition-shadow p-4"
     onClick={onClick}
   >
@@ -42,11 +42,11 @@ const LibraryHomePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
-  
+
   // Modal states
   const [selectedBook, setSelectedBook] = useState<Document | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // PDF Preview modal states
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [previewFilePath, setPreviewFilePath] = useState("");
@@ -138,7 +138,7 @@ const LibraryHomePage: React.FC = () => {
   const handleBookClick = async (book: Document) => {
     setSelectedBook(book);
     setIsModalOpen(true);
-    
+
     // Increment view count
     try {
       await fetch(`${API_BASE}/library/documents/${book.id}/view`, {
@@ -231,7 +231,7 @@ const LibraryHomePage: React.FC = () => {
           ? { ...book, rating: newRating, ratingCount: newRatingCount }
           : book
       );
-    
+
     setRecommendedBooks(updateBooks(recommendedBooks));
     setMostViewedBooks(updateBooks(mostViewedBooks));
     setNewestBooks(updateBooks(newestBooks));
@@ -268,27 +268,25 @@ const LibraryHomePage: React.FC = () => {
       {/* Hero Banner with Slideshow */}
       <div className="w-full h-[400px] pt-20 relative overflow-hidden">
         {bannerImages.map((banner, index) => (
-          <img 
+          <img
             key={index}
-            className={`w-full h-[400px] object-cover absolute top-0 left-0 transition-opacity duration-1000 ${
-              index === currentBannerIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-            src={banner} 
+            className={`w-full h-[400px] object-cover absolute top-0 left-0 transition-opacity duration-1000 ${index === currentBannerIndex ? 'opacity-100' : 'opacity-0'
+              }`}
+            src={banner}
             alt={`Library Banner ${index + 1}`}
           />
         ))}
-        
+
         {/* Banner Indicators */}
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
           {bannerImages.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentBannerIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentBannerIndex 
-                  ? 'bg-white w-8' 
-                  : 'bg-white/50 hover:bg-white/75'
-              }`}
+              className={`w-3 h-3 rounded-full transition-all ${index === currentBannerIndex
+                ? 'bg-white w-8'
+                : 'bg-white/50 hover:bg-white/75'
+                }`}
             />
           ))}
         </div>
@@ -326,7 +324,7 @@ const LibraryHomePage: React.FC = () => {
               className="w-[700px] text-2xl font-normal font-['Inter'] text-black placeholder:text-black/50 outline-none"
             />
           </div>
-          <button 
+          <button
             onClick={handleSearch}
             className="w-36 h-14 p-2.5 bg-blue-800 rounded-[90px] flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
           >
@@ -342,7 +340,7 @@ const LibraryHomePage: React.FC = () => {
         </div>
         <div className="flex justify-center items-center gap-10">
           {popularTags.map((tag, index) => (
-            <div 
+            <div
               key={index}
               onClick={() => handleTagClick(tag)}
               className="p-2.5 opacity-80 bg-sky-100 rounded-[90px] outline-1 -outline-offset-1 outline-blue-800 flex justify-center items-center gap-2.5 cursor-pointer hover:bg-sky-200 transition-colors"
@@ -362,7 +360,7 @@ const LibraryHomePage: React.FC = () => {
               Gợi ý cho bạn ({recommendedBooks.length})
             </div>
             {recommendedBooks.length >= 5 && (
-              <button 
+              <button
                 onClick={() => setExpandRecommended(!expandRecommended)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
               >
@@ -394,7 +392,7 @@ const LibraryHomePage: React.FC = () => {
               Được xem nhiều nhất ({mostViewedBooks.length})
             </div>
             {mostViewedBooks.length >= 5 && (
-              <button 
+              <button
                 onClick={() => setExpandMostViewed(!expandMostViewed)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
               >
@@ -426,7 +424,7 @@ const LibraryHomePage: React.FC = () => {
               Mới cập nhật ({newestBooks.length})
             </div>
             {newestBooks.length >= 5 && (
-              <button 
+              <button
                 onClick={() => setExpandNewest(!expandNewest)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
               >

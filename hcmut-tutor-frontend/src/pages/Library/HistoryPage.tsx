@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { HeaderSection } from "../ShareDocument/HeaderLibrarySection";
-import { FooterSection } from "../ShareDocument/FooterLibrarySection";
+import { HeaderSection } from "../../components/Library/HeaderLibrarySection";
+import { FooterSection } from "../../components/Library/FooterLibrarySection";
 import { BookDetailModal, PdfPreviewModal } from "../../components/Library";
 import "../../styles/Library.css";
 
@@ -43,7 +43,7 @@ const HistoryPage: React.FC = () => {
   const [borrowHistory, setBorrowHistory] = useState<BorrowRecord[]>([]);
   const [selectedTab, setSelectedTab] = useState<"all" | "borrowed" | "returned">("all");
   const [loading, setLoading] = useState(true);
-  
+
   // Modal states
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -133,7 +133,7 @@ const HistoryPage: React.FC = () => {
         await fetch(`${API_BASE}/library/documents/${document.id}/download`, {
           method: "POST",
         });
-        
+
         // Open PDF in new tab for download
         window.open(`${API_BASE}${document.filePath}`, "_blank");
       } catch (error) {
@@ -219,31 +219,28 @@ const HistoryPage: React.FC = () => {
         {/* Tabs */}
         <div className="flex justify-center gap-4 mb-8">
           <button
-            className={`px-6 py-3 rounded-full font-medium transition-colors ${
-              selectedTab === "all"
-                ? "bg-blue-800 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+            className={`px-6 py-3 rounded-full font-medium transition-colors ${selectedTab === "all"
+              ? "bg-blue-800 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
             onClick={() => setSelectedTab("all")}
           >
             Tất cả ({borrowHistory.length})
           </button>
           <button
-            className={`px-6 py-3 rounded-full font-medium transition-colors ${
-              selectedTab === "borrowed"
-                ? "bg-amber-500 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+            className={`px-6 py-3 rounded-full font-medium transition-colors ${selectedTab === "borrowed"
+              ? "bg-amber-500 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
             onClick={() => setSelectedTab("borrowed")}
           >
             Đang mượn ({getBorrowedCount()})
           </button>
           <button
-            className={`px-6 py-3 rounded-full font-medium transition-colors ${
-              selectedTab === "returned"
-                ? "bg-green-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+            className={`px-6 py-3 rounded-full font-medium transition-colors ${selectedTab === "returned"
+              ? "bg-green-600 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
             onClick={() => setSelectedTab("returned")}
           >
             Đã trả ({getReturnedCount()})
@@ -257,32 +254,31 @@ const HistoryPage: React.FC = () => {
               Chưa có lịch sử mượn tài liệu
             </div>
           )}
-          
+
           {getFilteredHistory().map((record) => {
-            const isOverdue = record.status === "overdue" || 
+            const isOverdue = record.status === "overdue" ||
               (record.status === "borrowed" && getDaysRemaining(record.dueDate) < 0);
             const daysRemaining = getDaysRemaining(record.dueDate);
-            const coverUrl = record.document?.coverImage 
-              ? `${API_BASE}${record.document.coverImage}` 
+            const coverUrl = record.document?.coverImage
+              ? `${API_BASE}${record.document.coverImage}`
               : null;
 
             return (
               <div
                 key={record.id}
-                className={`flex items-center gap-6 p-4 bg-white rounded-xl shadow-md border-l-4 ${
-                  isOverdue 
-                    ? "border-red-500 bg-red-50" 
-                    : record.status === "returned" 
-                    ? "border-green-500" 
+                className={`flex items-center gap-6 p-4 bg-white rounded-xl shadow-md border-l-4 ${isOverdue
+                  ? "border-red-500 bg-red-50"
+                  : record.status === "returned"
+                    ? "border-green-500"
                     : "border-amber-500"
-                }`}
+                  }`}
               >
                 {/* Cover Image */}
                 <div className="w-20 h-28 shrink-0 rounded-lg overflow-hidden shadow">
                   {coverUrl ? (
-                    <img 
-                      src={coverUrl} 
-                      alt={record.document?.title} 
+                    <img
+                      src={coverUrl}
+                      alt={record.document?.title}
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
@@ -313,13 +309,12 @@ const HistoryPage: React.FC = () => {
                   <div className="flex items-center gap-4 flex-wrap">
                     {/* Status Badge */}
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        isOverdue
-                          ? "bg-red-200 text-red-700"
-                          : record.status === "returned"
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${isOverdue
+                        ? "bg-red-200 text-red-700"
+                        : record.status === "returned"
                           ? "bg-green-200 text-green-700"
                           : "bg-amber-200 text-amber-700"
-                      }`}
+                        }`}
                     >
                       {isOverdue ? "Quá hạn" : record.status === "returned" ? "Đã trả" : "Đang mượn"}
                     </span>
@@ -378,15 +373,15 @@ const HistoryPage: React.FC = () => {
 
                   {record.status === "returned" && (
                     <>
-                      <button 
-                        className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 transition-colors" 
+                      <button
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 transition-colors"
                         title="Xem file"
                         onClick={() => record.document && handleViewFile(record.document)}
                       >
                         📄
                       </button>
-                      <button 
-                        className="w-10 h-10 flex items-center justify-center rounded-full bg-green-100 hover:bg-green-200 transition-colors" 
+                      <button
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-green-100 hover:bg-green-200 transition-colors"
                         title="Tải xuống"
                         onClick={() => record.document && handleDownload(record.document)}
                       >
@@ -396,8 +391,8 @@ const HistoryPage: React.FC = () => {
                   )}
 
                   {isOverdue && (
-                    <button 
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-red-100" 
+                    <button
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-red-100"
                       title="Cảnh báo"
                     >
                       ⚠️

@@ -7,8 +7,8 @@ import {
   DocumentFilter,
   PdfPreviewModal,
 } from "../../components/Library";
-import { HeaderSection } from "../ShareDocument/HeaderLibrarySection";
-import { FooterSection } from "../ShareDocument/FooterLibrarySection";
+import { HeaderSection } from "../../components/Library/HeaderLibrarySection";
+import { FooterSection } from "../../components/Library/FooterLibrarySection";
 import type { Document } from "../../components/Library";
 import type { UploadedDocument } from "../../components/Library";
 import "../../styles/Library.css";
@@ -62,10 +62,10 @@ const SearchPage: React.FC = () => {
   const userId = "student001";
   const searchQuery = searchParams.get("q") || "";
   const departmentParam = searchParams.get("department") || "";
-  
+
   // Local search input state
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
-  
+
   // Sync local search with URL param
   useEffect(() => {
     setLocalSearchQuery(searchQuery);
@@ -170,7 +170,7 @@ const SearchPage: React.FC = () => {
       if (selectedLanguages.length > 0) params.append("language", selectedLanguages.join(","));
       if (selectedStatuses.length > 0) params.append("status", selectedStatuses.join(","));
       if (sortBy !== "relevant") params.append("sortBy", sortBy);
-      
+
       // Year range filter - only apply if valid range
       if (yearFrom && yearTo && parseInt(yearFrom) <= parseInt(yearTo)) {
         params.append("yearFrom", yearFrom);
@@ -257,7 +257,7 @@ const SearchPage: React.FC = () => {
   const handleBookClick = async (book: Document) => {
     setSelectedBook(book);
     setIsModalOpen(true);
-    
+
     // Increment view count
     try {
       await fetch(`${API_BASE}/library/documents/${book.id}/view`, {
@@ -363,7 +363,7 @@ const SearchPage: React.FC = () => {
       <main className="library-content">
         <section className="search-page-header">
           <h1>TÌM KIẾM TÀI LIỆU</h1>
-          
+
           {/* Search Bar - Home page style */}
           <div className="w-full max-w-[900px] mx-auto mt-4">
             <div className="w-full h-16 px-4 bg-white rounded-[90px] border-[3px] border-blue-400 inline-flex justify-between items-center gap-3">
@@ -380,7 +380,7 @@ const SearchPage: React.FC = () => {
                 onKeyDown={(e) => e.key === "Enter" && handleSearch(localSearchQuery)}
                 className="flex-1 min-w-0 text-lg font-normal text-black placeholder:text-black/50 outline-none bg-transparent"
               />
-              <button 
+              <button
                 onClick={() => handleSearch(localSearchQuery)}
                 className="h-12 px-6 bg-blue-800 rounded-[90px] flex justify-center items-center shrink-0 hover:bg-blue-900 transition-colors ml-2"
               >
@@ -472,27 +472,26 @@ const SearchPage: React.FC = () => {
                         downloaded: { bg: "bg-blue-200", text: "text-blue-700", label: "Đã tải về" },
                       };
                       const style = statusStyles[userStatus];
-                      const coverUrl = doc.coverImage 
+                      const coverUrl = doc.coverImage
                         ? (doc.coverImage.startsWith('http') ? doc.coverImage : `${API_BASE}${doc.coverImage}`)
                         : null;
 
                       return (
                         <div
                           key={doc.id}
-                          className={`flex items-center gap-6 p-4 bg-white rounded-xl shadow-md border-l-4 ${
-                            userStatus === "borrowed" 
-                              ? "border-amber-500" 
-                              : userStatus === "downloaded"
+                          className={`flex items-center gap-6 p-4 bg-white rounded-xl shadow-md border-l-4 ${userStatus === "borrowed"
+                            ? "border-amber-500"
+                            : userStatus === "downloaded"
                               ? "border-blue-500"
                               : "border-green-500"
-                          }`}
+                            }`}
                         >
                           {/* Cover Image */}
                           <div className="w-20 h-28 shrink-0 rounded-lg overflow-hidden shadow">
                             {coverUrl ? (
-                              <img 
-                                src={coverUrl} 
-                                alt={doc.title} 
+                              <img
+                                src={coverUrl}
+                                alt={doc.title}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
                                   (e.target as HTMLImageElement).style.display = 'none';
@@ -540,19 +539,18 @@ const SearchPage: React.FC = () => {
                             >
                               👁
                             </button>
-                            <button 
-                              className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 transition-colors" 
+                            <button
+                              className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 transition-colors"
                               title="Xem file"
                               onClick={() => handleViewFile(doc)}
                             >
                               📄
                             </button>
-                            <button 
-                              className={`w-10 h-10 flex items-center justify-center rounded-full transition-colors ${
-                                savedDocIds.includes(doc.id) 
-                                  ? "bg-yellow-100 hover:bg-yellow-200" 
-                                  : "bg-gray-100 hover:bg-gray-200"
-                              }`}
+                            <button
+                              className={`w-10 h-10 flex items-center justify-center rounded-full transition-colors ${savedDocIds.includes(doc.id)
+                                ? "bg-yellow-100 hover:bg-yellow-200"
+                                : "bg-gray-100 hover:bg-gray-200"
+                                }`}
                               title={savedDocIds.includes(doc.id) ? "Đã lưu" : "Lưu tài liệu"}
                               onClick={() => handleSaveBook(doc.id)}
                             >

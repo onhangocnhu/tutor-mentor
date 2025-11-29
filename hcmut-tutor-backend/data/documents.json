@@ -65,7 +65,7 @@
     "description": "Chứa các dạng bài tập, luyện tập",
     "totalCopies": 1,
     "availableCopies": 1,
-    "views": 29,
+    "views": 30,
     "downloads": 1,
     "filePath": "/uploads/pdfs/1764319158081-330992658.pdf",
     "fileSize": "17.69 MB",
@@ -171,5 +171,28 @@
     "uploadedBy": "student001",
     "uploadedAt": "2025-11-28T17:49:12.783Z",
     "createdAt": "2025-11-28T17:49:12.783Z"
+  },
+  {
+    "id": "doc1764398852199",
+    "title": "mẫu",
+    "author": "mẫu",
+    "year": 2025,
+    "category": "Giáo trình",
+    "department": "Quản lý Công Nghiệp",
+    "language": "Tiếng Việt",
+    "status": "available",
+    "type": "hcmut",
+    "coverImage": "/uploads/covers/1764398849076-614993435.jpg",
+    "description": "",
+    "totalCopies": 1,
+    "availableCopies": 1,
+    "views": 1,
+    "downloads": 0,
+    "filePath": "/uploads/pdfs/1764398849076-614993435.pdf",
+    "fileSize": "0.61 MB",
+    "fileType": "PDF",
+    "uploadedBy": "student001",
+    "uploadedAt": "2025-11-29T06:47:32.199Z",
+    "createdAt": "2025-11-29T06:47:32.199Z"
   }
 ]

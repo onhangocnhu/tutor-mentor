@@ -1,0 +1,207 @@
+.sidebar-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.sidebar-item.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* SUBMENU */
+.submenu {
+  background: rgba(255, 255, 255, 0.05);
+  padding-left: 30px;
+  overflow: hidden;
+}
+
+.submenu-item {
+  padding: 10px 0;
+  font-size: 14px;
+  color: #d5d5d5;
+  cursor: pointer;
+}
+
+.submenu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* result one */
+/* Khối trắng chính */
+.lookup-card, .result-one-card, .result-all-card {
+  width: 1212px;
+  background: white;
+  padding: 30px 40px;
+  margin-top: 20px;
+  border: 1px solid #F4F4F4;
+  border-radius: 5px;
+  position: relative;
+}
+
+/* Tiêu đề của khối */
+.lookup-card-title, .result-one-card-title, .result-all-card-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+/* Form tra cứu */
+.lookup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Hàng label + input */
+.lookup-form-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lookup-form-row label {
+  width: 188px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #000;
+}
+
+.lookup-form-row input {
+  flex: 1;
+  height: 31px;
+  padding: 5px 10px;
+  border: 1px solid #D2D6DE;
+  background: #EEEEEE;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Nút tra cứu */
+.lookup-btn, .download-btn {
+  width: 150px;
+  height: 43px;
+  background: #3C8DBC;
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+/* Wrapper cho dropdown */
+.custom-select-wrapper {
+  position: relative;
+  flex: 1; /* => chiếm cùng không gian với input */
+}
+
+.lookup-input {
+  width: 100%;
+  height: 42.5px; /* giống input */
+  padding: 5px 30px; /* padding phải rộng để tránh chồng mũi tên */
+  font-family: Inter, sans-serif;
+  font-size: 14px; /* giống input */
+  color: #636262;
+  background: #EEEEEE;
+  border: 1px solid #D2D6DE;
+  border-radius: 4px; /* giống input */
+  outline: none;
+  appearance: none; /* ẩn mũi tên mặc định */
+  box-sizing: border-box;
+}
+
+/* Mũi tên bên trong */
+.custom-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 12px;
+  color: #636262;
+}
+
+.lookup-error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  background: rgba(213, 0, 0, 0.8); /* đỏ, trong suốt */
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 3000;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.lookup-error.hide {
+  opacity: 0;
+}
+
+.lookup-result {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.result-item {
+  width: calc(50% - 15px); /* 2 cột, responsive */
+  margin-bottom: 15px;
+}
+
+.result-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.result-value {
+  display: block;
+  background: #f0f0f0; /* ô màu xám */
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: 400;
+}
+
+ /* result-all */
+ .result-table {
+  width: 100%;
+  border-collapse: collapse; /* Gộp border */
+  margin-top: 10px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid #888; /* border cho từng ô */
+  padding: 8px 12px;      /* khoảng cách bên trong ô */
+  text-align: center;
+}
+
+.result-table th {
+  background-color: #f0f0f0; /* màu nền header */
+  font-weight: bold;
+}
+
+.result-table tr:nth-child(even) {
+  background-color: #fafafa; /* màu xen kẽ dòng */
+}
+
+.result-table tr:hover {
+  background-color: #eaeaea; /* highlight khi hover */
+}
+.result-one-card-header, .result-all-card-header {
+  display: flex;
+  justify-content: space-between; /* tiêu đề ở trái, nút ở phải */
+  align-items: center; /* căn giữa theo chiều dọc */
+  margin-bottom: 10px; /* khoảng cách với nội dung */
+}
+
+.download-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import menu_icon from "../images/menu.png";
 import hcmut_logo from "../images/hcmut_logo.png";
+import '../styles/CtsvIndexPage.css';
 
 export type SideBarOpenProps = {
   open: boolean;
@@ -13,6 +14,7 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
   const [fullName, setFullName] = useState<string>("");
   const [faculty, setFaculty] = useState<string>("");
   const [role, setRole] = useState<string | null>(null);
+  const [ctsvOpen, setCtsvOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -144,12 +146,58 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
                 { label: "Cổng thư viện", path: "/library" },
               ],
               ctsv: [
-                { label: "Kết quả tham gia chương trình", path: "/ctsv-results" },
+                // keep only real items here; the "Kết quả tham gia chương trình" label will be rendered as a toggle below
                 { label: "Cổng thư viện", path: "/library" },
               ],
             };
 
-            const items = role ? (menuMap[role] ?? []) : [];
+            if (!role) return null;
+
+            // when CT-SV, show the toggle + submenu (uses .sidebar-item, .chevron, .submenu, .submenu-item from your CSS)
+            if (role === "ctsv") {
+              const items = menuMap.ctsv || [];
+              return (
+                <>
+                  <div
+                    className="sidebar-item toggle"
+                    onClick={() => setCtsvOpen(s => !s)}
+                    style={{ display: "flex", alignItems: "center", gap: 12 }}
+                  >
+                    <img src={menu_icon} alt="icon" style={{ width: 18, height: 18 }} />
+                    <span style={{ display: "flex", alignItems: "center", gap: 12, background: "transparent", border: "none", color: "rgba(255,255,255,0.85)", fontSize: 18, textAlign: "left", padding: 6, cursor: "pointer" }}>Kết quả tham gia chương trình</span>
+                    <span className={`chevron ${ctsvOpen ? "open" : ""}`}>▶</span>
+                  </div>
+
+                  {ctsvOpen && (
+                    <div className="submenu">
+                      <div className="submenu-item" onClick={() => { onClose(); navigate("/result-one"); }}>
+                        Kết quả tham gia của 1 sinh viên
+                      </div>
+                      <div className="submenu-item" onClick={() => { onClose(); navigate("/result-all"); }}>
+                        Kết quả tham gia của tất cả sinh viên
+                      </div>
+                    </div>
+                  )}
+
+                  {items.map((item) => (
+                    <button
+                      key={item.label}
+                      onClick={() => {
+                        onClose();
+                        if (item.path) {
+                          navigate(item.path);
+                        }
+                      }}
+                      style={{ display: "flex", alignItems: "center", gap: 12, background: "transparent", border: "none", color: "rgba(255,255,255,0.85)", fontSize: 18, textAlign: "left", padding: 6, cursor: "pointer" }}
+                    >
+                      <img src={menu_icon} alt="icon" style={{ width: 18, height: 18 }} /> {item.label}
+                    </button>
+                  ))}
+                </>
+              );
+            }
+
+            const items = menuMap[role] ?? [];
             return items.map((item) => (
               <button
                 key={item.label}

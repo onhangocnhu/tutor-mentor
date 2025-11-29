@@ -27,11 +27,11 @@
     "id": "borrow1764321668127",
     "documentId": "doc1764319162034",
     "userId": "student001",
-    "borrowDate": "2025-11-28T16:57:34.698Z",
-    "dueDate": "2025-12-12T16:57:34.698Z",
-    "returnDate": "2025-11-28T16:58:12.704Z",
+    "borrowDate": "2025-11-29T06:40:32.612Z",
+    "dueDate": "2025-12-20T06:40:32.612Z",
+    "returnDate": "2025-11-29T06:45:31.846Z",
     "status": "returned",
-    "renewCount": 0
+    "renewCount": 1
   },
   {
     "id": "borrow1764350524099",

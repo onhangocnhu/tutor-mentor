@@ -1,10 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
+
+import ResultOnePage from "./pages/ViewResultCtsv/ResultOne";
+import ResultAllPage from "./pages/ViewResultCtsv/ResultAll";
+
 import StudentIndexPage from "./pages/Dashboard/StudentIndexPage";
 import RegisterProgramPage from "./pages/RegisterProgram/RegisterProgramPage";
 import PDTIndexPage from "./pages/Dashboard/PDTIndexPage";
 import FacultyIndexPage from "./pages/Dashboard/FacultyIndexPage";
+import CtsvIndexPage from "./pages/Dashboard/CtsvIndexPage";
 
 import SubjectRegistrationPage from "./pages/SubjectRegistration/SubjectRegistrationPage";
 import SubjectTutorListPage from "./pages/SubjectRegistration/SubjectTutorListPage";
@@ -61,7 +66,7 @@ function App() {
         <Route path="/tutor-dashboard" element={<TutorIndexPage />} />
         <Route path="/pdt-dashboard" element={<PDTIndexPage />} />
         <Route path="/faculty-dashboard" element={<FacultyIndexPage />} />
-        {/* <Route path="/ctsv-dashboard" element={<CTSVIndexPage />} /> */}
+        <Route path="/ctsv-dashboard" element={<CtsvIndexPage />} />
 
         <Route path="/student-profile" element={<StudentProfile />} />
         <Route path="/tutor-profile" element={<TutorProfile />} />
@@ -82,6 +87,8 @@ function App() {
         <Route path="/student-reviews/search" element={<StudentReviewsSearch />} />
         <Route path="/tutor-reviews" element={<TutorReviewsPage />} />
         <Route path="/tutor-reviews/search" element={<TutorReviewsSearch />} />
+        <Route path="/result-one" element={<ResultOnePage />} />
+        <Route path="/result-all" element={<ResultAllPage />} />
 
         {/* Library Routes */}
         <Route path="/library" element={<LibraryHomePage />} />
@@ -90,8 +97,6 @@ function App() {
         <Route path="/library/history" element={<HistoryPage />} />
         <Route path="/library/share" element={<ShareDocsPage />} />
         <Route path="/library/share-document" element={<ShareDocumentSection />} />
-
-
       </Routes>
     </BrowserRouter>
   )

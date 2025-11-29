@@ -42,5 +42,15 @@
     "returnDate": null,
     "status": "borrowed",
     "renewCount": 0
+  },
+  {
+    "id": "borrow1764418135368",
+    "documentId": "doc1764418076209",
+    "userId": "student001",
+    "borrowDate": "2025-11-29T12:08:55.368Z",
+    "dueDate": "2025-12-13T12:08:55.368Z",
+    "returnDate": null,
+    "status": "borrowed",
+    "renewCount": 0
   }
 ]

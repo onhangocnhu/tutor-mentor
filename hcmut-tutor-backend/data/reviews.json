@@ -1,0 +1,94 @@
+{
+  "reviews": [
+    {
+      "id": 1,
+      "studentId": "2212345",
+      "studentName": "Nguyễn Văn A",
+      "tutorId": "T001",
+      "tutorName": "Trần Thị B",
+      "subject": "Giải tích 1",
+      "semester": "HK1 2025",
+      "rating": 5,
+      "comment": "Tutor rất nhiệt tình, giảng dễ hiểu. Mình đã cải thiện được điểm số rất nhiều sau khi học với tutor.",
+      "date": "2025-10-15",
+      "status": "responded",
+      "facultyResponse": "11",
+      "respondedAt": "2025-11-29T19:30:46.898Z"
+    },
+    {
+      "id": 2,
+      "studentId": "2212346",
+      "studentName": "Lê Thị C",
+      "tutorId": "T002",
+      "tutorName": "Phạm Văn D",
+      "subject": "Đại số tuyến tính",
+      "semester": "HK1 2025",
+      "rating": 4,
+      "comment": "Tutor giảng bài tốt, tuy nhiên đôi khi hơi nhanh. Nhìn chung mình hài lòng với buổi học.",
+      "date": "2025-10-14",
+      "status": "responded",
+      "facultyResponse": "Cảm ơn em đã phản hồi. Khoa sẽ góp ý với tutor để cải thiện tốc độ giảng bài."
+    },
+    {
+      "id": 3,
+      "studentId": "2212347",
+      "studentName": "Trần Văn E",
+      "tutorId": "T001",
+      "tutorName": "Trần Thị B",
+      "subject": "Vật lý đại cương",
+      "semester": "HK1 2025",
+      "rating": 3,
+      "comment": "Buổi học bình thường, tutor cần chuẩn bị kỹ hơn về tài liệu.",
+      "date": "2025-10-13",
+      "status": "pending",
+      "facultyResponse": null
+    },
+    {
+      "id": 4,
+      "studentId": "2212348",
+      "studentName": "Hoàng Thị F",
+      "tutorId": "T003",
+      "tutorName": "Nguyễn Văn G",
+      "subject": "Giải tích 1",
+      "semester": "HK2 2024",
+      "rating": 5,
+      "comment": "Tutor xuất sắc! Giải thích rõ ràng và kiên nhẫn với sinh viên.",
+      "date": "2025-05-20",
+      "status": "responded",
+      "facultyResponse": "Khoa ghi nhận đóng góp của tutor. Xin cảm ơn em!"
+    },
+    {
+      "id": 5,
+      "studentId": "2212349",
+      "studentName": "Võ Văn H",
+      "tutorId": "T002",
+      "tutorName": "Phạm Văn D",
+      "subject": "Hóa học đại cương",
+      "semester": "HK2 2024",
+      "rating": 4,
+      "comment": "Tutor nhiệt tình, buổi học hiệu quả.",
+      "date": "2025-05-18",
+      "status": "pending",
+      "facultyResponse": null
+    },
+    {
+      "id": 6,
+      "studentId": "2212350",
+      "studentName": "Ngô Thị I",
+      "tutorId": "T001",
+      "tutorName": "Trần Thị B",
+      "subject": "Giải tích 1",
+      "semester": "HK1 2025",
+      "rating": 2,
+      "comment": "Tutor đến muộn và không chuẩn bị bài trước.",
+      "date": "2025-10-10",
+      "status": "pending",
+      "facultyResponse": null
+    }
+  ],
+  "semesters": [
+    "HK1 2025",
+    "HK2 2024",
+    "HK1 2024"
+  ]
+}

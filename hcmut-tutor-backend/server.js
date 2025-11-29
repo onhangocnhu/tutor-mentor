@@ -159,6 +159,104 @@ const reportUpload = createUploader(reportFolder, [".pdf"], 20);
 //Read file for frontend
 app.use("/uploads/reports", express.static(reportFolder));
 
+// =====================
+// Login Stats - Global (for faculty/pdt/ctsv) and Per-User (for student/tutor)
+// =====================
+const loginStatsPath = path.join(__dirname, "data", "loginStats.json");
+const userLoginStatsFolder = path.join(__dirname, "data", "userLoginStats");
+
+// Ensure userLoginStats folder exists
+if (!fs.existsSync(userLoginStatsFolder)) {
+  fs.mkdirSync(userLoginStatsFolder, { recursive: true });
+}
+
+// Global login stats (for faculty, pdt, ctsv - shared view)
+const loadLoginStats = () => {
+  try {
+    if (fs.existsSync(loginStatsPath)) {
+      return JSON.parse(fs.readFileSync(loginStatsPath, "utf8"));
+    }
+  } catch (e) {
+    console.error("Failed to read loginStats.json:", e.message);
+  }
+  return { 
+    lastReset: new Date().toISOString(), 
+    totalLogins: 0, 
+    monthlyStats: [] 
+  };
+};
+
+const saveLoginStats = (stats) => {
+  try {
+    fs.writeFileSync(loginStatsPath, JSON.stringify(stats, null, 2), "utf8");
+    return true;
+  } catch (e) {
+    console.error("Failed to write loginStats.json:", e.message);
+    return false;
+  }
+};
+
+// Per-user login stats (for student/tutor - individual view)
+const getUserLoginStatsPath = (userId) => {
+  return path.join(userLoginStatsFolder, `user_${userId}.json`);
+};
+
+const loadUserLoginStats = (userId) => {
+  try {
+    const filePath = getUserLoginStatsPath(userId);
+    if (fs.existsSync(filePath)) {
+      return JSON.parse(fs.readFileSync(filePath, "utf8"));
+    }
+  } catch (e) {
+    console.error(`Failed to read user login stats for ${userId}:`, e.message);
+  }
+  return { 
+    userId,
+    lastLogin: null,
+    totalLogins: 0, 
+    monthlyStats: [] 
+  };
+};
+
+const saveUserLoginStats = (userId, stats) => {
+  try {
+    const filePath = getUserLoginStatsPath(userId);
+    fs.writeFileSync(filePath, JSON.stringify(stats, null, 2), "utf8");
+    return true;
+  } catch (e) {
+    console.error(`Failed to write user login stats for ${userId}:`, e.message);
+    return false;
+  }
+};
+
+// Helper function to get current month in Vietnam timezone (GMT+7)
+const getCurrentMonthVN = () => {
+  const now = new Date();
+  // Convert to Vietnam timezone
+  const vnTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }));
+  const month = String(vnTime.getMonth() + 1).padStart(2, '0');
+  const year = vnTime.getFullYear();
+  return `${month}/${year}`;
+};
+
+// Helper to add current month if not exists
+const ensureCurrentMonthExists = (stats) => {
+  const currentMonth = getCurrentMonthVN();
+  const existingMonth = stats.monthlyStats.find(s => s.month === currentMonth);
+  
+  if (!existingMonth) {
+    // Add new month entry at the end
+    stats.monthlyStats.push({ month: currentMonth, count: 0 });
+    
+    // Keep only last 7 months if exceeded
+    if (stats.monthlyStats.length > 7) {
+      stats.monthlyStats = stats.monthlyStats.slice(-7);
+    }
+  }
+  
+  return stats;
+};
+
 // API routes
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -171,12 +269,59 @@ app.post("/login", (req, res) => {
     return res.json({ success: false });
   }
 
+  const currentMonth = getCurrentMonthVN();
+  const now = new Date().toISOString();
+
+  // Track global login statistics (for faculty/pdt/ctsv view)
+  let loginStats = loadLoginStats();
+  loginStats = ensureCurrentMonthExists(loginStats);
+  const monthEntry = loginStats.monthlyStats.find(s => s.month === currentMonth);
+  if (monthEntry) {
+    monthEntry.count += 1;
+  }
+  loginStats.totalLogins += 1;
+  saveLoginStats(loginStats);
+
+  // Track per-user login statistics (for student/tutor)
+  if (user.role === 'student' || user.role === 'tutor') {
+    let userStats = loadUserLoginStats(user.id);
+    userStats = ensureCurrentMonthExists(userStats);
+    userStats.lastLogin = now;
+    const userMonthEntry = userStats.monthlyStats.find(s => s.month === currentMonth);
+    if (userMonthEntry) {
+      userMonthEntry.count += 1;
+    }
+    userStats.totalLogins += 1;
+    saveUserLoginStats(user.id, userStats);
+  }
+
   res.json({
     success: true,
     role: user.role,
     name: user.name,
     id: user.id
   });
+});
+
+// Get global login statistics (for faculty/pdt/ctsv)
+app.get("/login-stats", (req, res) => {
+  try {
+    const stats = loadLoginStats();
+    res.json(stats);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch login stats" });
+  }
+});
+
+// Get user-specific login statistics (for student/tutor)
+app.get("/login-stats/user/:userId", (req, res) => {
+  try {
+    const { userId } = req.params;
+    const stats = loadUserLoginStats(userId);
+    res.json(stats);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch user login stats" });
+  }
 });
 
 
@@ -1680,6 +1825,184 @@ app.get("/library/stats", (req, res) => {
     });
   } catch (err) {
     console.error("GET /library/stats error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// =====================
+// Faculty Reviews API
+// =====================
+const reviewsPath = path.join(__dirname, "data", "reviews.json");
+
+const loadReviews = () => {
+  try {
+    if (fs.existsSync(reviewsPath)) {
+      return JSON.parse(fs.readFileSync(reviewsPath, "utf8"));
+    }
+  } catch (e) {
+    console.error("Failed to read reviews.json:", e.message);
+  }
+  return { reviews: [], semesters: [] };
+};
+
+const saveReviews = (data) => {
+  try {
+    fs.writeFileSync(reviewsPath, JSON.stringify(data, null, 2), "utf8");
+    return true;
+  } catch (e) {
+    console.error("Failed to write reviews.json:", e.message);
+    return false;
+  }
+};
+
+// GET all reviews with optional filters
+app.get("/reviews", (req, res) => {
+  try {
+    const { semester, status, search } = req.query;
+    const data = loadReviews();
+    let reviews = data.reviews;
+
+    if (semester && semester !== "all") {
+      reviews = reviews.filter(r => r.semester === semester);
+    }
+
+    if (status && status !== "all") {
+      reviews = reviews.filter(r => r.status === status);
+    }
+
+    if (search) {
+      const searchLower = search.toLowerCase();
+      reviews = reviews.filter(r => 
+        r.studentName.toLowerCase().includes(searchLower) ||
+        r.tutorName.toLowerCase().includes(searchLower) ||
+        r.subject.toLowerCase().includes(searchLower) ||
+        r.studentId.includes(search)
+      );
+    }
+
+    return res.json({ 
+      success: true, 
+      reviews,
+      semesters: data.semesters 
+    });
+  } catch (err) {
+    console.error("GET /reviews error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET single review by ID
+app.get("/reviews/:id", (req, res) => {
+  try {
+    const data = loadReviews();
+    const review = data.reviews.find(r => r.id === parseInt(req.params.id));
+
+    if (!review) {
+      return res.status(404).json({ success: false, message: "Review not found" });
+    }
+
+    return res.json({ success: true, review });
+  } catch (err) {
+    console.error("GET /reviews/:id error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// PUT respond to a review
+app.put("/reviews/:id/respond", (req, res) => {
+  try {
+    const { response } = req.body;
+
+    if (!response) {
+      return res.status(400).json({ success: false, message: "Response is required" });
+    }
+
+    const data = loadReviews();
+    const reviewIndex = data.reviews.findIndex(r => r.id === parseInt(req.params.id));
+
+    if (reviewIndex === -1) {
+      return res.status(404).json({ success: false, message: "Review not found" });
+    }
+
+    data.reviews[reviewIndex].facultyResponse = response;
+    data.reviews[reviewIndex].status = "responded";
+    data.reviews[reviewIndex].respondedAt = new Date().toISOString();
+
+    saveReviews(data);
+
+    return res.json({ success: true, review: data.reviews[reviewIndex] });
+  } catch (err) {
+    console.error("PUT /reviews/:id/respond error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET review statistics
+app.get("/reviews/stats/summary", (req, res) => {
+  try {
+    const { semester } = req.query;
+    const data = loadReviews();
+    let reviews = data.reviews;
+
+    if (semester && semester !== "all") {
+      reviews = reviews.filter(r => r.semester === semester);
+    }
+
+    // Calculate statistics
+    const totalReviews = reviews.length;
+    const respondedReviews = reviews.filter(r => r.status === "responded").length;
+    const pendingReviews = reviews.filter(r => r.status === "pending").length;
+    const averageRating = reviews.length > 0 
+      ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+      : 0;
+
+    // Rating distribution
+    const ratingDistribution = [5, 4, 3, 2, 1].map(rating => ({
+      rating,
+      count: reviews.filter(r => r.rating === rating).length,
+      percentage: reviews.length > 0 
+        ? Math.round((reviews.filter(r => r.rating === rating).length / reviews.length) * 100)
+        : 0
+    }));
+
+    // Tutor statistics
+    const tutorStats = {};
+    reviews.forEach(r => {
+      if (!tutorStats[r.tutorId]) {
+        tutorStats[r.tutorId] = {
+          tutorId: r.tutorId,
+          tutorName: r.tutorName,
+          totalReviews: 0,
+          totalRating: 0,
+          ratings: []
+        };
+      }
+      tutorStats[r.tutorId].totalReviews++;
+      tutorStats[r.tutorId].totalRating += r.rating;
+      tutorStats[r.tutorId].ratings.push(r.rating);
+    });
+
+    const tutorSummary = Object.values(tutorStats).map((t) => ({
+      tutorId: t.tutorId,
+      tutorName: t.tutorName,
+      totalReviews: t.totalReviews,
+      averageRating: (t.totalRating / t.totalReviews).toFixed(1)
+    }));
+
+    return res.json({
+      success: true,
+      stats: {
+        totalReviews,
+        respondedReviews,
+        pendingReviews,
+        averageRating,
+        ratingDistribution,
+        tutorSummary
+      },
+      semesters: data.semesters
+    });
+  } catch (err) {
+    console.error("GET /reviews/stats/summary error:", err);
     return res.status(500).json({ success: false, message: "Internal error" });
   }
 });

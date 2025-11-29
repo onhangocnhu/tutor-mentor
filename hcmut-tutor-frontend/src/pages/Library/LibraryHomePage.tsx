@@ -231,7 +231,6 @@ const LibraryHomePage: React.FC = () => {
           ? { ...book, rating: newRating, ratingCount: newRatingCount }
           : book
       );
-
     setRecommendedBooks(updateBooks(recommendedBooks));
     setMostViewedBooks(updateBooks(mostViewedBooks));
     setNewestBooks(updateBooks(newestBooks));
@@ -361,6 +360,7 @@ const LibraryHomePage: React.FC = () => {
             </div>
             {recommendedBooks.length >= 5 && (
               <button
+
                 onClick={() => setExpandRecommended(!expandRecommended)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
               >
@@ -393,6 +393,7 @@ const LibraryHomePage: React.FC = () => {
             </div>
             {mostViewedBooks.length >= 5 && (
               <button
+
                 onClick={() => setExpandMostViewed(!expandMostViewed)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"
               >
@@ -424,6 +425,7 @@ const LibraryHomePage: React.FC = () => {
               Mới cập nhật ({newestBooks.length})
             </div>
             {newestBooks.length >= 5 && (
+
               <button
                 onClick={() => setExpandNewest(!expandNewest)}
                 className="p-2.5 bg-blue-800 rounded-md flex justify-center items-center gap-2.5 hover:bg-blue-900 transition-colors"

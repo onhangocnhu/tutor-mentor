@@ -47,6 +47,15 @@ import TutorReviewsSearch from "./pages/ViewReport/TutorReviewsSearch";
 import EditSessionPage from "./pages/Sessions/EditSessionPage";
 import SessionListPage from "./pages/Sessions/SessionListPage";
 import NewSessionPage from "./pages/Sessions/NewSessionPage";
+
+// Faculty Review Pages
+import {
+  ViewReviewsPage,
+  ReviewDetailPage,
+  FeedbackPage,
+  ReviewStatsPage,
+} from "./pages/FacultyReview";
+
 import "./App.css"
 
 function App() {
@@ -97,6 +106,13 @@ function App() {
         <Route path="/library/history" element={<HistoryPage />} />
         <Route path="/library/share" element={<ShareDocsPage />} />
         <Route path="/library/share-document" element={<ShareDocumentSection />} />
+
+        {/* Faculty Review Routes */}
+        <Route path="/faculty-reviews" element={<ViewReviewsPage />} />
+        <Route path="/faculty-reviews/stats" element={<ReviewStatsPage />} />
+        <Route path="/faculty-reviews/:id" element={<ReviewDetailPage />} />
+        <Route path="/faculty-reviews/:id/respond" element={<FeedbackPage />} />
+
       </Routes>
     </BrowserRouter>
   )

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "borrow1764303242564",
+    "documentId": "doc1764303099442",
+    "userId": "student001",
+    "studentId": null,
+    "studentName": null,
+    "borrowDate": "2025-11-28T17:23:04.103Z",
+    "dueDate": "2025-12-12T17:23:04.103Z",
+    "returnDate": "2025-11-28T17:23:26.854Z",
+    "status": "returned",
+    "borrowType": "offline",
+    "notes": null,
+    "renewCount": 0
+  },
+  {
+    "id": "borrow002",
+    "documentId": "doc1764307270723",
+    "userId": "student001",
+    "borrowDate": "2025-11-28T06:00:55.437Z",
+    "dueDate": "2025-12-12T06:00:55.437Z",
+    "returnDate": "2025-11-28T06:02:11.713Z",
+    "status": "returned",
+    "renewCount": 0
+  },
+  {
+    "id": "borrow1764321668127",
+    "documentId": "doc1764319162034",
+    "userId": "student001",
+    "borrowDate": "2025-11-28T16:57:34.698Z",
+    "dueDate": "2025-12-12T16:57:34.698Z",
+    "returnDate": "2025-11-28T16:58:12.704Z",
+    "status": "returned",
+    "renewCount": 0
+  },
+  {
+    "id": "borrow1764350524099",
+    "documentId": "doc1764323986372",
+    "userId": "student001",
+    "borrowDate": "2025-11-28T17:23:37.996Z",
+    "dueDate": "2025-12-12T17:23:37.996Z",
+    "returnDate": null,
+    "status": "borrowed",
+    "renewCount": 0
+  }
+]

@@ -21,13 +21,23 @@ import ResetPassword from "./pages/ForgotPassword/ResetPassword"
 import SuccessfulResetPassword from "./pages/ForgotPassword/SuccessfulPasswordReset"
 import { ShareDocumentSection } from "./pages/ShareDocument/ShareDocument";
 
+// Library Pages
+import {
+  LibraryHomePage,
+  SearchPage,
+  MyDocsPage,
+  HistoryPage,
+  ShareDocsPage,
+} from "./pages/Library";
+
 import StudentProfile from "./pages/Profile/StudentProfile";
+import TutorProfile from "./pages/Profile/TutorProfile";
+
 import ViewReport from "./pages/ViewReport/ViewReportPage";
 import StudentReviewsPage from "./pages/ViewReport/StudentReviewsPage";
 import TutorReviewsPage from "./pages/ViewReport/TutorReviewsPage";
 import StudentReviewsSearch from "./pages/ViewReport/StudentReviewsSearch";
 import TutorReviewsSearch from "./pages/ViewReport/TutorReviewsSearch";
-import TutorProfile from "./pages/Profile/TutorProfile";
 
 import EditSessionPage from "./pages/Sessions/EditSessionPage";
 import SessionListPage from "./pages/Sessions/SessionListPage";
@@ -73,7 +83,12 @@ function App() {
         <Route path="/tutor-reviews" element={<TutorReviewsPage />} />
         <Route path="/tutor-reviews/search" element={<TutorReviewsSearch />} />
 
-
+        {/* Library Routes */}
+        <Route path="/library" element={<LibraryHomePage />} />
+        <Route path="/library/search" element={<SearchPage />} />
+        <Route path="/library/my-docs" element={<MyDocsPage />} />
+        <Route path="/library/history" element={<HistoryPage />} />
+        <Route path="/library/share" element={<ShareDocsPage />} />
         <Route path="/library/share-document" element={<ShareDocumentSection />} />
 
 

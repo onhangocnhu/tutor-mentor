@@ -6,25 +6,26 @@
   left: 0;
   width: 100vw;
   height: 80px;
-  background-color: #4F99C4;
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #1e40af 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 40px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   z-index: 50;
-  
 }
 
 .header-left {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-shrink: 0;
 }
 
 .header-left img {
-  width: 80px;
-  height: auto;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
 }
 
 .header-left h1 {
@@ -33,42 +34,74 @@
   font-weight: bold;
   letter-spacing: 2px;
   margin: 0;
+  white-space: nowrap;
 }
 
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding-right: 50px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .header-nav a {
   color: white;
   text-decoration: none;
   font-size: 18px;
-  font-weight: 600;
-  padding: 8px 12px;
-  transition: color 0.2s;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .header-nav a:hover {
-  color: #032B91;
+  background-color: #0369a1;
 }
+
+.header-nav a.active {
+  background-color: #0369a1;
+}
+
 .header-nav .share-btn {
-  background-color: #032B91;
+  background-color: white;
   font-size: 18px;
-  color: white;
+  color: #1e40af;
   font-weight: bold;
-  padding: 8px 16px;
-  border-radius: 10px;
+  padding: 10px 16px;
+  border-radius: 6px;
   text-decoration: none;
-  transition: background-color 0.2s;
-   margin-right: 70px; /* cách lề phải 20px */
+  transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .header-nav .share-btn:hover {
   background-color: #f0f0f0;
   color: #032B91;
+}
+
+/* Nút quay về hệ thống quản lý */
+.back-to-system-btn {
+  position: fixed;
+  top: 90px;
+  left: 0;
+  background-color: white;
+  color: #0369a1;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  z-index: 49;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.back-to-system-btn:hover {
+  background-color: #f0f9ff;
+  color: #0284c7;
 }
 
 

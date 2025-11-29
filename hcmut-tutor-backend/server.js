@@ -12,6 +12,9 @@ const corsOptions = { origin: true, credentials: true };
 app.use(cors(corsOptions));
 app.options("/files{/*path}", cors(corsOptions));
 
+// Serve static files for uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 const nodemailer = require("nodemailer")
 const otpPath = path.join(__dirname, "./data/otp.json")
 
@@ -721,6 +724,962 @@ app.get("/progress", (req, res) => {
     return res.json({ success: true, progress: filtered });
   } catch (err) {
     console.error("GET /progress error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// =====================================================
+// LIBRARY API ENDPOINTS
+// =====================================================
+
+// Library data paths
+const documentsPath = path.join(__dirname, "data", "documents.json");
+const borrowHistoryPath = path.join(__dirname, "data", "borrowHistory.json");
+const savedDocumentsPath = path.join(__dirname, "data", "savedDocuments.json");
+const sharedDocumentsPath = path.join(__dirname, "data", "sharedDocuments.json");
+
+// Library data loaders
+const loadDocuments = () => {
+  try {
+    if (fs.existsSync(documentsPath)) {
+      return JSON.parse(fs.readFileSync(documentsPath, "utf8"));
+    }
+  } catch (e) {
+    console.error("Failed to read documents.json:", e.message);
+  }
+  return [];
+};
+
+const loadBorrowHistory = () => {
+  try {
+    if (fs.existsSync(borrowHistoryPath)) {
+      return JSON.parse(fs.readFileSync(borrowHistoryPath, "utf8"));
+    }
+  } catch (e) {
+    console.error("Failed to read borrowHistory.json:", e.message);
+  }
+  return [];
+};
+
+const saveBorrowHistory = (data) => {
+  try {
+    fs.writeFileSync(borrowHistoryPath, JSON.stringify(data, null, 2), "utf8");
+    return true;
+  } catch (e) {
+    console.error("Failed to write borrowHistory.json:", e.message);
+    return false;
+  }
+};
+
+const loadSavedDocuments = () => {
+  try {
+    if (fs.existsSync(savedDocumentsPath)) {
+      return JSON.parse(fs.readFileSync(savedDocumentsPath, "utf8"));
+    }
+  } catch (e) {
+    console.error("Failed to read savedDocuments.json:", e.message);
+  }
+  return [];
+};
+
+const saveSavedDocuments = (data) => {
+  try {
+    fs.writeFileSync(savedDocumentsPath, JSON.stringify(data, null, 2), "utf8");
+    return true;
+  } catch (e) {
+    console.error("Failed to write savedDocuments.json:", e.message);
+    return false;
+  }
+};
+
+const loadSharedDocuments = () => {
+  try {
+    if (fs.existsSync(sharedDocumentsPath)) {
+      return JSON.parse(fs.readFileSync(sharedDocumentsPath, "utf8"));
+    }
+  } catch (e) {
+    console.error("Failed to read sharedDocuments.json:", e.message);
+  }
+  return [];
+};
+
+const saveSharedDocuments = (data) => {
+  try {
+    fs.writeFileSync(sharedDocumentsPath, JSON.stringify(data, null, 2), "utf8");
+    return true;
+  } catch (e) {
+    console.error("Failed to write sharedDocuments.json:", e.message);
+    return false;
+  }
+};
+
+const saveDocuments = (data) => {
+  try {
+    fs.writeFileSync(documentsPath, JSON.stringify(data, null, 2), "utf8");
+    return true;
+  } catch (e) {
+    console.error("Failed to write documents.json:", e.message);
+    return false;
+  }
+};
+
+// =====================================================
+// FILE UPLOAD CONFIGURATION
+// =====================================================
+
+// Create uploads directories if they don't exist
+const uploadsDir = path.join(__dirname, 'uploads');
+const pdfsDir = path.join(uploadsDir, 'pdfs');
+const coversDir = path.join(uploadsDir, 'covers');
+
+[uploadsDir, pdfsDir, coversDir].forEach(dir => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+});
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, pdfsDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, uniqueSuffix + ext);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'application/pdf') {
+    cb(null, true);
+  } else {
+    cb(new Error('Only PDF files are allowed'), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 50 * 1024 * 1024 } // 50MB limit
+});
+
+// Function to extract first page of PDF as image using pdfjs-dist and canvas
+const extractPdfCover = async (pdfPath, outputPath) => {
+  try {
+    const { createCanvas } = require('canvas');
+    const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
+    
+    // Read PDF file
+    const pdfData = new Uint8Array(fs.readFileSync(pdfPath));
+    
+    // Load PDF document
+    const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+    const pdfDocument = await loadingTask.promise;
+    
+    // Get first page
+    const page = await pdfDocument.getPage(1);
+    
+    // Set scale for good quality
+    const scale = 2.0;
+    const viewport = page.getViewport({ scale });
+    
+    // Create canvas
+    const canvas = createCanvas(viewport.width, viewport.height);
+    const context = canvas.getContext('2d');
+    
+    // Render page to canvas
+    const renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+    
+    await page.render(renderContext).promise;
+    
+    // Save canvas as JPEG
+    const buffer = canvas.toBuffer('image/jpeg', { quality: 0.9 });
+    fs.writeFileSync(outputPath, buffer);
+    
+    console.log('Cover extracted successfully using pdfjs-dist:', outputPath);
+    return true;
+  } catch (err) {
+    console.error('Error extracting PDF cover:', err.message);
+    // Return false - upload will still work, just without cover image
+    return false;
+  }
+};
+
+// =====================================================
+// DOCUMENT UPLOAD API
+// =====================================================
+
+// POST upload a new document with PDF
+app.post("/library/upload", upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+    }
+
+    const { title, author, year, category, department, language, description, type, userId } = req.body;
+
+    if (!title || !author) {
+      // Remove uploaded file if validation fails
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ success: false, message: "Title and author are required" });
+    }
+
+    // Generate cover image from PDF
+    const coverFilename = path.basename(req.file.filename, '.pdf') + '.jpg';
+    const coverPath = path.join(coversDir, coverFilename);
+    
+    let coverImage = null;
+    const coverExtracted = await extractPdfCover(req.file.path, coverPath);
+    if (coverExtracted) {
+      coverImage = `/uploads/covers/${coverFilename}`;
+    }
+
+    // Create new document entry
+    const documents = loadDocuments();
+    const newId = 'doc' + (Date.now());
+    
+    const newDocument = {
+      id: newId,
+      title: title,
+      author: author,
+      year: year ? parseInt(year) : new Date().getFullYear(),
+      category: category || "Tài liệu cá nhân",
+      department: department || "",
+      language: language || "Tiếng Việt",
+      status: "available",
+      type: type || "digital",
+      coverImage: coverImage,
+      description: description || "",
+      totalCopies: 1,
+      availableCopies: 1,
+      views: 0,
+      downloads: 0,
+      filePath: `/uploads/pdfs/${req.file.filename}`,
+      fileSize: (req.file.size / (1024 * 1024)).toFixed(2) + " MB",
+      fileType: "PDF",
+      uploadedBy: userId || "anonymous",
+      uploadedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString()
+    };
+
+    documents.push(newDocument);
+    saveDocuments(documents);
+
+    return res.json({ 
+      success: true, 
+      document: newDocument,
+      message: "Document uploaded successfully"
+    });
+  } catch (err) {
+    console.error("POST /library/upload error:", err);
+    // Clean up uploaded file on error
+    if (req.file && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+    return res.status(500).json({ success: false, message: "Internal error: " + err.message });
+  }
+});
+
+// GET all documents with optional search and filters
+app.get("/library/documents", (req, res) => {
+  try {
+    const { search, category, department, language, status, sortBy, yearFrom, yearTo } = req.query;
+    let documents = loadDocuments();
+
+    // Search filter
+    if (search) {
+      const searchLower = search.toLowerCase();
+      documents = documents.filter(doc =>
+        doc.title.toLowerCase().includes(searchLower) ||
+        doc.author.toLowerCase().includes(searchLower) ||
+        (doc.description && doc.description.toLowerCase().includes(searchLower))
+      );
+    }
+
+    // Category filter
+    if (category) {
+      const categories = category.split(",");
+      documents = documents.filter(doc => categories.includes(doc.category));
+    }
+
+    // Department filter
+    if (department) {
+      const departments = department.split(",");
+      documents = documents.filter(doc => departments.includes(doc.department));
+    }
+
+    // Language filter
+    if (language) {
+      const languages = language.split(",");
+      documents = documents.filter(doc => languages.includes(doc.language));
+    }
+
+    // Year range filter
+    if (yearFrom) {
+      const fromYear = parseInt(yearFrom);
+      if (!isNaN(fromYear)) {
+        documents = documents.filter(doc => doc.year >= fromYear);
+      }
+    }
+    if (yearTo) {
+      const toYear = parseInt(yearTo);
+      if (!isNaN(toYear)) {
+        documents = documents.filter(doc => doc.year <= toYear);
+      }
+    }
+
+    // Status filter
+    if (status) {
+      const statuses = status.split(",");
+      documents = documents.filter(doc => statuses.includes(doc.status));
+    }
+
+    // Sorting
+    if (sortBy) {
+      switch (sortBy) {
+        case "newest":
+          documents.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          break;
+        case "oldest":
+          documents.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+          break;
+        case "popular":
+          documents.sort((a, b) => b.views - a.views);
+          break;
+        case "mostDownloaded":
+          documents.sort((a, b) => b.downloads - a.downloads);
+          break;
+        default:
+          break;
+      }
+    }
+
+    return res.json({ success: true, documents, total: documents.length });
+  } catch (err) {
+    console.error("GET /library/documents error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET single document by ID
+app.get("/library/documents/:id", (req, res) => {
+  try {
+    const documents = loadDocuments();
+    const document = documents.find(doc => doc.id === req.params.id);
+    
+    if (!document) {
+      return res.status(404).json({ success: false, message: "Document not found" });
+    }
+
+    return res.json({ success: true, document });
+  } catch (err) {
+    console.error("GET /library/documents/:id error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET filter counts - count documents by category, department, language, status
+app.get("/library/filter-counts", (req, res) => {
+  try {
+    const documents = loadDocuments();
+    
+    // Count by category
+    const categoryCounts = {};
+    documents.forEach(doc => {
+      const cat = doc.category || "Khác";
+      categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+    });
+
+    // Count by department
+    const departmentCounts = {};
+    documents.forEach(doc => {
+      const dept = doc.department || "Khác";
+      departmentCounts[dept] = (departmentCounts[dept] || 0) + 1;
+    });
+
+    // Count by language
+    const languageCounts = {};
+    documents.forEach(doc => {
+      const lang = doc.language || "Tiếng Việt";
+      languageCounts[lang] = (languageCounts[lang] || 0) + 1;
+    });
+
+    // Count by status
+    const statusCounts = {};
+    documents.forEach(doc => {
+      const status = doc.status || "available";
+      statusCounts[status] = (statusCounts[status] || 0) + 1;
+    });
+
+    return res.json({ 
+      success: true, 
+      counts: {
+        category: categoryCounts,
+        department: departmentCounts,
+        language: languageCounts,
+        status: statusCounts
+      }
+    });
+  } catch (err) {
+    console.error("GET /library/filter-counts error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// POST increment download count for a document
+app.post("/library/documents/:id/download", (req, res) => {
+  try {
+    const documents = loadDocuments();
+    const docIndex = documents.findIndex(doc => doc.id === req.params.id);
+    
+    if (docIndex === -1) {
+      return res.status(404).json({ success: false, message: "Document not found" });
+    }
+
+    documents[docIndex].downloads = (documents[docIndex].downloads || 0) + 1;
+    saveDocuments(documents);
+
+    return res.json({ success: true, downloads: documents[docIndex].downloads });
+  } catch (err) {
+    console.error("POST /library/documents/:id/download error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// POST increment view count for a document
+app.post("/library/documents/:id/view", (req, res) => {
+  try {
+    const documents = loadDocuments();
+    const docIndex = documents.findIndex(doc => doc.id === req.params.id);
+    
+    if (docIndex === -1) {
+      return res.status(404).json({ success: false, message: "Document not found" });
+    }
+
+    documents[docIndex].views = (documents[docIndex].views || 0) + 1;
+    saveDocuments(documents);
+
+    return res.json({ success: true, views: documents[docIndex].views });
+  } catch (err) {
+    console.error("POST /library/documents/:id/view error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// POST rate a document
+app.post("/library/documents/:id/rate", (req, res) => {
+  try {
+    const { rating } = req.body;
+    
+    if (!rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ success: false, message: "Rating must be between 1 and 5" });
+    }
+
+    const documents = loadDocuments();
+    const docIndex = documents.findIndex(doc => doc.id === req.params.id);
+    
+    if (docIndex === -1) {
+      return res.status(404).json({ success: false, message: "Document not found" });
+    }
+
+    const doc = documents[docIndex];
+    const currentRating = doc.rating || 0;
+    const currentCount = doc.ratingCount || 0;
+    
+    // Calculate new average rating
+    const newCount = currentCount + 1;
+    const newRating = ((currentRating * currentCount) + rating) / newCount;
+    
+    documents[docIndex].rating = Math.round(newRating * 10) / 10; // Round to 1 decimal
+    documents[docIndex].ratingCount = newCount;
+    saveDocuments(documents);
+
+    return res.json({ 
+      success: true, 
+      newRating: documents[docIndex].rating,
+      newRatingCount: documents[docIndex].ratingCount
+    });
+  } catch (err) {
+    console.error("POST /library/documents/:id/rate error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET popular/recommended documents (sort by views + downloads + borrows)
+app.get("/library/recommended", (req, res) => {
+  try {
+    const documents = loadDocuments();
+    const recommended = documents
+      .map(doc => ({
+        ...doc,
+        score: (doc.views || 0) + (doc.downloads || 0) * 2 + (doc.borrows || 0) * 3
+      }))
+      .sort((a, b) => b.score - a.score);
+
+    return res.json({ success: true, documents: recommended });
+  } catch (err) {
+    console.error("GET /library/recommended error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET most viewed documents (sort by views count)
+app.get("/library/most-viewed", (req, res) => {
+  try {
+    const documents = loadDocuments();
+    const mostViewed = documents
+      .sort((a, b) => (b.views || 0) - (a.views || 0));
+
+    return res.json({ success: true, documents: mostViewed });
+  } catch (err) {
+    console.error("GET /library/most-viewed error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET newest documents (sort by uploadedAt or createdAt)
+app.get("/library/newest", (req, res) => {
+  try {
+    const documents = loadDocuments();
+    const newest = documents
+      .sort((a, b) => {
+        const dateA = new Date(a.uploadedAt || a.createdAt || 0);
+        const dateB = new Date(b.uploadedAt || b.createdAt || 0);
+        return dateB - dateA;
+      });
+
+    return res.json({ success: true, documents: newest });
+  } catch (err) {
+    console.error("GET /library/newest error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET my documents statistics
+app.get("/library/my-stats", (req, res) => {
+  try {
+    const { userId } = req.query;
+    
+    if (!userId) {
+      return res.status(400).json({ success: false, message: "userId is required" });
+    }
+
+    const documents = loadDocuments();
+    const savedDocs = loadSavedDocuments().filter(s => s.userId === userId);
+    const borrowHistory = loadBorrowHistory().filter(b => b.userId === userId);
+
+    // Count saved documents (that still exist)
+    const savedCount = savedDocs.filter(s => 
+      documents.some(d => d.id === s.documentId)
+    ).length;
+
+    // Count currently borrowed documents (status = borrowed)
+    const borrowedCount = borrowHistory.filter(b => 
+      b.status === "borrowed" && documents.some(d => d.id === b.documentId)
+    ).length;
+
+    // Count downloaded documents (returned with downloadDate or digital type with downloads > 0)
+    const downloadedDocs = new Set();
+    borrowHistory.forEach(b => {
+      if (b.downloadDate || b.status === "returned") {
+        const doc = documents.find(d => d.id === b.documentId);
+        if (doc && doc.type === "digital") {
+          downloadedDocs.add(b.documentId);
+        }
+      }
+    });
+    // Also count documents user uploaded that have downloads
+    documents.forEach(d => {
+      if (d.uploadedBy === userId && (d.downloads || 0) > 0) {
+        downloadedDocs.add(d.id);
+      }
+    });
+    const downloadedCount = downloadedDocs.size;
+
+    // Count shared documents - total number of uploaded documents in system
+    // Since we don't have per-user tracking yet, count all documents uploaded
+    const sharedCount = documents.length;
+
+    return res.json({ 
+      success: true, 
+      stats: {
+        saved: savedCount,
+        borrowed: borrowedCount,
+        downloaded: downloadedCount,
+        shared: sharedCount
+      }
+    });
+  } catch (err) {
+    console.error("GET /library/my-stats error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET borrow history for a user
+app.get("/library/borrow-history", (req, res) => {
+  try {
+    const { userId, status } = req.query;
+    let history = loadBorrowHistory();
+    const documents = loadDocuments();
+
+    if (userId) {
+      history = history.filter(h => h.userId === userId);
+    }
+
+    if (status) {
+      const statuses = status.split(",");
+      history = history.filter(h => statuses.includes(h.status));
+    }
+
+    // Attach document details to each history record
+    const historyWithDocs = history.map(h => {
+      const doc = documents.find(d => d.id === h.documentId);
+      return { ...h, document: doc || null };
+    });
+
+    return res.json({ success: true, history: historyWithDocs });
+  } catch (err) {
+    console.error("GET /library/borrow-history error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET currently borrowed documents for a user
+app.get("/library/borrowed", (req, res) => {
+  try {
+    const { userId } = req.query;
+    let history = loadBorrowHistory();
+    const documents = loadDocuments();
+
+    // Filter by user if provided
+    if (userId) {
+      history = history.filter(h => h.userId === userId);
+    }
+
+    // Only return currently borrowed (not returned)
+    history = history.filter(h => h.status === "borrowed");
+
+    // Attach document details to each history record
+    const borrowedWithDocs = history.map(h => {
+      const doc = documents.find(d => d.id === h.documentId);
+      return { ...h, document: doc || null };
+    });
+
+    return res.json({ success: true, borrowed: borrowedWithDocs });
+  } catch (err) {
+    console.error("GET /library/borrowed error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// POST borrow a document
+app.post("/library/borrow", (req, res) => {
+  try {
+    const { documentId, userId } = req.body;
+
+    if (!documentId || !userId) {
+      return res.status(400).json({ success: false, message: "documentId and userId are required" });
+    }
+
+    const documents = loadDocuments();
+    const doc = documents.find(d => d.id === documentId);
+
+    if (!doc) {
+      return res.status(404).json({ success: false, message: "Document not found" });
+    }
+
+    if (doc.type === "physical" && doc.availableCopies <= 0) {
+      return res.status(400).json({ success: false, message: "No copies available" });
+    }
+
+    const history = loadBorrowHistory();
+    
+    // Check if user already has an active borrow for this document
+    const existingActiveBorrow = history.find(
+      h => h.documentId === documentId && h.userId === userId && h.status === "borrowed"
+    );
+    
+    if (existingActiveBorrow) {
+      return res.status(400).json({ success: false, message: "You already have this document borrowed" });
+    }
+    
+    // Check if there's a returned record for this user and document - reuse it
+    const existingReturnedIndex = history.findIndex(
+      h => h.documentId === documentId && h.userId === userId && h.status === "returned"
+    );
+    
+    const borrowDate = new Date();
+    const dueDate = new Date(borrowDate);
+    dueDate.setDate(dueDate.getDate() + 14); // 14 days loan period
+
+    if (existingReturnedIndex !== -1) {
+      // Reuse the existing record - update it instead of creating new
+      history[existingReturnedIndex].borrowDate = borrowDate.toISOString();
+      history[existingReturnedIndex].dueDate = dueDate.toISOString();
+      history[existingReturnedIndex].returnDate = null;
+      history[existingReturnedIndex].status = "borrowed";
+      history[existingReturnedIndex].renewCount = 0;
+      
+      saveBorrowHistory(history);
+      return res.json({ success: true, borrow: history[existingReturnedIndex] });
+    }
+
+    // Create new borrow record only if no existing record found
+    const newBorrow = {
+      id: `borrow${Date.now()}`,
+      documentId,
+      userId,
+      borrowDate: borrowDate.toISOString(),
+      dueDate: dueDate.toISOString(),
+      returnDate: null,
+      status: "borrowed",
+      renewCount: 0
+    };
+
+    history.push(newBorrow);
+    saveBorrowHistory(history);
+
+    return res.json({ success: true, borrow: newBorrow });
+  } catch (err) {
+    console.error("POST /library/borrow error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// POST return a document
+app.post("/library/return", (req, res) => {
+  try {
+    const { borrowId } = req.body;
+
+    if (!borrowId) {
+      return res.status(400).json({ success: false, message: "borrowId is required" });
+    }
+
+    const history = loadBorrowHistory();
+    const borrowIndex = history.findIndex(h => h.id === borrowId);
+
+    if (borrowIndex === -1) {
+      return res.status(404).json({ success: false, message: "Borrow record not found" });
+    }
+
+    history[borrowIndex].returnDate = new Date().toISOString();
+    history[borrowIndex].status = "returned";
+    saveBorrowHistory(history);
+
+    return res.json({ success: true, borrow: history[borrowIndex] });
+  } catch (err) {
+    console.error("POST /library/return error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// POST renew a borrow
+app.post("/library/renew", (req, res) => {
+  try {
+    const { borrowId } = req.body;
+
+    if (!borrowId) {
+      return res.status(400).json({ success: false, message: "borrowId is required" });
+    }
+
+    const history = loadBorrowHistory();
+    const borrowIndex = history.findIndex(h => h.id === borrowId);
+
+    if (borrowIndex === -1) {
+      return res.status(404).json({ success: false, message: "Borrow record not found" });
+    }
+
+    if (history[borrowIndex].renewCount >= 2) {
+      return res.status(400).json({ success: false, message: "Maximum renewal limit reached" });
+    }
+
+    const newDueDate = new Date(history[borrowIndex].dueDate);
+    newDueDate.setDate(newDueDate.getDate() + 7); // Extend by 7 days
+    
+    history[borrowIndex].dueDate = newDueDate.toISOString();
+    history[borrowIndex].renewCount += 1;
+    saveBorrowHistory(history);
+
+    return res.json({ success: true, borrow: history[borrowIndex] });
+  } catch (err) {
+    console.error("POST /library/renew error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET saved documents for a user
+app.get("/library/saved", (req, res) => {
+  try {
+    const { userId } = req.query;
+    let saved = loadSavedDocuments();
+    const documents = loadDocuments();
+
+    if (userId) {
+      saved = saved.filter(s => s.userId === userId);
+    }
+
+    // Attach document details
+    const savedWithDocs = saved.map(s => {
+      const doc = documents.find(d => d.id === s.documentId);
+      return { ...s, document: doc || null };
+    });
+
+    return res.json({ success: true, saved: savedWithDocs });
+  } catch (err) {
+    console.error("GET /library/saved error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// POST save a document
+app.post("/library/save", (req, res) => {
+  try {
+    const { documentId, userId } = req.body;
+
+    if (!documentId || !userId) {
+      return res.status(400).json({ success: false, message: "documentId and userId are required" });
+    }
+
+    const saved = loadSavedDocuments();
+    
+    // Check if already saved
+    const existing = saved.find(s => s.documentId === documentId && s.userId === userId);
+    if (existing) {
+      return res.status(400).json({ success: false, message: "Document already saved" });
+    }
+
+    const newSave = {
+      id: `save${String(saved.length + 1).padStart(3, "0")}`,
+      documentId,
+      userId,
+      savedAt: new Date().toISOString()
+    };
+
+    saved.push(newSave);
+    saveSavedDocuments(saved);
+
+    return res.json({ success: true, saved: newSave });
+  } catch (err) {
+    console.error("POST /library/save error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// DELETE unsave a document
+app.delete("/library/save", (req, res) => {
+  try {
+    const { documentId, userId } = req.body;
+
+    if (!documentId || !userId) {
+      return res.status(400).json({ success: false, message: "documentId and userId are required" });
+    }
+
+    let saved = loadSavedDocuments();
+    const initialLength = saved.length;
+    saved = saved.filter(s => !(s.documentId === documentId && s.userId === userId));
+
+    if (saved.length === initialLength) {
+      return res.status(404).json({ success: false, message: "Saved document not found" });
+    }
+
+    saveSavedDocuments(saved);
+    return res.json({ success: true, message: "Document unsaved successfully" });
+  } catch (err) {
+    console.error("DELETE /library/save error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET shared documents for a user
+app.get("/library/shared", (req, res) => {
+  try {
+    const { userId, status } = req.query;
+    let shared = loadSharedDocuments();
+
+    if (userId) {
+      shared = shared.filter(s => s.userId === userId);
+    }
+
+    if (status) {
+      shared = shared.filter(s => s.status === status);
+    }
+
+    return res.json({ success: true, shared });
+  } catch (err) {
+    console.error("GET /library/shared error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// POST share a document
+app.post("/library/share", (req, res) => {
+  try {
+    const { userId, title, author, year, documentType, category, department, fileName, fileSize, fileType } = req.body;
+
+    if (!userId || !title || !author || !documentType) {
+      return res.status(400).json({ success: false, message: "Required fields are missing" });
+    }
+
+    const shared = loadSharedDocuments();
+    
+    const newShare = {
+      id: `share${String(shared.length + 1).padStart(3, "0")}`,
+      userId,
+      title,
+      author,
+      year: year || new Date().getFullYear(),
+      documentType,
+      category: category || "Tài liệu nội sinh",
+      department: department || "",
+      fileName: fileName || "",
+      fileSize: fileSize || "",
+      fileType: fileType || "PDF",
+      status: "pending",
+      sharedAt: new Date().toISOString(),
+      approvedAt: null
+    };
+
+    shared.push(newShare);
+    saveSharedDocuments(shared);
+
+    return res.json({ success: true, shared: newShare });
+  } catch (err) {
+    console.error("POST /library/share error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+// GET user library statistics
+app.get("/library/stats", (req, res) => {
+  try {
+    const { userId } = req.query;
+
+    if (!userId) {
+      return res.status(400).json({ success: false, message: "userId is required" });
+    }
+
+    const saved = loadSavedDocuments().filter(s => s.userId === userId);
+    const history = loadBorrowHistory().filter(h => h.userId === userId);
+    const shared = loadSharedDocuments().filter(s => s.userId === userId);
+
+    const borrowed = history.filter(h => h.status === "borrowed");
+    const downloaded = history.filter(h => h.status === "returned" && h.downloadDate);
+
+    return res.json({
+      success: true,
+      stats: {
+        savedCount: saved.length,
+        borrowedCount: borrowed.length,
+        downloadedCount: downloaded.length,
+        sharedCount: shared.length
+      }
+    });
+  } catch (err) {
+    console.error("GET /library/stats error:", err);
     return res.status(500).json({ success: false, message: "Internal error" });
   }
 });

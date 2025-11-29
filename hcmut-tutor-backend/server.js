@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
+
 require("dotenv").config();
 
 const app = express();
@@ -26,6 +28,8 @@ const usersPath = path.join(__dirname, "./data/users.json")
 const templatePath = path.join(__dirname, "templates/forgotPasswordEmail.html");
 
 const serverStart = new Date().toISOString();
+
+
 
 // expose server start so frontend can detect restarts and clear client state
 app.get("/server-start", (req, res) => {
@@ -112,6 +116,46 @@ const saveProgress = (arr) => {
   }
 };
 
+// --- Prepare for upload reports ---
+const uploadFolder = "./uploads/reports";
+
+if (!fs.existsSync("./uploads")) {
+  fs.mkdirSync("./uploads");
+}
+if (!fs.existsSync(uploadFolder)) {
+  fs.mkdirSync(uploadFolder);
+}
+
+// multer config 
+const createUploader = (uploadFolder, allowedExts = [".pdf"], maxSizeMB = 20) => {
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, uploadFolder),
+    filename: (req, file, cb) => cb(null, file.originalname),
+  });
+
+  const fileFilter = (req, file, cb) => {
+    const isValid = allowedExts.some(ext => file.originalname.toLowerCase().endsWith(ext));
+    if (!isValid) {
+      return cb(new Error(`Only ${allowedExts.join(", ")} allowed!`));
+    }
+    cb(null, true);
+  };
+
+  return multer({
+    storage,
+    limits: { fileSize: maxSizeMB * 1024 * 1024 },
+    fileFilter,
+  });
+};
+
+// Report Upload
+const reportFolder = path.join(__dirname, "uploads/reports");
+const reportUpload = createUploader(reportFolder, [".pdf"], 20);
+
+
+//Read file for frontend
+app.use("/uploads/reports", express.static(reportFolder));
+
 // API routes
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -176,6 +220,15 @@ app.get("/sessions/:id", (req, res) => {
 app.post("/sessions", (req, res) => {
   try {
     sessions = readJSON(sessionsPath)
+    // Username from cookie
+    const username = req.cookies.username;
+    let tutorFullName = null;
+    if (username) { //Read tutor.json
+      const tutors = readJSON(tutorsPath);
+      const tutor = tutors.find(t => t.username === username);
+      if (tutor) tutorFullName = tutor.fullName;
+    }
+
     const newSession = {
       id: req.body.id || `C${Date.now()}`,
       date: req.body.date,
@@ -186,6 +239,10 @@ app.post("/sessions", (req, res) => {
       department: req.body.department,
       status: req.body.status || "Chưa diễn ra",
       notes: req.body.notes || "",
+      tutor: tutorFullName,
+      report:false,
+      duration: null,
+      actualParticipants: null,
       students: req.body.students || [],
     }
     sessions.push(newSession)
@@ -227,6 +284,43 @@ app.delete("/sessions/:id", (req, res) => {
     res.status(500).json({ error: "Failed to delete session" })
   }
 })
+
+//Add report
+app.post("/sessions/:id/add-report", reportUpload.single("report"), (req, res) => {
+  try {
+    const sessions = readJSON(sessionsPath);
+    const session = sessions.find(s => s.id === req.params.id);
+    if (!session) return res.status(404).json({ error: "Session not found" });
+
+    const { duration, actualParticipants } = req.body;
+    if (duration !== undefined) session.duration = Number(duration);
+    if (actualParticipants !== undefined) session.actualParticipants = Number(actualParticipants);
+    session.report = true;
+
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+    const fileName = `${req.params.id}.pdf`;
+    const filePath = path.join(uploadFolder, fileName);
+    writeJSON(sessionsPath, sessions);
+    res.json({
+      success: true,
+      reportUrl: session.report,
+      message: "Report uploaded and JSON updated successfully"
+    });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Failed to upload report" });
+  }
+});
+
+app.use("/uploads/reports", express.static(reportFolder, {
+  setHeaders: (res) => {
+    res.setHeader("Content-Type", "application/pdf");
+  }
+}));
+
 
 // Add student to session
 app.post("/sessions/:id/add-student", (req, res) => {
@@ -523,6 +617,49 @@ app.get("/registrations", (req, res) => {
     return res.status(500).json({ success: false, message: "Internal error" });
   }
 });
+
+app.get("/students-reg", (req, res) => {
+  try {
+    const cookieHeader = req.get("Cookie") || "";
+    let cookieUser = null;
+    let cookieRole = null;
+
+    cookieHeader.split(";").map(c => c.trim()).forEach(pair => {
+      const [k, v] = pair.split("=");
+      if (k === "username") cookieUser = decodeURIComponent(v || "");
+      if (k === "role") cookieRole = decodeURIComponent(v || "");
+    });
+
+    // must be tutor
+    if (cookieRole !== "tutor") {
+      return res.status(403).json({ success: false, message: "Not tutor" });
+    }
+
+    const tutorUsername = cookieUser;
+    const regs = loadRegistrations();
+
+    // lấy các student ứng với tutor
+    const students = regs
+      .filter(r => r.tutor.username === tutorUsername)
+      .map(r => r.student);
+
+    // loại duplicate student
+    const uniqueStudents = Array.from(
+      new Map(students.map(s => [s.username, s])).values()
+    );
+
+    return res.json({
+      success: true,
+      students: uniqueStudents,
+    });
+
+  } catch (err) {
+    console.error("GET /students error:", err);
+    return res.status(500).json({ success: false, message: "Internal error" });
+  }
+});
+
+
 
 // save student progress (from tutor)
 app.post("/student-progress", (req, res) => {

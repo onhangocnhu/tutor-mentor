@@ -47,6 +47,9 @@ import TutorReviewsSearch from "./pages/ViewReport/TutorReviewsSearch";
 import EditSessionPage from "./pages/Sessions/EditSessionPage";
 import SessionListPage from "./pages/Sessions/SessionListPage";
 import NewSessionPage from "./pages/Sessions/NewSessionPage";
+import FeedbackSubjects from "./pages/Feedback/FeedbackSubjects";
+import FeedbackSubjectDetail from "./pages/Feedback/FeedbackSubjectDetail";
+import FeedbackSessionPage from "./pages/Feedback/FeedbackSessionPage";
 import "./App.css"
 
 function App() {
@@ -72,6 +75,8 @@ function App() {
         <Route path="/tutor-profile" element={<TutorProfile />} />
 
         <Route path="/register-program" element={<RegisterProgramPage />} />
+        <Route path="/result-one" element={<ResultOnePage />} />
+        <Route path="/result-all" element={<ResultAllPage />} />
         <Route path="/register-subject" element={<SubjectRegistrationPage />} />
         <Route path="/register-subject/tutors" element={<SubjectTutorListPage />} />
 
@@ -87,8 +92,6 @@ function App() {
         <Route path="/student-reviews/search" element={<StudentReviewsSearch />} />
         <Route path="/tutor-reviews" element={<TutorReviewsPage />} />
         <Route path="/tutor-reviews/search" element={<TutorReviewsSearch />} />
-        <Route path="/result-one" element={<ResultOnePage />} />
-        <Route path="/result-all" element={<ResultAllPage />} />
 
         {/* Library Routes */}
         <Route path="/library" element={<LibraryHomePage />} />
@@ -97,6 +100,11 @@ function App() {
         <Route path="/library/history" element={<HistoryPage />} />
         <Route path="/library/share" element={<ShareDocsPage />} />
         <Route path="/library/share-document" element={<ShareDocumentSection />} />
+
+        <Route path="/feedback" element={<FeedbackSubjects />} />
+        <Route path="/feedback/:subjectCode/:studentId/:semester" element={<FeedbackSubjectDetail />} />
+        <Route path="/feedback/session/:subjectCode/:studentId/:semester/:sessionId" element={<FeedbackSessionPage />} />
+
       </Routes>
     </BrowserRouter>
   )

@@ -151,7 +151,7 @@ export default function ResultAllPage() {
             <div className="breadcrumb-row">
               <div className="breadcrumb">
                 <img className="home-logo" src={home_icon} alt="home" />
-                BKTutorPortal &gt; Trang chủ
+                BKTutorPortal &gt; Kết quả tham gia
               </div>
             </div>
 
@@ -167,6 +167,8 @@ export default function ResultAllPage() {
                   >
                     <option>Học kỳ 1 năm học 2024-2025</option>
                     <option>Học kỳ 2 năm học 2024-2025</option>
+                    <option>Học kỳ 1 năm học 2025-2026</option>
+                    <option>Học kỳ 2 năm học 2025-2026</option>
                   </select>
                   <span className="custom-arrow">▼</span>
                 </div>
@@ -180,45 +182,51 @@ export default function ResultAllPage() {
 
             {showError && (
               <div className="lookup-error">
-                Lỗi: Không tìm thấy dữ liệu trong học kỳ này.
+                Không có dữ liệu trong học kỳ này.
               </div>
             )}
 
             {resultsAll.length > 0 && (
               <div className="result-all-card">
                 <div className="result-all-card-header">
-                  <span className="result-all-card-title">Kết quả tham gia</span>
+                  <span className="result-all-card-title">
+                    Kết quả tham gia - {semester} ({resultsAll.length} sinh viên)
+                  </span>
                   <button className="download-btn" onClick={handleDownloadAllPDF}>
                     Tải xuống PDF
                   </button>
                 </div>
 
-                <table className="result-table">
-                  <thead>
-                    <tr>
-                      <th>STT</th>
-                      <th>Họ và tên</th>
-                      <th>Mã số sinh viên</th>
-                      <th>Khoa/TT Đào tạo</th>
-                      <th>Kết quả đánh giá</th>
-                      <th>Số lượng môn tham gia</th>
-                      <th>Điểm cộng điểm rèn luyện quy đổi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {resultsAll.map((r, index) => (
-                      <tr key={r.studentId}>
-                        <td>{index + 1}</td>
-                        <td>{r.name}</td>
-                        <td>{r.studentId}</td>
-                        <td>{r.faculty}</td>
-                        <td>{r.evaluationResult}</td>
-                        <td>{r.subjectCount}</td>
-                        <td>{r.score}</td>
+                <div style={{ overflowX: "auto" }}>
+                  <table className="result-table">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Họ và tên</th>
+                        <th>MSSV</th>
+                        <th>Khoa</th>
+                        <th>Lớp</th>
+                        <th>Kết quả đánh giá</th>
+                        <th>Số môn</th>
+                        <th>Điểm RL</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {resultsAll.map((r, i) => (
+                        <tr key={r.studentId}>
+                          <td>{i + 1}</td>
+                          <td>{r.name}</td>
+                          <td>{r.studentId}</td>
+                          <td>{r.faculty}</td>
+                          <td>{r.classCode}</td>
+                          <td>{r.evaluationResult}</td>
+                          <td>{r.subjectCount}</td>
+                          <td>{r.score}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
           </main>

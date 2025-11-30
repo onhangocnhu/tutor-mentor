@@ -1,0 +1,26 @@
+[
+  {
+    "id": "fb1",
+    "sessionId": "C138036",
+    "subjectCode": "CO1007",
+    "studentId": "2312001",
+    "studentName": "Nguyễn Văn A",
+    "content": "Giảng viên dạy rất nhiệt tình, giải thích dễ hiểu. Rất hài lòng!",
+    "contentRating": 5,
+    "paceRating": 4,
+    "understandingRating": 5,
+    "submittedAt": "2025-09-16T10:30:00Z"
+  },
+  {
+    "id": "fb2",
+    "sessionId": "C138036",
+    "subjectCode": "CO1007",
+    "studentId": "2312002",
+    "studentName": "Lê Thị C",
+    "content": "Buổi học ổn, nhưng hơi nhanh ở phần cuối.",
+    "contentRating": 4,
+    "paceRating": 3,
+    "understandingRating": 4,
+    "submittedAt": "2025-09-17T14:20:00Z"
+  }
+]

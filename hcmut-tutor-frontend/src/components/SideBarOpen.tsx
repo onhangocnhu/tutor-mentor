@@ -10,14 +10,31 @@ export type SideBarOpenProps = {
 };
 
 const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
-  if (!open) return null;
   const [fullName, setFullName] = useState<string>("");
   const [faculty, setFaculty] = useState<string>("");
   const [role, setRole] = useState<string | null>(null);
   const [ctsvOpen, setCtsvOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  // Logout handler
+  const handleLogout = () => {
+    // Clear all cookies
+    document.cookie.split(";").forEach((cookie) => {
+      const [name] = cookie.split("=");
+      document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    });
+    
+    // Clear localStorage/sessionStorage if used
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    // Navigate to login page
+    onClose();
+    navigate("/");
+  };
+
   useEffect(() => {
+    if (!open) return;
     // read username and role from cookie (set at login)
     const cookie = document.cookie || "";
     let username: string | null = null;
@@ -28,23 +45,27 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
       if (k === "role") cookieRole = decodeURIComponent(v || "");
     });
 
-    setRole(cookieRole);
+    // compute immediate display values, but defer state updates to avoid synchronous setState in effect
+    let immediateFullName: string | null = null;
+    let immediateFaculty: string | null = null;
 
     if (cookieRole === "ctsv") {
-      setFullName("Phòng Công tác sinh viên");
-      setFaculty("Bách khoa");
-      return;
+      immediateFullName = "Phòng Công tác sinh viên";
+      immediateFaculty = "Bách khoa";
+    } else if (cookieRole === "pdt") {
+      immediateFullName = "Phòng Đào tạo";
+      immediateFaculty = "Bách khoa";
+    } else if (cookieRole === "faculty") {
+      immediateFullName = "Khoa Khoa học và Kỹ thuật Máy tính";
+      immediateFaculty = "Bách khoa";
     }
-    if (cookieRole === "pdt") {
-      setFullName("Phòng Đào tạo");
-      setFaculty("Bách khoa");
-      return;
-    }
-    if (cookieRole === "faculty") {
-      setFullName("Khoa Khoa học và Kỹ thuật Máy tính");
-      setFaculty("Bách khoa");
-      return;
-    }
+
+    // Defer state updates to the next microtask to avoid cascading renders inside the effect
+    Promise.resolve().then(() => {
+      setRole(cookieRole);
+      if (immediateFullName !== null) setFullName(immediateFullName);
+      if (immediateFaculty !== null) setFaculty(immediateFaculty);
+    });
 
     // for student/tutor, fetch corresponding endpoint if username is available
     if (!username) return;
@@ -69,7 +90,9 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
       })
       .catch(() => {
       });
-  }, []);
+  }, [open]);
+
+  if (!open) return null;
 
   const width = "min(372px, 90vw)";
   return (
@@ -213,6 +236,42 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
               </button>
             ));
           })()}
+
+          {/* Logout button */}
+          <div style={{ marginTop: 20, borderTop: "1px solid rgba(255,255,255,0.2)", paddingTop: 16 }}>
+            <button
+              onClick={handleLogout}
+              style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: 12, 
+                background: "transparent", 
+                border: "none", 
+                color: "#ff6b6b", 
+                fontSize: 18, 
+                textAlign: "left", 
+                padding: 6, 
+                cursor: "pointer",
+                width: "100%"
+              }}
+            >
+              <svg 
+                width="18" 
+                height="18" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              Đăng xuất
+            </button>
+          </div>
         </nav>
       </div>
     </div>

@@ -50,6 +50,15 @@ import NewSessionPage from "./pages/Sessions/NewSessionPage";
 import FeedbackSubjects from "./pages/Feedback/FeedbackSubjects";
 import FeedbackSubjectDetail from "./pages/Feedback/FeedbackSubjectDetail";
 import FeedbackSessionPage from "./pages/Feedback/FeedbackSessionPage";
+
+// Faculty Review Pages
+import {
+  ViewReviewsPage,
+  ReviewDetailPage,
+  FeedbackPage,
+  ReviewStatsPage,
+} from "./pages/FacultyReview";
+
 import "./App.css"
 
 function App() {
@@ -104,6 +113,12 @@ function App() {
         <Route path="/feedback" element={<FeedbackSubjects />} />
         <Route path="/feedback/:subjectCode/:studentId/:semester" element={<FeedbackSubjectDetail />} />
         <Route path="/feedback/session/:subjectCode/:studentId/:semester/:sessionId" element={<FeedbackSessionPage />} />
+        
+        {/* Faculty Review Routes */}
+        <Route path="/faculty-reviews" element={<ViewReviewsPage />} />
+        <Route path="/faculty-reviews/stats" element={<ReviewStatsPage />} />
+        <Route path="/faculty-reviews/:id" element={<ReviewDetailPage />} />
+        <Route path="/faculty-reviews/:id/respond" element={<FeedbackPage />} />
 
       </Routes>
     </BrowserRouter>

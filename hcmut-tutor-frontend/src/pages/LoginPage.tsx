@@ -57,6 +57,7 @@ export const LoginPage = (): React.JSX.Element => {
 
     document.cookie = `username=${encodeURIComponent(username)}; path=/; max-age=${60 * 60 * 24}`;
     document.cookie = `role=${encodeURIComponent(data.role)}; path=/; max-age=${60 * 60 * 24}`;
+    document.cookie = `userId=${encodeURIComponent(data.id)}; path=/; max-age=${60 * 60 * 24}`;
 
     const cookieRole = document.cookie
       .split(";")

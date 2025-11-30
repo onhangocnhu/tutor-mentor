@@ -1,0 +1,14 @@
+{
+  "userId": 4,
+  "lastLogin": "2025-11-30T08:45:12.000Z",
+  "totalLogins": 245,
+  "monthlyStats": [
+    { "month": "05/2025", "count": 48 },
+    { "month": "06/2025", "count": 55 },
+    { "month": "07/2025", "count": 42 },
+    { "month": "08/2025", "count": 35 },
+    { "month": "09/2025", "count": 38 },
+    { "month": "10/2025", "count": 22 },
+    { "month": "11/2025", "count": 5 }
+  ]
+}

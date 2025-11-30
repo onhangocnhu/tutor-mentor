@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import StudentIndexAfterRegister from "./pages/StudentIndexAfterRegister";
+// import StudentIndexAfterRegister from "./pages/StudentIndexAfterRegister";
 import CtsvDashboard from "./pages/Dashboard/CtsvIndexPage";
 import ResultOnePage from "./pages/ViewResultCtsv/ResultOne";
 import ResultAllPage from "./pages/ViewResultCtsv/ResultAll";
@@ -20,7 +20,9 @@ import ForgotPasswordOTP from "./pages/ForgotPassword/ForgotPasswordOTP"
 import ResetPassword from "./pages/ForgotPassword/ResetPassword"
 import SuccessfulResetPassword from "./pages/ForgotPassword/SuccessfulPasswordReset"
 import { ShareDocumentSection } from "./pages/ShareDocument/ShareDocument";
-
+import FeedbackSubjects from "./pages/Feedback/FeedbackSubjects";
+import FeedbackSubjectDetail from "./pages/Feedback/FeedbackSubjectDetail";
+import FeedbackSessionPage from "./pages/Feedback/FeedbackSessionPage";
 import "./App.css"
 import StudentProfile from "./pages/StudentProfile/StudentProfile";
 
@@ -44,7 +46,7 @@ function App() {
         {/* <Route path="/ctsv-dashboard" element={<CTSVIndexPage />} /> */}
 
         <Route path="/register-program" element={<RegisterProgramPage />} />
-        <Route path="/student-dashboard-after" element={<StudentIndexAfterRegister />} />
+        {/* <Route path="/student-dashboard-after" element={<StudentIndexAfterRegister />} /> */}
         <Route path="/ctsv-dashboard" element={<CtsvDashboard />} />
         <Route path="/result-one" element={<ResultOnePage />} />
         <Route path="/result-all" element={<ResultAllPage />} />
@@ -55,6 +57,10 @@ function App() {
         <Route path="/tutor/set-schedule" element={<TutorSchedule />} />
 
         <Route path="/library/share-document" element={<ShareDocumentSection />} />
+
+        <Route path="/feedback" element={<FeedbackSubjects/>} />
+        <Route path="/feedback/:subjectCode/:studentId/:semester" element={<FeedbackSubjectDetail />} />
+        <Route path="/feedback/session/:subjectCode/:studentId/:semester/:sessionId" element={<FeedbackSessionPage />} />
 
       </Routes>
     </BrowserRouter>

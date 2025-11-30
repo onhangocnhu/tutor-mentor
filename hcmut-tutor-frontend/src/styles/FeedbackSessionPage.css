@@ -1,0 +1,220 @@
+.session-detail-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 24px;
+  margin-top: 20px;
+}
+
+.session-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1976d2;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.star-rating {
+  display: flex;
+  gap: 8px;
+}
+
+.star-icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.star-icon:hover { transform: scale(1.2); }
+
+.rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0;
+  font-size: 1.1rem;
+}
+
+.rating-group {
+  margin: 20px 0;
+}
+
+.rating-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.comment-section {
+  margin: 24px 0;
+}
+
+.comment-section textarea {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.cancel-btn, .submit-btn, .add-feedback-btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #eee;
+  color: #333;
+}
+
+.submit-btn {
+  background: #0066cc;
+  color: white;
+}
+
+.add-feedback-btn {
+  background: #0066cc;
+  color: white;
+}
+
+.submit-btn:hover { background: #0052a3; }
+
+.existing-feedback {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.comment-box {
+  margin-top: 20px;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.comment-box p {
+  margin: 8px 0 0;
+  line-height: 1.6;
+}
+
+.lookup-error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  background: rgba(213, 0, 0, 0.8); /* đỏ, trong suốt */
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 3000;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.kebab-menu {
+  position: relative;
+  margin-left: auto;
+}
+
+.kebab-container {
+  position: relative;       
+  margin-left: auto;        
+}
+
+/* Dropdown hiện ngay dưới icon kebab */
+.kebab-dropdown {
+  position: absolute;
+  top: 100%;               
+  right: 0;                
+  margin-top: 4px;          
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  min-width: 140px;
+  overflow: hidden;
+}
+
+.kebab-dropdown div {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.kebab-dropdown div:hover {
+  background: #f5f5f5;
+}
+
+.kebab-icon {
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.kebab-icon:hover {
+  background: #e0e0e0;
+}
+
+.kebab-icon {
+  width: 40px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.kebab-icon:hover {
+  background: #eee;
+}
+
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.lookup-error {
+  animation: fadeIn 0.3s;
+  background: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 16px 0;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

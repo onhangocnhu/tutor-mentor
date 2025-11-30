@@ -1,9 +1,7 @@
-/* Áp dụng font cho toàn bộ body */
 body, html, .page-outer, .page-inner, .content, .lookup-card, .result-one-card, .result-all-card {
   font-family: 'Inter', sans-serif;
 }
 
-/* Nếu bạn muốn ưu tiên font Inter cho tất cả thẻ con */
 * {
   font-family: 'Inter', sans-serif;
 }
@@ -36,22 +34,74 @@ body, html, .page-outer, .page-inner, .content, .lookup-card, .result-one-card, 
 /* ====================== SIDEBAR ====================== */
 .sidebar {
   width: 70px;
+  min-height: 100vh;       
   background: #222d32;
   display: flex;
   flex-direction: column;
   transition: width 0.35s ease;
-  overflow: hidden;
   position: fixed;
-  justify-content: flex-start;   /* 👈 đảm bảo nội dung dính lên top */
-  align-items: center;      
   left: 0;
   top: 0;
-  height: calc(100vh - 70px);
+  bottom: 0;
   z-index: 1000;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .sidebar.open {
-  width: 280px;
+  width: 280px !important;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px !important;
+  }
+  .sidebar.open {
+    width: 240px !important;   
+  }
+  
+  .sidebar-text,
+  .chevron {
+    opacity: 0;
+  }
+  .sidebar.open .sidebar-text,
+  .sidebar.open .chevron {
+    opacity: 1;
+  }
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.content {
+  margin-left: 70px;           /* Luôn chừa chỗ cho sidebar thu gọn */
+  transition: margin-left 0.35s ease;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.sidebar.open ~ .content {
+  margin-left: 280px;          /* Khi sidebar mở rộng → đẩy nội dung sang phải */
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 70px !important;
+  }
+  .sidebar.open ~ .content {
+    margin-left: 70px !important;  /* Trên mobile: nội dung không bị đẩy */
+  }
 }
 
 .sidebar-avatar {
@@ -105,6 +155,27 @@ body, html, .page-outer, .page-inner, .content, .lookup-card, .result-one-card, 
 .sidebar.open .chevron {
   opacity: 1;
 }
+
+/* ====================== SIDEBAR OVERLAY ====================== */
+.sidebar-overlay {
+  /* Che phủ toàn bộ viewport (màn hình hiển thị) */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh; 
+  
+  /* Màu đen mờ (darken) */
+  background-color: rgba(0, 0, 0, 0.5); /* 50% opacity màu đen */
+  
+  z-index: 1; 
+  
+  visibility: visible;
+  opacity: 1; 
+
+  transition: opacity 0.35s ease;
+}
+
 
 /* Chevron (mũi tên mở submenu) */
 .chevron {
@@ -216,6 +287,7 @@ body, html, .page-outer, .page-inner, .content, .lookup-card, .result-one-card, 
   color: #000;
   font-size: 36px;
   font-weight: 700;
+  padding: 10px;
 }
 
 /* BREADCRUMB */

@@ -1,10 +1,10 @@
-import hcmut_logo from "../images/hcmut_logo.png";
-import last_seen_icon from "../images/last-seen-icon.svg";
-import menu_icon from "../images/menu.png";
-import home_icon from "../images/Home.svg";
+import hcmut_logo from "../../images/hcmut_logo.png";
+import last_seen_icon from "../../images/last-seen-icon.svg";
+import menu_icon from "../../images/menu.png";
+import home_icon from "../../images/Home.svg";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CtsvIndexPage.css";
+import "../../styles/CtsvIndexPage.css";
 
 export default function CtsvIndexPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -37,9 +37,10 @@ export default function CtsvIndexPage() {
         {/* THÊM THẺ BAO CHUNG ĐỂ KHÔNG LỖI JSX */}
         {/* HEADER – chỉ giữ lại nút menu, bỏ phần cũ */}
           <header className="topbar">
-            <div className={`logo-box ${sidebarOpen ? "open" : ""}`}>
+            <div className={`logo-box ${sidebarOpen ? "open" : ""}`}> {/* 👈 THÊM LOGO BOX VÀO ĐẦU SIDEBAR */}
               <div className="logo-text">Bk</div>
             </div>
+                        
 
             <button
               className="menu-btn"
@@ -50,12 +51,13 @@ export default function CtsvIndexPage() {
             >
               <img className="top-menu" src={menu_icon} alt="menu" />
             </button>
-
+            
           </header>
         <div className="student-page">
           
           {/* SIDEBAR */}
           <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+
             <div className="iden">
                 <img className="sidebar-avatar" src={hcmut_logo} alt="HCMUT logo" />
                 <div className="iden-inner"><h3>Phòng Công tác Sinh viên</h3>
@@ -93,7 +95,7 @@ export default function CtsvIndexPage() {
           </aside>
 
 
-          
+          {sidebarOpen && <div className="sidebar-overlay" />}
 
           {/* MAIN CONTENT – giữ nguyên 100% của bạn */}
           <main className="content">

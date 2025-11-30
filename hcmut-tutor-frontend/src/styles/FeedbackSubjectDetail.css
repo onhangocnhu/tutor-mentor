@@ -1,0 +1,136 @@
+.subject-header {
+  background: #f8f9fa;
+  padding: 20px 24px;
+  border-bottom: 2px solid #0066cc;
+  margin-bottom: 24px;
+}
+
+.subject-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.sessions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.week-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.week-card.inactive {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.week-header {
+  background: #e3f2fd;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: #1976d2;
+  font-size: 1.1rem;
+}
+
+.arrow-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.week-title {
+  flex: 1;
+}
+
+.session-list {
+  padding: 0;
+}
+
+.session-item {
+  padding: 16px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.session-item:hover {
+  background: #f0f7ff;
+}
+
+.feedback-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.session-text {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 202;
+}
+
+.session-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.session-main {
+  font-weight: 500;
+  color: #333;
+}
+
+.session-sub {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.breadcrumb-link {
+  color: #0066cc;
+  cursor: pointer;
+  text-decoration: underline;
+  margin: 0 8px;
+}
+
+.breadcrumb-link:hover {
+  color: #0052a3;
+  text-decoration: none;
+}
+
+.subject-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.no-session {
+  padding: 20px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+.arrow-icon {
+  font-size: 1.4rem;
+  margin-right: 10px;
+}

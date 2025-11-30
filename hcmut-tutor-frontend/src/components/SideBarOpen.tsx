@@ -126,7 +126,7 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
                 { label: "Thông tin sinh viên", path: "/student-profile" },
                 { label: "Đăng ký Tutor", path: "/register-subject" },
                 { label: "Cổng thư viện", path: "/library" },
-                { label: "Đánh giá", path: "/reviews" },
+                { label: "Đánh giá", path: "/feedback" },
               ],
               tutor: [
                 { label: "Thông tin cá nhân", path: "/tutor-profile" },

@@ -40,8 +40,9 @@
       "rating": 3,
       "comment": "Buổi học bình thường, tutor cần chuẩn bị kỹ hơn về tài liệu.",
       "date": "2025-10-13",
-      "status": "pending",
-      "facultyResponse": null
+      "status": "responded",
+      "facultyResponse": "Khoa nhận ý kiến của các bạn",
+      "respondedAt": "2025-11-30T06:40:40.806Z"
     },
     {
       "id": 4,

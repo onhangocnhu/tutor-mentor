@@ -1,4 +1,3 @@
-// src/pages/Feedback/FeedbackSubjectDetail.tsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import home_icon from "../../images/Home.svg";
@@ -8,12 +7,11 @@ import SideBarOpen from "../../components/SideBarOpen";
 import SidebarRail from "../../components/SidebarRail";
 import TopBar from "../../components/TopBar";
 
-// Import dữ liệu
 import sessionsData from "../../../../hcmut-tutor-backend/data/sessions.json";
 
 interface Session {
   id: string;
-  date: string; // format: DD/MM/YYYY
+  date: string;
   time: string;
   format: string;
   location: string;
@@ -26,7 +24,6 @@ interface Session {
 
 const sessions = sessionsData as Session[];
 
-// Map subjectCode → tên đầy đủ
 const subjectNameMap: Record<string, string> = {
   "CO1007": "Cấu trúc Rời rạc cho Khoa học Máy tính",
   "CO3001": "Công nghệ Phần mềm",
@@ -49,12 +46,28 @@ export default function FeedbackSubjectDetail() {
 
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-
   
-const subjectName = subjectNameMap[subjectCode || ""] || "Môn học không xác định";
-const fullSubjectDisplay = subjectCode 
-  ? `${subjectCode} - ${subjectName}` 
-  : "Môn học";
+  useEffect(() => {
+    const cookieRole = document.cookie
+      .split(";")
+      .map((s) => s.trim())
+      .find((s) => s.startsWith("role="))
+      ? document.cookie
+        .split(";")
+        .map((s) => s.trim())
+        .find((s) => s.startsWith("role="))!
+        .split("=")[1]
+      : null;
+
+    if (!cookieRole || decodeURIComponent(cookieRole) !== "student") {
+      navigate("/unauthorized");
+    }
+  }, [navigate]);
+
+  const subjectName = subjectNameMap[subjectCode || ""] || "Môn học không xác định";
+  const fullSubjectDisplay = subjectCode
+    ? `${subjectCode} - ${subjectName}`
+    : "Môn học";
 
   const parseDate = (dateStr: string): Date => {
     const [day, month, year] = dateStr.split("/").map(Number);
@@ -72,7 +85,6 @@ const fullSubjectDisplay = subjectCode
     }))
     .sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime());
 
-  // Tự động chia tuần (7 ngày/tuần, bắt đầu từ buổi đầu tiên)
   const weeks: {
     week: string;
     dateRange: string;

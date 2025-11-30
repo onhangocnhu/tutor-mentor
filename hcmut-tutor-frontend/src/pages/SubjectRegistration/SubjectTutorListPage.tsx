@@ -21,12 +21,10 @@ const CloseIcon = () => (
 );
 
 export default function SubjectTutorListPage() {
-  // --- STATE QUẢN LÝ MODAL ---
-  // 'none': Đóng | 'confirm': Hỏi xác nhận | 'success': Thông báo thành công
   const [modalStep, setModalStep] = useState<'none' | 'confirm' | 'success'>('none');
   const [selectedTutor, setSelectedTutor] = useState<string | null>(null);
   const [selectedTutorUsername, setSelectedTutorUsername] = useState<string | null>(null);
-  const [registeredTutors, setRegisteredTutors] = useState<string[]>([]); // <-- track tutors already chosen
+  const [registeredTutors, setRegisteredTutors] = useState<string[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [tutors, setTutors] = useState<any[]>([]);
   const [filterSubject, setFilterSubject] = useState<string>("");
@@ -49,10 +47,8 @@ export default function SubjectTutorListPage() {
     }
   }, [navigate]);
 
-  // helper: load student's registrations to mark disabled tutors
   const fetchRegisteredTutors = async () => {
     try {
-      // read username from cookie (optional; server also accepts cookie)
       const cookie = document.cookie || "";
       let studentUsername: string | null = null;
       cookie.split(";").map(s => s.trim()).forEach(pair => {
@@ -75,27 +71,22 @@ export default function SubjectTutorListPage() {
     }
   };
 
-  // gọi khi mount
   useEffect(() => {
     fetchRegisteredTutors();
   }, []);
 
-  // 1. Khi nhấn nút "Chọn"
   const handleSelectTutor = (tutorUsername: string, tutorName: string) => {
     setSelectedTutor(tutorName);
     setSelectedTutorUsername(tutorUsername);
-    setModalStep('confirm'); // Mở modal xác nhận
+    setModalStep('confirm');
   };
 
-  // 2. Khi nhấn "Huỷ" hoặc nút X
   const handleClose = () => {
     setModalStep('none');
     setSelectedTutor(null);
   };
 
-  // 3. Khi nhấn "Xác nhận" ở modal
   const handleConfirmRegistration = async () => {
-    // lấy student username từ cookie
     const cookie = document.cookie || "";
     let studentUsername: string | null = null;
     cookie.split(";").map(s => s.trim()).forEach(pair => {
@@ -112,12 +103,10 @@ export default function SubjectTutorListPage() {
       return;
     }
 
-    // subject: ưu tiên filterSubject, fallback localStorage
     let subjectCode = filterSubject;
     try {
       if (!subjectCode) subjectCode = localStorage.getItem("selectedSubject") || "";
     } catch { }
-    // gửi subjectCode (chuỗi rỗng cho trường hợp không có)
     try {
       const res = await fetch("http://localhost:3001/register-program", {
         method: "POST",
@@ -127,14 +116,12 @@ export default function SubjectTutorListPage() {
       });
       const data = await res.json();
       if (data && data.success) {
-        // cập nhật UI: đánh dấu tutor đã đăng ký
         if (selectedTutorUsername) {
           setRegisteredTutors((prev) => {
             if (prev.includes(selectedTutorUsername)) return prev;
             return [...prev, selectedTutorUsername];
           });
         }
-        // refresh registrations từ server (đảm bảo đồng bộ)
         await fetchRegisteredTutors();
         setModalStep('success');
       } else {
@@ -148,12 +135,10 @@ export default function SubjectTutorListPage() {
     }
   };
 
-  // --- Fetch API khi component mount ---
   useEffect(() => {
     fetch("http://localhost:3001/tutors")
       .then(res => res.json())
       .then((data) => {
-        // backend may return an array or an object { success, tutors } or { tutors: [...] }
         if (Array.isArray(data)) setTutors(data);
         else if (data && Array.isArray((data as any).tutors)) setTutors((data as any).tutors);
         else if (data && Array.isArray((data as any).data)) setTutors((data as any).data);
@@ -165,7 +150,6 @@ export default function SubjectTutorListPage() {
       });
   }, []);
 
-  // read filter subject from localStorage OR query param on mount
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -181,9 +165,7 @@ export default function SubjectTutorListPage() {
     } catch { }
   }, []);
 
-  // load registrations for current student and mark registered tutors (disables "Chọn" button)
   useEffect(() => {
-    // read username from cookie (optional; server also accepts cookie)
     const cookie = document.cookie || "";
     let studentUsername: string | null = null;
     cookie.split(";").map(s => s.trim()).forEach(pair => {
@@ -198,7 +180,6 @@ export default function SubjectTutorListPage() {
     fetch(url, { credentials: "include" })
       .then(res => res.json())
       .then((payload) => {
-        // payload shape: { success: true, registrations: [...] } or array
         const regs = Array.isArray(payload) ? payload : (payload.registrations ?? payload.data ?? []);
         const tutorUsernames = regs.map((r: any) => r.tutor?.username).filter(Boolean);
         setRegisteredTutors(Array.from(new Set(tutorUsernames)));
@@ -213,7 +194,6 @@ export default function SubjectTutorListPage() {
     <div className="page-outer">
       <div className="page-inner">
         <div className="student-page">
-          {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
           {menuOpen && (
             <div
               onClick={() => setMenuOpen(false)}
@@ -224,15 +204,13 @@ export default function SubjectTutorListPage() {
                 width: "100vw",
                 height: "100vh",
                 background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 202, // below SideBarOpen (300) and above topbar (200)
+                zIndex: 202,
               }}
             />
           )}
 
-          {/* collapsed sidebar (always present) */}
           <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-          {/* render drawer component (separate component) */}
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
           <TopBar
@@ -253,7 +231,6 @@ export default function SubjectTutorListPage() {
               </div>
             </div>
 
-            {/* --- TABLE LIST --- */}
             <div className="tutor-list-card">
               <div className="card-header">
                 <div>
@@ -316,11 +293,9 @@ export default function SubjectTutorListPage() {
         </div>
       </div>
 
-      {/* --- MODAL LOGIC --- */}
       {modalStep !== 'none' && (
         <div className="modal-overlay">
 
-          {/* TRƯỜNG HỢP 1: MODAL XÁC NHẬN */}
           {modalStep === 'confirm' && (
             <div className="modal-box">
               <div className="modal-close-icon" onClick={handleClose}><CloseIcon /></div>
@@ -345,7 +320,6 @@ export default function SubjectTutorListPage() {
             </div>
           )}
 
-          {/* TRƯỜNG HỢP 2: MODAL THÀNH CÔNG */}
           {modalStep === 'success' && (
             <div className="modal-box">
               <div className="modal-close-icon" onClick={handleClose}><CloseIcon /></div>

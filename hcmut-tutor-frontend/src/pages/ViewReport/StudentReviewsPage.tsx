@@ -108,7 +108,6 @@ export default function StudentReviewsPage() {
 
                 <div className="sr-panel">
                   <div className="sr-panel__outline">
-                    {/* Search rows / result rows (responsive stacked rows) */}
                     <div className="sr-row"> {/* example row 1 */} </div>
                     <div className="sr-row"> {/* example row 2 */} </div>
                     <div className="sr-row"> {/* example row 3 */} </div>

@@ -65,30 +65,37 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Handle Login and Role Routes */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="/login" element={<LoginPage />} />
-
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/forgot-password-otp" element={<ForgotPasswordOTP />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/successful-reset-password" element={<SuccessfulResetPassword />} />
 
+        {/* Dashboard Routes */}
         <Route path="/student-dashboard" element={<StudentIndexPage />} />
         <Route path="/tutor-dashboard" element={<TutorIndexPage />} />
         <Route path="/pdt-dashboard" element={<PDTIndexPage />} />
         <Route path="/faculty-dashboard" element={<FacultyIndexPage />} />
         <Route path="/ctsv-dashboard" element={<CtsvIndexPage />} />
 
+        {/* View Profile Routes */}
         <Route path="/student-profile" element={<StudentProfile />} />
         <Route path="/tutor-profile" element={<TutorProfile />} />
 
+        {/* Student Register Program Routes */}
         <Route path="/register-program" element={<RegisterProgramPage />} />
-        <Route path="/result-one" element={<ResultOnePage />} />
-        <Route path="/result-all" element={<ResultAllPage />} />
         <Route path="/register-subject" element={<SubjectRegistrationPage />} />
         <Route path="/register-subject/tutors" element={<SubjectTutorListPage />} />
 
+        {/* Student Feedback Routes */}
+        <Route path="/feedback" element={<FeedbackSubjects />} />
+        <Route path="/feedback/:subjectCode/:studentId/:semester" element={<FeedbackSubjectDetail />} />
+        <Route path="/feedback/session/:subjectCode/:studentId/:semester/:sessionId" element={<FeedbackSessionPage />} />
+
+        {/* Tutor Routes */}
         <Route path="/tutor/update-progress" element={<TutorStudentListPage />} />
         <Route path="/tutor/update-progress/:id" element={<TutorStudentUpdatePage />} />
         <Route path="/tutor/set-schedule" element={<TutorSchedule />} />
@@ -96,6 +103,17 @@ function App() {
         <Route path="/tutor-sessions/:id" element={<EditSessionPage />} />
         <Route path="/tutor-sessions/new" element={<NewSessionPage />} />
 
+        {/* Faculty Review Routes */}
+        <Route path="/faculty-reviews" element={<ViewReviewsPage />} />
+        <Route path="/faculty-reviews/stats" element={<ReviewStatsPage />} />
+        <Route path="/faculty-reviews/:id" element={<ReviewDetailPage />} />
+        <Route path="/faculty-reviews/:id/respond" element={<FeedbackPage />} />
+
+        {/* CTSV Routes */}
+        <Route path="/result-one" element={<ResultOnePage />} />
+        <Route path="/result-all" element={<ResultAllPage />} />
+
+        {/* PDT Routes */}
         <Route path="/view-reports" element={<ViewReport />} />
         <Route path="/student-reviews" element={<StudentReviewsPage />} />
         <Route path="/student-reviews/search" element={<StudentReviewsSearch />} />
@@ -109,17 +127,6 @@ function App() {
         <Route path="/library/history" element={<HistoryPage />} />
         <Route path="/library/share" element={<ShareDocsPage />} />
         <Route path="/library/share-document" element={<ShareDocumentSection />} />
-
-        <Route path="/feedback" element={<FeedbackSubjects />} />
-        <Route path="/feedback/:subjectCode/:studentId/:semester" element={<FeedbackSubjectDetail />} />
-        <Route path="/feedback/session/:subjectCode/:studentId/:semester/:sessionId" element={<FeedbackSessionPage />} />
-        
-        {/* Faculty Review Routes */}
-        <Route path="/faculty-reviews" element={<ViewReviewsPage />} />
-        <Route path="/faculty-reviews/stats" element={<ReviewStatsPage />} />
-        <Route path="/faculty-reviews/:id" element={<ReviewDetailPage />} />
-        <Route path="/faculty-reviews/:id/respond" element={<FeedbackPage />} />
-
       </Routes>
     </BrowserRouter>
   )

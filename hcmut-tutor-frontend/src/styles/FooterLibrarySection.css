@@ -11,7 +11,7 @@
 
 .footer-top {
   display: flex;
-  justify-content: space-between; /* left sang trái, right sang phải */
+  justify-content: space-between;
   gap: 50px;
 }
 

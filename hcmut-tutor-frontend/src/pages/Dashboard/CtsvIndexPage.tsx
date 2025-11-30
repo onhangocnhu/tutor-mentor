@@ -130,13 +130,10 @@ export default function CtsvIndexPage() {
             />
           )}
 
-          {/* collapsed sidebar (always present) */}
           <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-          {/* render drawer component (separate component) */}
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
           <TopBar
             menuOpen={menuOpen}
             onMenuClick={() => setMenuOpen(true)}
@@ -156,12 +153,9 @@ export default function CtsvIndexPage() {
               </div>
             </div>
 
-            {/* THỐNG KÊ USAGE SECTION */}
             <h2 className="section-title">Thống kê sử dụng</h2>
 
             <div className="usage-row">
-              {/* LEFT BAR CHART */}
-
               <div className="chart-card">
                 <div className="chart-header">Thống kê tần suất đăng nhập</div>
                 <div className="chart">

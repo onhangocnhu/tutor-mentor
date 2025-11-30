@@ -8,7 +8,6 @@ import { DocumentSection } from "./UploadForm";
 const ShareDocumentSection: React.FC = () => {
   const navigate = useNavigate();
 
-  // Share document only for user with roles
   useEffect(() => {
     const cookieRole = document.cookie
       .split(";")
@@ -56,8 +55,8 @@ const ShareDocumentSection: React.FC = () => {
         onClick={handleBackClick}
         style={{
           display: "inline-flex",
-          alignItems: "center", // canh chữ theo giữa chiều dọc với icon
-          gap: "8px",           // khoảng cách giữa icon và chữ
+          alignItems: "center",
+          gap: "8px",         
         }}
       >
         <svg

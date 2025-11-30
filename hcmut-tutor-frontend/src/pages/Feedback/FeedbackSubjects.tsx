@@ -7,8 +7,7 @@ import SidebarRail from "../../components/SidebarRail";
 import TopBar from "../../components/TopBar";
 
 import registrationsData from "../../../../hcmut-tutor-backend/data/registrations.json";
-import studentsData from "../../../../hcmut-tutor-backend/data/students.json";
-import {getCurrentStudentId} from "../../components/auth";
+import { getCurrentStudentId } from "../../components/auth";
 
 interface Registration {
   id: number;
@@ -29,7 +28,7 @@ export default function FeedbackSubjects() {
 
   const [studentId, setStudentId] = useState<string | null>(null);
 
-      useEffect(() => {
+  useEffect(() => {
     const currentStudentId = getCurrentStudentId();
     const role = document.cookie
       .split("; ")
@@ -37,7 +36,6 @@ export default function FeedbackSubjects() {
       ?.split("=")[1];
     const decodedRole = role ? decodeURIComponent(role) : null;
 
-    // Kiểm tra quyền truy cập
     if (!decodedRole || decodedRole !== "student") {
       navigate("/unauthorized");
       return;
@@ -45,21 +43,20 @@ export default function FeedbackSubjects() {
 
     if (!currentStudentId) {
       console.error("Không tìm thấy studentId của người dùng hiện tại");
-      navigate("/login"); 
+      navigate("/login");
       return;
     }
 
     const enrolled = registrations.filter(
       (reg) =>
-        reg.student.studentId === currentStudentId && 
+        reg.student.studentId === currentStudentId &&
         reg.status === "registered"
     );
 
     setMyCourses(enrolled);
-    setStudentId(currentStudentId); 
+    setStudentId(currentStudentId);
   }, [navigate]);
 
-  // Danh sách màu nền cho các ô (tự động lặp lại nếu nhiều hơn 9 môn)
   const colors = [
     "#6C63FF", // tím
     "#4CAF50", // xanh lá
@@ -76,7 +73,6 @@ export default function FeedbackSubjects() {
     <div className="page-outer">
       <div className="page-inner">
         <div className="student-page">
-          {/* Overlay khi mở menu */}
           {menuOpen && (
             <div
               onClick={() => setMenuOpen(false)}
@@ -116,7 +112,6 @@ export default function FeedbackSubjects() {
               </div>
             </div>
 
-            {/* Danh sách môn học - Grid 3 cột */}
             <div className="courses-grid">
               {myCourses.length === 0 ? (
                 <div className="no-courses">
@@ -139,13 +134,13 @@ export default function FeedbackSubjects() {
                         alert("Không thể tải thông tin sinh viên. Vui lòng đăng nhập lại.");
                         return;
                       }
-                      const semester = "2024-2025-HK1"; 
+                      const semester = "2024-2025-HK1";
                       navigate(`/feedback/${course.subjectCode}/${studentId}/${semester}`);
                     }}
-                    >
+                  >
                     <div className="course-code">{course.subjectCode}</div>
                     <div className="course-name">{course.subjectName}</div>
-                    </div>
+                  </div>
                 ))
               )}
             </div>

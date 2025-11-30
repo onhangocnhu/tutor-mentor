@@ -63,22 +63,18 @@ const SearchPage: React.FC = () => {
   const searchQuery = searchParams.get("q") || "";
   const departmentParam = searchParams.get("department") || "";
 
-  // Local search input state
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
 
-  // Sync local search with URL param
   useEffect(() => {
     setLocalSearchQuery(searchQuery);
   }, [searchQuery]);
 
-  // Initialize department filter from URL params
   useEffect(() => {
     if (departmentParam) {
       setSelectedDepartments([departmentParam]);
     }
   }, [departmentParam]);
 
-  // Fetch filter counts from backend
   useEffect(() => {
     const fetchFilterCounts = async () => {
       try {
@@ -156,7 +152,6 @@ const SearchPage: React.FC = () => {
     fetchDocuments();
     fetchSavedDocuments();
     fetchBorrowedDocuments();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, selectedCategories, selectedDepartments, selectedLanguages, selectedStatuses, sortBy, yearFrom, yearTo]);
 
   const fetchDocuments = async () => {
@@ -171,7 +166,6 @@ const SearchPage: React.FC = () => {
       if (selectedStatuses.length > 0) params.append("status", selectedStatuses.join(","));
       if (sortBy !== "relevant") params.append("sortBy", sortBy);
 
-      // Year range filter - only apply if valid range
       if (yearFrom && yearTo && parseInt(yearFrom) <= parseInt(yearTo)) {
         params.append("yearFrom", yearFrom);
         params.append("yearTo", yearTo);
@@ -219,7 +213,6 @@ const SearchPage: React.FC = () => {
     }
   };
 
-  // Fetch borrow history to get downloaded documents
   useEffect(() => {
     const fetchDownloadedDocuments = async () => {
       try {
@@ -238,7 +231,6 @@ const SearchPage: React.FC = () => {
     fetchDownloadedDocuments();
   }, []);
 
-  // Helper function to determine user's status for a document
   const getUserDocumentStatus = (docId: string): "available" | "borrowed" | "downloaded" => {
     if (borrowedDocIds.includes(docId)) {
       return "borrowed";
@@ -258,7 +250,6 @@ const SearchPage: React.FC = () => {
     setSelectedBook(book);
     setIsModalOpen(true);
 
-    // Increment view count
     try {
       await fetch(`${API_BASE}/library/documents/${book.id}/view`, {
         method: "POST",
@@ -342,7 +333,6 @@ const SearchPage: React.FC = () => {
     }
   };
 
-  // Handler to update rating in local state after user rates a document
   const handleRatingUpdate = (documentId: string, newRating: number, newRatingCount: number) => {
     setDocuments(documents.map((doc) =>
       doc.id === documentId
@@ -351,7 +341,6 @@ const SearchPage: React.FC = () => {
     ));
   };
 
-  // Pagination
   const totalPages = Math.ceil(documents.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedDocuments = documents.slice(startIndex, startIndex + itemsPerPage);
@@ -364,7 +353,6 @@ const SearchPage: React.FC = () => {
         <section className="search-page-header">
           <h1>TÌM KIẾM TÀI LIỆU</h1>
 
-          {/* Search Bar - Home page style */}
           <div className="w-full max-w-[900px] mx-auto mt-4">
             <div className="w-full h-16 px-4 bg-white rounded-[90px] border-[3px] border-blue-400 inline-flex justify-between items-center gap-3">
               <div className="flex items-center gap-2 shrink-0">
@@ -507,7 +495,6 @@ const SearchPage: React.FC = () => {
                             )}
                           </div>
 
-                          {/* Info */}
                           <div className="flex-1">
                             <h3
                               className="text-lg font-semibold text-gray-800 hover:text-blue-600 cursor-pointer mb-1"
@@ -520,7 +507,6 @@ const SearchPage: React.FC = () => {
                             </p>
 
                             <div className="flex items-center gap-4 flex-wrap">
-                              {/* Status Badge */}
                               <span className={`px-3 py-1 rounded-full text-xs font-medium ${style.bg} ${style.text}`}>
                                 {style.label}
                               </span>
@@ -530,7 +516,6 @@ const SearchPage: React.FC = () => {
                             </div>
                           </div>
 
-                          {/* Actions */}
                           <div className="flex items-center gap-2">
                             <button
                               className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
@@ -611,7 +596,6 @@ const SearchPage: React.FC = () => {
 
       <FooterSection />
 
-      {/* Show UploadedDocumentModal for uploaded documents (with filePath), BookDetailModal for others */}
       {selectedBook && (selectedBook as UploadedDocument).filePath ? (
         <UploadedDocumentModal
           document={selectedBook as UploadedDocument}
@@ -635,7 +619,6 @@ const SearchPage: React.FC = () => {
         />
       )}
 
-      {/* PDF Preview Modal */}
       <PdfPreviewModal
         filePath={previewFilePath}
         documentTitle={previewTitle}

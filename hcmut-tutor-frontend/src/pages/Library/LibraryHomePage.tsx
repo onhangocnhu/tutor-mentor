@@ -8,8 +8,6 @@ import "../../styles/Library.css";
 
 const API_BASE = "http://localhost:3001";
 
-// Banner images array - using imported images from library folder
-// You need to save the 3 banner images as banner1.jpg, banner2.jpg, banner3.jpg in src/images/library/
 const bannerImages = [
   "/src/images/library/banner1.jpg",
   "/src/images/library/banner2.jpg",
@@ -38,28 +36,24 @@ const LibraryHomePage: React.FC = () => {
   const [newestBooks, setNewestBooks] = useState<Document[]>([]);
   const [savedDocIds, setSavedDocIds] = useState<string[]>([]);
   const [borrowedDocIds, setBorrowedDocIds] = useState<string[]>([]);
-  const [downloadedDocIds, setDownloadedDocIds] = useState<string[]>([]); // Documents that have been returned/downloaded
+  const [downloadedDocIds, setDownloadedDocIds] = useState<string[]>([]); 
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
 
-  // Modal states
   const [selectedBook, setSelectedBook] = useState<Document | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // PDF Preview modal states
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [previewFilePath, setPreviewFilePath] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
-  // Expand states for "Xem tất cả"
   const [expandRecommended, setExpandRecommended] = useState(false);
   const [expandMostViewed, setExpandMostViewed] = useState(false);
   const [expandNewest, setExpandNewest] = useState(false);
 
   const userId = "student001";
 
-  // Helper function to determine user's status for a document
   const getUserDocumentStatus = (docId: string): "available" | "borrowed" | "downloaded" => {
     if (borrowedDocIds.includes(docId)) {
       return "borrowed";
@@ -81,7 +75,6 @@ const LibraryHomePage: React.FC = () => {
     { id: "im", name: "Quản lý Công Nghiệp", icon: "📊" },
   ];
 
-  // Banner slideshow effect - change every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBannerIndex((prev) => (prev + 1) % bannerImages.length);
@@ -122,7 +115,6 @@ const LibraryHomePage: React.FC = () => {
         setBorrowedDocIds(borrowed.borrowed.map((b: { documentId: string }) => b.documentId));
       }
       if (history.success) {
-        // Get documents that have been returned (downloaded)
         const returnedDocs = history.history
           .filter((h: { status: string }) => h.status === "returned")
           .map((h: { documentId: string }) => h.documentId);
@@ -139,7 +131,6 @@ const LibraryHomePage: React.FC = () => {
     setSelectedBook(book);
     setIsModalOpen(true);
 
-    // Increment view count
     try {
       await fetch(`${API_BASE}/library/documents/${book.id}/view`, {
         method: "POST",
@@ -223,7 +214,6 @@ const LibraryHomePage: React.FC = () => {
     }
   };
 
-  // Handler to update rating in local state after user rates a document
   const handleRatingUpdate = (documentId: string, newRating: number, newRatingCount: number) => {
     const updateBooks = (books: Document[]) =>
       books.map((book) =>
@@ -264,7 +254,6 @@ const LibraryHomePage: React.FC = () => {
     <div className="library-page w-full min-h-screen relative bg-white overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
       <HeaderSection />
 
-      {/* Hero Banner with Slideshow */}
       <div className="w-full h-[400px] pt-20 relative overflow-hidden">
         {bannerImages.map((banner, index) => (
           <img
@@ -276,7 +265,6 @@ const LibraryHomePage: React.FC = () => {
           />
         ))}
 
-        {/* Banner Indicators */}
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
           {bannerImages.map((_, index) => (
             <button
@@ -291,7 +279,6 @@ const LibraryHomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Title & Search */}
       <div className="w-full px-[223px] pt-10 flex flex-col items-center">
         <div className="flex flex-col items-center">
           <div className="p-2.5 inline-flex justify-center items-center gap-2.5">
@@ -304,7 +291,6 @@ const LibraryHomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Search Bar */}
         <div className="w-[1000px] h-20 mt-6 pl-1 pr-4 bg-white rounded-[90px] outline-[3px] outline-offset-[-3px] outline-blue-400 inline-flex justify-between items-center">
           <div className="px-3 flex justify-start items-center gap-2.5">
             <div className="w-12 h-12 inline-flex flex-col justify-center items-center">
@@ -332,7 +318,6 @@ const LibraryHomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Popular Tags - aligned with search bar */}
       <div className="w-[1000px] mx-auto mt-8 flex justify-start items-center gap-5">
         <div className="p-2.5 flex justify-center items-center gap-2.5">
           <div className="opacity-60 text-black text-2xl font-normal font-['Inter']">Phổ biến:</div>
@@ -350,9 +335,7 @@ const LibraryHomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Book Sections */}
       <div className="w-[1299px] mx-auto mt-16 flex flex-col gap-16">
-        {/* Gợi ý cho bạn */}
         <section className="flex flex-col gap-4">
           <div className="flex justify-between items-start">
             <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">
@@ -385,7 +368,6 @@ const LibraryHomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Được xem nhiều nhất */}
         <section className="flex flex-col gap-4">
           <div className="flex justify-between items-start">
             <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">
@@ -418,7 +400,6 @@ const LibraryHomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Mới cập nhật */}
         <section className="flex flex-col gap-4">
           <div className="flex justify-between items-start">
             <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">
@@ -452,7 +433,6 @@ const LibraryHomePage: React.FC = () => {
         </section>
       </div>
 
-      {/* Duyệt theo Khoa/Bộ môn */}
       <div className="w-full max-w-[1300px] mx-auto mt-16 mb-16 flex flex-col justify-center items-center gap-7 px-4">
         <div className="p-2.5 inline-flex justify-center items-center gap-2.5">
           <div className="text-center text-black text-2xl font-normal font-['Inter'] leading-8">Duyệt theo Khoa/Bộ môn</div>
@@ -471,7 +451,6 @@ const LibraryHomePage: React.FC = () => {
 
       <FooterSection />
 
-      {/* Document Detail Modal */}
       {selectedBook && (selectedBook as UploadedDocument).filePath ? (
         <UploadedDocumentModal
           document={selectedBook as UploadedDocument}
@@ -495,7 +474,6 @@ const LibraryHomePage: React.FC = () => {
         />
       )}
 
-      {/* PDF Preview Modal */}
       <PdfPreviewModal
         filePath={previewFilePath}
         documentTitle={previewTitle}

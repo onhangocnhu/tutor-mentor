@@ -7,14 +7,12 @@ import SidebarRail from "../../components/SidebarRail";
 import SideBarOpen from "../../components/SideBarOpen";
 import TopBar from "../../components/TopBar";
 
-// Icon Clip
 const ClipIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
   </svg>
 );
 
-// Icon Check
 const CheckIcon = () => (
   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 6L9 17L4 12" stroke="#039855" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
@@ -26,7 +24,6 @@ export default function TutorStudentUpdatePage() {
   const location = useLocation();
   const { id } = useParams();
 
-  // expect registration passed in navigation: { registration }
   const registration = location.state?.registration || null;
   const student = registration?.student || (location.state?.student) || { name: "N/A", faculty: "N/A", email: "N/A", subject: "N/A", studentId: id || "" };
   const subjectName = registration?.subjectName ?? registration?.subjectCode ?? (student.subject || "");
@@ -63,7 +60,6 @@ export default function TutorStudentUpdatePage() {
       setNote(draft);
     }
 
-    // load existing progress for this registration (latest)
     const loadProgress = async () => {
       try {
         if (!registrationId) return;
@@ -72,13 +68,11 @@ export default function TutorStudentUpdatePage() {
         const json = await res.json();
         const items = Array.isArray(json) ? json : (json.progress ?? []);
         if (items && items.length > 0) {
-          // pick latest by createdAt
           items.sort((a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
           const latest = items[items.length - 1];
           if (latest && latest.note) setNote(latest.note);
         }
       } catch (e) {
-        // ignore
       }
     };
     loadProgress();
@@ -95,7 +89,6 @@ export default function TutorStudentUpdatePage() {
   };
 
   const handleSubmit = () => {
-    // save progress to backend
     const payload = {
       registrationId,
       student,
@@ -130,23 +123,18 @@ export default function TutorStudentUpdatePage() {
     navigate("/tutor/update-progress");
   };
 
-  // --- LOGIC XỬ LÝ NHIỀU FILE ---
-
   const handleClipClick = () => {
     fileInputRef.current?.click();
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      // Chuyển FileList thành mảng và gộp vào danh sách cũ
       const newFiles = Array.from(event.target.files);
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
-    // Reset input value để cho phép chọn lại cùng 1 file nếu muốn
     if (event.target.value) event.target.value = "";
   };
 
-  // Xóa file theo index
   const handleRemoveFile = (indexToRemove: number) => {
     setSelectedFiles((prevFiles) =>
       prevFiles.filter((_, index) => index !== indexToRemove)
@@ -157,7 +145,6 @@ export default function TutorStudentUpdatePage() {
     <div className="page-outer">
       <div className="page-inner">
         <div className="student-page">
-          {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
           {menuOpen && (
             <div
               onClick={() => setMenuOpen(false)}
@@ -168,7 +155,7 @@ export default function TutorStudentUpdatePage() {
                 width: "100vw",
                 height: "100vh",
                 background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 202, // below SideBarOpen (203) and above topbar (201)
+                zIndex: 202,
               }}
             />
           )}
@@ -177,7 +164,6 @@ export default function TutorStudentUpdatePage() {
 
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
           <TopBar
             menuOpen={menuOpen}
             onMenuClick={() => setMenuOpen(true)}
@@ -221,7 +207,6 @@ export default function TutorStudentUpdatePage() {
                 </div>
               </div>
 
-              {/* CỘT PHẢI */}
               <div className="right-panel">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', flex: 1 }}>
                   <div className="section-header">Nhận xét sinh viên</div>
@@ -234,7 +219,6 @@ export default function TutorStudentUpdatePage() {
                   />
 
                   <div>
-                    {/* Thêm thuộc tính multiple */}
                     <input
                       type="file"
                       ref={fileInputRef}
@@ -252,7 +236,6 @@ export default function TutorStudentUpdatePage() {
                         <ClipIcon />
                       </div>
 
-                      {/* Ẩn dòng gợi ý nếu đã có ít nhất 1 file */}
                       {selectedFiles.length === 0 && <span className="file-hint">File đính kèm không vượt quá 200MB</span>}
                     </div>
 
@@ -279,7 +262,6 @@ export default function TutorStudentUpdatePage() {
         </div>
       </div>
 
-      {/* Modal */}
       {showSuccessModal && (
         <div className="modal-overlay">
           <div className="modal-box" style={{ width: '450px' }}>

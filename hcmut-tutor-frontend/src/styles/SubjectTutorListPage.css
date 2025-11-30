@@ -1,15 +1,12 @@
-/* Container chính cho bảng */
 .tutor-list-card {
   background: white;
   margin-top: 20px;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  /* Để bo góc hoạt động */
   border: 1px solid #EAECF0;
 }
 
-/* Header của Card */
 .card-header {
   padding: 20px 24px;
   border-bottom: 1px solid #EAECF0;
@@ -30,7 +27,6 @@
   margin-top: 4px;
 }
 
-/* Bảng dữ liệu */
 .tutor-table {
   width: 100%;
   border-collapse: collapse;
@@ -55,7 +51,6 @@
   vertical-align: middle;
 }
 
-/* Cột thông tin Tutor (Avatar + Tên) */
 .tutor-info {
   display: flex;
   align-items: center;
@@ -75,7 +70,6 @@
   font-size: 12px;
 }
 
-/* Badges trạng thái */
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -114,7 +108,6 @@
   background-color: #667085;
 }
 
-/* Nút Chọn */
 .select-btn {
   background-color: #0073B7;
   color: white;
@@ -139,12 +132,10 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  /* Nền tối mờ */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  /* Đè lên mọi thứ */
 }
 
 .modal-box {
@@ -187,18 +178,15 @@
   margin-top: 10px;
 }
 
-/* Icon tròn xanh lá */
 .icon-circle-green {
   width: 48px;
   height: 48px;
   background-color: #D1FADF;
-  /* Màu xanh nhạt nền */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 8px solid #ECFDF3;
-  /* Viền nhạt hơn nữa */
 }
 
 .modal-title {
@@ -210,11 +198,9 @@
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  /* Đẩy nút sang phải */
   gap: 12px;
 }
 
-/* Nút Huỷ (nền trắng) */
 .btn-cancel {
   padding: 10px 18px;
   background: white;
@@ -226,11 +212,9 @@
   cursor: pointer;
 }
 
-/* Nút Xác nhận (nền xanh) */
 .btn-confirm-blue {
   padding: 10px 18px;
   background: #007aff;
-  /* Màu xanh giống trong ảnh */
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -253,7 +237,6 @@
   color: #333;
 }
 
-/* clickable breadcrumb links: no underline by default, underline on hover/focus */
 .breadcrumb-link {
   cursor: pointer;
   text-decoration: none;
@@ -265,16 +248,13 @@
 .breadcrumb-link:focus {
   text-decoration: underline;
   outline: none;
-  /* keep default focus visible if you add custom focus style */
 }
 
-/* separator spacing */
 .breadcrumb-sep {
   margin-right: 8px;
   color: #666;
 }
 
-/* current page text (non-clickable) */
 .breadcrumb-sep.current {
   margin-left: 8px;
   color: #333;

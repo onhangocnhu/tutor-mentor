@@ -1,14 +1,13 @@
-/* Card trắng chứa form */
 .register-subject-card {
   background: white;
   margin-top: 20px;
   padding: 20px 30px;
-  border-radius: 4px; /* Bo góc nhẹ cho đẹp */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 1200px; /* Giới hạn chiều rộng để không bị quá dài */
+  max-width: 1200px;
 }
 
 .card-title {
@@ -24,7 +23,6 @@
   width: 100%;
 }
 
-/* Phần input Môn học */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -49,7 +47,6 @@
   color: black;
 }
 
-/* Nút Tìm kiếm - Style theo mẫu nút xanh */
 .search-btn {
   width: 120px;
   height: 40px;
@@ -71,19 +68,18 @@
   background-color: #006099;
 }
 
-/* --- STYLE CHO MODAL LỖI --- */
 .error-modal {
   width: 598px;
   height: 79px;
-  background: rgba(234, 1, 1, 0.2); /* Màu đỏ nhạt nền (dựa trên RegisterProgramPage) */
-  position: absolute; /* Để đè lên hoặc nằm ở vị trí cố định */
-  top: 50px; /* Cách mép trên, tùy chỉnh cho vừa mắt */
-  right: 40px; /* Nằm bên phải màn hình */
+  background: rgba(234, 1, 1, 0.2);
+  position: absolute;
+  top: 50px;
+  right: 40px;
   display: flex;
   align-items: center;
-  padding-left: 0; 
+  padding-left: 0;
   overflow: hidden;
-  z-index: 100; /* Đảm bảo nổi lên trên các thành phần khác */
+  z-index: 100;
 }
 
 .error-icon {
@@ -95,8 +91,8 @@
 .error-content {
   display: flex;
   align-items: center;
-  padding-left: 20px; /* Khoảng cách với icon */
-  gap: 5px; /* Khoảng cách giữa chữ Lỗi và nội dung */
+  padding-left: 20px;
+  gap: 5px;
 }
 
 .error-title {

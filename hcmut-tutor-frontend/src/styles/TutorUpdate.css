@@ -1,4 +1,3 @@
-/* --- CSS CHO TRANG DANH SÁCH (TABLE) --- */
 .tutor-page-container {
   padding: 0;
   background-color: #ECF0F5;
@@ -8,7 +7,7 @@
 .table-card {
   background: white;
   border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
   overflow: hidden;
 }
@@ -28,11 +27,10 @@
   background-color: #006099;
 }
 
-/* --- CSS CHO TRANG CẬP NHẬT CHI TIẾT (FORM) --- */
 .update-title {
   font-size: 24px;
   font-weight: 700;
-  color: #1a237e; /* Màu xanh đậm tiêu đề */
+  color: #1a237e;
   margin-bottom: 30px;
 }
 
@@ -42,10 +40,9 @@
   background: white;
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Cột trái: Thông tin */
 .left-panel {
   flex: 1;
   display: flex;
@@ -74,7 +71,6 @@
   color: #333;
 }
 
-/* Style cho input readonly (nền xám) */
 .read-only-input {
   background-color: #E9ECEF;
   border: none;
@@ -83,7 +79,7 @@
   color: #495057;
   font-size: 14px;
   font-weight: 500;
-  pointer-events: none; /* Không cho click sửa */
+  pointer-events: none;
 }
 
 .btn-view-list {
@@ -95,10 +91,9 @@
   font-weight: 600;
   cursor: pointer;
   width: fit-content;
-  margin-top: auto; /* Đẩy xuống đáy nếu cần */
+  margin-top: auto;
 }
 
-/* Cột phải: Nhập liệu */
 .right-panel {
   flex: 1.2;
   display: flex;
@@ -130,16 +125,15 @@
   margin-top: 5px;
 }
 
-/* Footer nút bấm bên phải */
 .action-buttons {
   display: flex;
-  justify-content: flex-end; /* Đẩy sang phải */
+  justify-content: flex-end;
   gap: 15px;
   margin-top: 40px;
 }
 
 .btn-exit {
-  background-color: #D1D5DB; /* Màu xám */
+  background-color: #D1D5DB;
   color: white;
   border: none;
   border-radius: 8px;
@@ -158,7 +152,6 @@
   cursor: pointer;
 }
 
-/* Override CSS modal cũ để đẹp hơn */
 .success-modal-content {
   text-align: center;
 }
@@ -182,10 +175,9 @@
   max-width: 100%;
 }
 
-/* Yêu cầu: Mô tả file thành chữ màu đen */
 .file-name {
   font-weight: 500;
-  color: #000000; /* Màu đen tuyệt đối */
+  color: #000000;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -9,7 +9,6 @@ import SideBarOpen from "../../components/SideBarOpen";
 import TopBar from "../../components/TopBar";
 
 export default function SubjectRegistrationPage() {
-  // 2. Thêm state để quản lý ẩn/hiện lỗi
   const [showError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -51,7 +50,6 @@ export default function SubjectRegistrationPage() {
       .catch(() => setSubjects([]));
   }, []);
 
-  // persist selection to localStorage whenever it changes
   useEffect(() => {
     try {
       if (selectedSubject) localStorage.setItem("selectedSubject", selectedSubject);
@@ -62,7 +60,6 @@ export default function SubjectRegistrationPage() {
   }, [selectedSubject]);
 
   const handleSearch = () => {
-    // ensure localStorage is in sync (in case user didn't trigger change)
     try { if (selectedSubject) localStorage.setItem("selectedSubject", selectedSubject); } catch { }
     const url = selectedSubject
       ? `/register-subject/tutors?subject=${encodeURIComponent(selectedSubject)}`
@@ -84,7 +81,7 @@ export default function SubjectRegistrationPage() {
                 width: "100vw",
                 height: "100vh",
                 background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 202, // below SideBarOpen (300) and above topbar (200)
+                zIndex: 202, 
               }}
             />
           )}
@@ -92,7 +89,6 @@ export default function SubjectRegistrationPage() {
 
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
           <TopBar
             menuOpen={menuOpen}
             onMenuClick={() => setMenuOpen(true)}
@@ -109,7 +105,6 @@ export default function SubjectRegistrationPage() {
               </div>
             </div>
 
-            {/* --- 3. KHỐI THÔNG BÁO LỖI (Hiển thị khi showError = true) --- */}
             {showError && (
               <div className="error-modal">
                 <img src={error_icon} alt="error" className="error-icon" />
@@ -136,7 +131,6 @@ export default function SubjectRegistrationPage() {
                 </div>
               </div>
 
-              {/* Gắn hàm handleSearch vào nút bấm */}
               <button className="search-btn" onClick={handleSearch}>
                 Tìm kiếm
               </button>

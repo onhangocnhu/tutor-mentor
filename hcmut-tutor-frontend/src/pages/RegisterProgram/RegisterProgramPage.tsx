@@ -40,24 +40,20 @@ const TermsModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open, on
           boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
         }}
       >
-        {/* header */}
         <div style={{ width: "100%", height: 124, top: 0, left: 0, position: "absolute", background: "white", display: "flex", alignItems: "center", paddingLeft: 36 }}>
           <div style={{ fontSize: 40, fontWeight: 700 }}>
             Điều khoản sử dụng & Chính sách bảo mật
           </div>
         </div>
 
-        {/* content area */}
         <div style={{ position: "absolute", left: 71, top: 124, width: 977, height: 537, overflow: "auto" }}>
           <div style={{ width: 919, marginLeft: 22, background: "rgba(217,217,217,0.11)", padding: 16, borderRadius: 6 }}>
-            {/* replicate multiple placeholder lines like the design */}
             {Array.from({ length: 20 }).map((_, i) => (
               <div key={i} style={{ height: 14, background: "rgba(0,0,0,0.20)", borderRadius: 4, marginBottom: 12 }} />
             ))}
           </div>
         </div>
 
-        {/* footer / exit button */}
         <div style={{ position: "absolute", right: 36, bottom: 36, display: "flex", gap: 12 }}>
           <button
             onClick={onClose}
@@ -101,7 +97,6 @@ const RegisterProgramPage: React.FC = () => {
   const hideTimerRef = useRef<number | null>(null);
   const navTimerRef = useRef<number | null>(null);
 
-  // load current student info from backend and populate the form values (read-only)
   useEffect(() => {
     const loadStudent = async () => {
       try {
@@ -162,7 +157,6 @@ const RegisterProgramPage: React.FC = () => {
       : null;
 
     if (!cookieRole || decodeURIComponent(cookieRole) !== "student") {
-      // go to centralized unauthorized page
       navigate("/unauthorized");
     }
   }, [navigate]);
@@ -194,7 +188,6 @@ const RegisterProgramPage: React.FC = () => {
 
       {menuOpen && <div className="register-drawer-overlay" onClick={() => setMenuOpen(false)} />}
 
-      {/* drawer component */}
       <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
       <SidebarRail wrapperClass="register-sidebar-rail" imgClass="sidebar-avatar" />
 
@@ -204,7 +197,6 @@ const RegisterProgramPage: React.FC = () => {
       <div className="register-ribbon-text">Đăng ký tham gia chương trình</div>
       <div className="register-edit-circle"><img src={edit_icon} alt="edit" style={{ width: 20, height: 20 }} /></div>
 
-      {/* main white card (form) */}
       <div className="register-form-card">
         <div className="register-form-card-header">Kiểm tra thông tin cá nhân</div>
 
@@ -265,10 +257,8 @@ const RegisterProgramPage: React.FC = () => {
         <img className="register-checkbox" src={agreed ? checkbox_true : checkbox_none} alt={agreed ? "checked" : "unchecked"} onClick={() => { const next = !agreed; setAgreed(next); if (next) setShowAgreeError(false); }} />
       </div>
 
-      {/* render modal */}
       <TermsModal open={termsOpen} onClose={() => setTermsOpen(false)} />
 
-      {/* Confirmation block shown after register */}
       {registered && (
         <div className="register-confirm">
           <div className="confirm-header">Xác nhận đơn đăng ký</div>
@@ -281,19 +271,6 @@ const RegisterProgramPage: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* error alert shown when user clicks Đăng ký without agreeing (auto-fade after 4s) */}
-      {/* {showAgreeError && (
-        // <div className={`register-error-alert ${errorFading ? "fading" : ""}`} >
-        <div className={`register-error-alert ${errorFading ? "fading" : ""}`} >
-          <div className="box">
-            <div className="text-wrap">
-              Lỗi: Vui lòng đồng ý với <strong style={{ whiteSpace: "nowrap", color: "#D50100", fontWeight: 700 }}>Điều khoản sử dụng và Chính sách bảo mật</strong> trước khi nhấn Đăng ký.
-            </div>
-          </div>
-          <img src={error_icon} alt="error" />
-        </div>
-      )} */}
 
       {showAgreeError && (
         <div className={`register-error-alert ${errorFading ? "fading" : ""}`}>

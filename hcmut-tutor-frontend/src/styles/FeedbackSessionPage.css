@@ -1,7 +1,7 @@
 .session-detail-card {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 24px;
   margin-top: 20px;
 }
@@ -16,7 +16,6 @@
   gap: 12px;
 }
 
-
 .star-rating {
   display: flex;
   gap: 8px;
@@ -29,7 +28,9 @@
   transition: transform 0.2s;
 }
 
-.star-icon:hover { transform: scale(1.2); }
+.star-icon:hover {
+  transform: scale(1.2);
+}
 
 .rating-row {
   display: flex;
@@ -68,7 +69,9 @@
   margin-top: 20px;
 }
 
-.cancel-btn, .submit-btn, .add-feedback-btn {
+.cancel-btn,
+.submit-btn,
+.add-feedback-btn {
   padding: 12px 32px;
   border: none;
   border-radius: 8px;
@@ -91,7 +94,9 @@
   color: white;
 }
 
-.submit-btn:hover { background: #0052a3; }
+.submit-btn:hover {
+  background: #0052a3;
+}
 
 .existing-feedback {
   margin-top: 20px;
@@ -119,11 +124,12 @@
   top: 20px;
   right: 20px;
   padding: 15px 25px;
-  background: rgba(213, 0, 0, 0.8); /* đỏ, trong suốt */
+  background: rgba(213, 0, 0, 0.8);
+  /* đỏ, trong suốt */
   color: white;
   font-weight: 600;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 3000;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
@@ -135,16 +141,15 @@
 }
 
 .kebab-container {
-  position: relative;       
-  margin-left: auto;        
+  position: relative;
+  margin-left: auto;
 }
 
-/* Dropdown hiện ngay dưới icon kebab */
 .kebab-dropdown {
   position: absolute;
-  top: 100%;               
-  right: 0;                
-  margin-top: 4px;          
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -190,7 +195,6 @@
   background: #eee;
 }
 
-
 .feedback-header {
   display: flex;
   justify-content: space-between;
@@ -215,6 +219,11 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

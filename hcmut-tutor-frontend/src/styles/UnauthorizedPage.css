@@ -62,7 +62,6 @@
   outline-offset: 2px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 480px) {
   .unauth-box {
     padding: 18px;

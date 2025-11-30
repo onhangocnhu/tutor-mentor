@@ -1,4 +1,3 @@
-// src/pages/Feedback/FeedbackSession/FeedbackSessionPage.tsx
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import home_icon from "../../images/Home.svg";
@@ -69,22 +68,32 @@ export default function FeedbackSessionPage() {
 
 
   useEffect(() => {
-    if (!studentId) {
-      alert("Vui lòng đăng nhập!");
-      navigate("/login");
+    const cookieRole = document.cookie
+      .split(";")
+      .map((s) => s.trim())
+      .find((s) => s.startsWith("role="))
+      ? document.cookie
+        .split(";")
+        .map((s) => s.trim())
+        .find((s) => s.startsWith("role="))!
+        .split("=")[1]
+      : null;
+
+    if (!cookieRole || decodeURIComponent(cookieRole) !== "student") {
+      navigate("/unauthorized");
     }
-  }, [studentId, navigate]);
+  }, [navigate]);
 
   const [contentRating, setContentRating] = useState(0);
   const [paceRating, setPaceRating] = useState(0);
   const [understandingRating, setUnderstandingRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const subjectName = subjectCode 
+  const subjectName = subjectCode
     ? (subjectNameMap[subjectCode] || "Môn học không xác định")
     : "Môn học";
 
-  const fullSubjectDisplay = subjectCode 
+  const fullSubjectDisplay = subjectCode
     ? `${subjectCode} - ${subjectName}`
     : "Môn học";
   const session = sessions.find(s => s.id === sessionId);
@@ -151,7 +160,7 @@ export default function FeedbackSessionPage() {
 
   const StarRating = ({ rating, setRating, readonly = false }: any) => (
     <div className="star-rating">
-      {[1,2,3,4,5].map(n => (
+      {[1, 2, 3, 4, 5].map(n => (
         <img
           key={n}
           src={n <= rating ? star_filled : star_empty}
@@ -181,7 +190,7 @@ export default function FeedbackSessionPage() {
                   Các khóa học của tôi
                 </Link>
                 →
-                <Link 
+                <Link
                   to={`/feedback/${subjectCode}/${studentId}/${semester}`}
                   className="breadcrumb-link"
                 >
@@ -216,32 +225,32 @@ export default function FeedbackSessionPage() {
               ) : existingFeedback ? (
                 <div className="existing-feedback">
                   <div className="feedback-header">
-                  <div>Đánh giá của bạn</div>
-                  <div className="kebab-container">
-                    <img
-                      src={kebab_icon}
-                      className="kebab-icon"
-                      alt="menu"
-                      onClick={() => setKebabOpen(!kebabOpen)}
-                    />
-                    {kebabOpen && (
-                      <div className="kebab-dropdown">
-                        <div onClick={startEdit}>Chỉnh sửa</div>
-                        <div
-                          onClick={() => {
-                            setLocalFeedbacks(prev =>
-                              prev.filter(f => f.id !== existingFeedback?.id)
-                            );
-                            setKebabOpen(false);
-                          }}
-                          style={{ color: "red" }}
-                        >
-                          Xóa đánh giá
+                    <div>Đánh giá của bạn</div>
+                    <div className="kebab-container">
+                      <img
+                        src={kebab_icon}
+                        className="kebab-icon"
+                        alt="menu"
+                        onClick={() => setKebabOpen(!kebabOpen)}
+                      />
+                      {kebabOpen && (
+                        <div className="kebab-dropdown">
+                          <div onClick={startEdit}>Chỉnh sửa</div>
+                          <div
+                            onClick={() => {
+                              setLocalFeedbacks(prev =>
+                                prev.filter(f => f.id !== existingFeedback?.id)
+                              );
+                              setKebabOpen(false);
+                            }}
+                            style={{ color: "red" }}
+                          >
+                            Xóa đánh giá
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
                   <div className="rating-row"><span>Nội dung giảng dạy</span><StarRating rating={existingFeedback.contentRating} readonly /></div>
                   <div className="rating-row"><span>Tốc độ giảng dạy</span><StarRating rating={existingFeedback.paceRating} readonly /></div>
                   <div className="rating-row"><span>Mức độ hiểu bài</span><StarRating rating={existingFeedback.understandingRating} readonly /></div>

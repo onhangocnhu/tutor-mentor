@@ -35,7 +35,7 @@ export default function NewSessionPage() {
   const handleAdd = async (formData: Session) => {
     try {
       const response = await fetch("http://localhost:3001/sessions", {
-        method : "POST",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       })
@@ -62,8 +62,7 @@ export default function NewSessionPage() {
 
   return (
     <div className="form-page relative min-h-screen flex bg-gray-100">
-      
-      {/* Overlay khi menu mở */}
+
       {menuOpen && (
         <div
           onClick={() => setMenuOpen(false)}
@@ -71,23 +70,18 @@ export default function NewSessionPage() {
         />
       )}
 
-      {/* Collapsed sidebar (luôn hiện) */}
       <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-      {/* Drawer sidebar khi menu mở */}
       <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      {/* Main content area */}
       <div className="flex-1 flex flex-col">
-        
-        {/* HEADER */}
+
         <TopBar
           menuOpen={menuOpen}
           onMenuClick={() => setMenuOpen(true)}
           onLogoClick={() => navigate("/student-dashboard")}
         />
 
-        {/* CONTENT */}
         <main className="flex-1 flex justify-center items-start p-6">
           {isLoading ? (
             <div className="text-gray-500 text-lg">Loading...</div>
@@ -102,7 +96,6 @@ export default function NewSessionPage() {
           )}
         </main>
 
-        {/* Success modal */}
         {showSuccess && <SuccessModal message={successMessage} />}
       </div>
     </div>

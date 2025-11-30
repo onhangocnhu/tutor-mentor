@@ -44,7 +44,6 @@ const HistoryPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<"all" | "borrowed" | "returned">("all");
   const [loading, setLoading] = useState(true);
 
-  // Modal states
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
@@ -129,12 +128,10 @@ const HistoryPage: React.FC = () => {
   const handleDownload = async (document: Document) => {
     if (document.filePath) {
       try {
-        // Increment download count
         await fetch(`${API_BASE}/library/documents/${document.id}/download`, {
           method: "POST",
         });
 
-        // Open PDF in new tab for download
         window.open(`${API_BASE}${document.filePath}`, "_blank");
       } catch (error) {
         console.error("Error downloading:", error);
@@ -273,7 +270,6 @@ const HistoryPage: React.FC = () => {
                     : "border-amber-500"
                   }`}
               >
-                {/* Cover Image */}
                 <div className="w-20 h-28 shrink-0 rounded-lg overflow-hidden shadow">
                   {coverUrl ? (
                     <img
@@ -294,7 +290,6 @@ const HistoryPage: React.FC = () => {
                   )}
                 </div>
 
-                {/* Info */}
                 <div className="flex-1">
                   <h3
                     className="text-lg font-semibold text-gray-800 hover:text-blue-600 cursor-pointer mb-1"
@@ -307,7 +302,6 @@ const HistoryPage: React.FC = () => {
                   </p>
 
                   <div className="flex items-center gap-4 flex-wrap">
-                    {/* Status Badge */}
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${isOverdue
                         ? "bg-red-200 text-red-700"
@@ -342,7 +336,6 @@ const HistoryPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Actions */}
                 <div className="flex items-center gap-2">
                   <button
                     className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
@@ -407,7 +400,6 @@ const HistoryPage: React.FC = () => {
 
       <FooterSection />
 
-      {/* Document Detail Modal */}
       {selectedDocument && (
         <BookDetailModal
           document={{
@@ -421,7 +413,6 @@ const HistoryPage: React.FC = () => {
         />
       )}
 
-      {/* PDF Preview Modal */}
       <PdfPreviewModal
         filePath={previewFilePath}
         documentTitle={previewTitle}

@@ -6,7 +6,6 @@
   overflow: hidden;
 }
 
-/* top blue bar and left small square */
 .register-topbar {
   width: 100vw;
   height: 70px;
@@ -23,7 +22,6 @@
   cursor: pointer;
 }
 
-/* Bk text */
 .register-bk {
   width: 117px;
   height: 29px;
@@ -39,7 +37,6 @@
   font-weight: 700;
 }
 
-/* menu icon next to Bk */
 .register-menu-btn {
   position: absolute;
   left: 90px;
@@ -52,7 +49,6 @@
   z-index: 210;
 }
 
-/* overlay used by drawer */
 .register-drawer-overlay {
   position: fixed;
   left: 0;
@@ -63,7 +59,6 @@
   z-index: 200;
 }
 
-/* left rail (sidebar strip) */
 .register-sidebar-rail {
   width: 70px;
   height: 100vh;
@@ -347,7 +342,6 @@
   pointer-events: none;
 }
 
-/* nhỏ hơn nữa thì giảm lề phải để vừa khung */
 @media (max-width: 420px) {
   .register-error-alert {
     right: 8px;

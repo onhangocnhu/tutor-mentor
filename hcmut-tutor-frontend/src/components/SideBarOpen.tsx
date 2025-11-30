@@ -16,26 +16,21 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
   const [ctsvOpen, setCtsvOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // Logout handler
   const handleLogout = () => {
-    // Clear all cookies
     document.cookie.split(";").forEach((cookie) => {
       const [name] = cookie.split("=");
       document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     });
     
-    // Clear localStorage/sessionStorage if used
     localStorage.clear();
     sessionStorage.clear();
     
-    // Navigate to login page
     onClose();
     navigate("/");
   };
 
   useEffect(() => {
     if (!open) return;
-    // read username and role from cookie (set at login)
     const cookie = document.cookie || "";
     let username: string | null = null;
     let cookieRole: string | null = null;
@@ -45,7 +40,6 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
       if (k === "role") cookieRole = decodeURIComponent(v || "");
     });
 
-    // compute immediate display values, but defer state updates to avoid synchronous setState in effect
     let immediateFullName: string | null = null;
     let immediateFaculty: string | null = null;
 
@@ -60,14 +54,12 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
       immediateFaculty = "Bách khoa";
     }
 
-    // Defer state updates to the next microtask to avoid cascading renders inside the effect
     Promise.resolve().then(() => {
       setRole(cookieRole);
       if (immediateFullName !== null) setFullName(immediateFullName);
       if (immediateFaculty !== null) setFaculty(immediateFaculty);
     });
 
-    // for student/tutor, fetch corresponding endpoint if username is available
     if (!username) return;
 
     const endpoint = cookieRole === "tutor"
@@ -111,7 +103,6 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
         pointerEvents: "auto",
       }}
     >
-      {/* header (matches topbar style) */}
       <div
         style={{
           height: 70,
@@ -122,7 +113,6 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
           paddingLeft: 48,
         }}
       >
-        {/* clickable icon at top-right that closes the drawer (replaces topbar img) */}
         <img
           src={menu_icon}
           alt="close"
@@ -169,14 +159,12 @@ const SideBarOpen: React.FC<SideBarOpenProps> = ({ open, onClose }) => {
                 { label: "Cổng thư viện", path: "/library" },
               ],
               ctsv: [
-                // keep only real items here; the "Kết quả tham gia chương trình" label will be rendered as a toggle below
                 { label: "Cổng thư viện", path: "/library" },
               ],
             };
 
             if (!role) return null;
 
-            // when CT-SV, show the toggle + submenu (uses .sidebar-item, .chevron, .submenu, .submenu-item from your CSS)
             if (role === "ctsv") {
               const items = menuMap.ctsv || [];
               return (

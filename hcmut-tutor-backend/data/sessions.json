@@ -32,22 +32,6 @@
     "students": []
   },
   {
-    "id": "C138036",
-    "date": "15/09/2025",
-    "time": "14:00",
-    "format": "Trực tuyến",
-    "location": "Meet - link",
-    "studentCount": 40,
-    "department": "Cấu trúc rời rạc",
-    "status": "Đã diễn ra",
-    "notes": "",
-    "tutor": "Nguyễn Văn An",
-    "report": false,
-    "duration": null,
-    "actualParticipants": null,
-    "students": []
-  },
-  {
     "id": "C138039",
     "date": "16/9/2025",
     "time": "14:00",

@@ -122,7 +122,6 @@ const ShareDocsPage: React.FC = () => {
       setSubmitting(true);
       setUploadProgress(10);
 
-      // Create FormData for file upload
       const formData = new FormData();
       formData.append('file', file);
       formData.append('title', title);
@@ -150,7 +149,6 @@ const ShareDocsPage: React.FC = () => {
 
       if (data.success) {
         alert("Đăng tải tài liệu thành công! Ảnh bìa đã được tự động trích xuất từ trang đầu tiên của PDF.");
-        // Reset form
         setTitle("");
         setAuthor("");
         setYear("");
@@ -162,7 +160,6 @@ const ShareDocsPage: React.FC = () => {
         setAgreed(false);
         setDocumentType("digital");
         setUploadProgress(0);
-        // Navigate to library home
         navigate("/library");
       } else {
         alert(data.message || "Có lỗi xảy ra");
@@ -209,7 +206,6 @@ const ShareDocsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Document Info */}
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-3 text-slate-800">Thông tin tài liệu</h3>
 
@@ -300,7 +296,6 @@ const ShareDocsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* File Upload */}
           <div className="mb-6">
             <label className="block text-xl font-semibold mb-3 text-slate-800">Đính kèm tài liệu (PDF) *</label>
             <div className="flex gap-4 items-center">
@@ -337,7 +332,6 @@ const ShareDocsPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Upload Progress */}
           {submitting && uploadProgress > 0 && (
             <div className="mb-6">
               <div className="w-full bg-gray-200 rounded-full h-3">
@@ -352,7 +346,6 @@ const ShareDocsPage: React.FC = () => {
             </div>
           )}
 
-          {/* Footer */}
           <div className="flex justify-between items-center">
             <label className="flex items-center gap-2 cursor-pointer">
               <input

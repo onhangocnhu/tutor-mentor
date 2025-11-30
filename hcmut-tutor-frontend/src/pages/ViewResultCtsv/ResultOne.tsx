@@ -1,7 +1,7 @@
 import home_icon from "../../images/Home.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import resultsData from "../../../results.json";
+import resultsData from "../../../../hcmut-tutor-backend/data/results.json";
 import { jsPDF } from "jspdf";
 import "../../styles/CtsvIndexPage.css";
 import '../../styles/IndexPage.css';
@@ -128,13 +128,10 @@ export default function ResultOnePage() {
             />
           )}
 
-          {/* collapsed sidebar (always present) */}
           <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-          {/* render drawer component (separate component) */}
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
           <TopBar
             menuOpen={menuOpen}
             onMenuClick={() => setMenuOpen(true)}
@@ -151,11 +148,9 @@ export default function ResultOnePage() {
               </div>
             </div>
 
-            {/* Khối chính trắng */}
             <div className="lookup-card">
               <div className="lookup-card-title">Điền thông tin tra cứu</div>
 
-              {/* Form nhập thông tin */}
               <div className="lookup-form">
                 <div className="lookup-form-row">
                   <label>Mã số sinh viên</label>
@@ -177,6 +172,8 @@ export default function ResultOnePage() {
                     >
                       <option>Học kỳ 1 năm học 2024-2025</option>
                       <option>Học kỳ 2 năm học 2024-2025</option>
+                      <option>Học kỳ 1 năm học 2024-2026</option>
+                      <option>Học kỳ 2 năm học 2024-2026</option>
                     </select>
                     <span className="custom-arrow">▼</span>
                   </div>
@@ -262,14 +259,9 @@ export default function ResultOnePage() {
 
               </div>
             )}
-
-
-
-
           </main>
-
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }

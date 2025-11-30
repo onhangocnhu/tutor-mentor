@@ -19,7 +19,6 @@ const TutorSchedule: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Dữ liệu giả lập 
   const scheduleData: ClassSession[] = [
     { id: 1, className: 'DSA1', subjectName: 'Cấu trúc Dữ liệu và Giải Thuật', location: 'https://meet.google.com/...', day: 3, time: '9:00-11:50' },
     { id: 2, className: 'DS1', subjectName: 'Hệ cơ sở dữ liệu', location: 'https://meet.google.com/...', day: 3, time: '13:00-15:50' },
@@ -28,11 +27,11 @@ const TutorSchedule: React.FC = () => {
   ];
 
   const handleToggleForm = () => {
-    setShowAddForm(true); // Hiện form khi bấm nút
+    setShowAddForm(true);
   };
 
   const handleCancel = () => {
-    setShowAddForm(false); // Ẩn form khi bấm Thoát
+    setShowAddForm(false);
   };
 
   useEffect(() => {
@@ -54,7 +53,6 @@ const TutorSchedule: React.FC = () => {
 
   return (
     <div className="app-container">
-      {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
       {menuOpen && (
         <div
           onClick={() => setMenuOpen(false)}
@@ -74,14 +72,12 @@ const TutorSchedule: React.FC = () => {
 
       <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      {/* HEADER (using TopBar component) */}
       <TopBar
         menuOpen={menuOpen}
         onMenuClick={() => setMenuOpen(true)}
         onLogoClick={() => navigate("/tutor-dashboard")}
       />
 
-      {/* Nội dung chính bên phải */}
       <main className="main-content">
         <div className="content-body">
           <div className="page-title-section">
@@ -89,7 +85,6 @@ const TutorSchedule: React.FC = () => {
             <span className="week-info">Tuần 42 (27/10 - 02/11)</span>
           </div>
 
-          {/* Phần Lịch dạy - Table */}
           <div className="session-wrapper">
             <section className="schedule-section">
               <div className="section-header-bar">Lịch dạy</div>
@@ -125,14 +120,12 @@ const TutorSchedule: React.FC = () => {
             </section>
           </div>
 
-          {/* Nút kích hoạt form  */}
           <div className="action-bar">
             <button className="btn-setup" onClick={handleToggleForm}>
               Thiết lập lịch rảnh
             </button>
           </div>
 
-          {/* Form thêm lịch rảnh (Chỉ hiện khi showAddForm = true ) */}
           {showAddForm && (
             <section className="add-schedule-form fade-in">
               <h2>Thêm lịch rảnh</h2>

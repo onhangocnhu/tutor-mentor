@@ -1,4 +1,3 @@
-// AddStudentModal.tsx
 import type { ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
 import React from 'react';
@@ -18,7 +17,6 @@ const AddStudentModal: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Xử lý submit, ví dụ gửi dữ liệu lên API
     console.log({ mssv, fullName, className, email });
     alert('Đã thêm sinh viên thành công!');
     handleCancel();
@@ -33,15 +31,12 @@ const AddStudentModal: React.FC = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg overflow-hidden p-6">
-        {/* Header */}
         <div className="mb-6">
           <h2 className="text-2xl font-semibold text-black">Thêm sinh viên</h2>
           <div className="border-b border-gray-300 mt-2" />
         </div>
 
-        {/* Form */}
         <form className="space-y-4" onSubmit={handleSubmit}>
-          {/* MSSV */}
           <div className="flex flex-col">
             <label className="text-gray-700 font-medium mb-1">MSSV</label>
             <input
@@ -53,7 +48,6 @@ const AddStudentModal: React.FC = () => {
             />
           </div>
 
-          {/* Họ và tên */}
           <div className="flex flex-col">
             <label className="text-gray-700 font-medium mb-1">Họ và tên</label>
             <input
@@ -65,7 +59,6 @@ const AddStudentModal: React.FC = () => {
             />
           </div>
 
-          {/* Lớp */}
           <div className="flex flex-col">
             <label className="text-gray-700 font-medium mb-1">Lớp</label>
             <select
@@ -79,7 +72,6 @@ const AddStudentModal: React.FC = () => {
             </select>
           </div>
 
-          {/* Email */}
           <div className="flex flex-col">
             <label className="text-gray-700 font-medium mb-1">Email</label>
             <input
@@ -91,7 +83,6 @@ const AddStudentModal: React.FC = () => {
             />
           </div>
 
-          {/* Buttons */}
           <div className="mt-6 flex justify-end gap-4">
             <button
               type="button"

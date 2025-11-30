@@ -80,12 +80,9 @@ export default function PDTIndexPage() {
   };
 
   return (
-    // outer full-width background wrapper
     <div className="page-outer">
-      {/* inner centered container to prevent large white gutter on the right */}
       <div className="page-inner">
         <div className="student-page">
-          {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
           {menuOpen && (
             <div
               onClick={() => setMenuOpen(false)}
@@ -96,18 +93,15 @@ export default function PDTIndexPage() {
                 width: "100vw",
                 height: "100vh",
                 background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 202, // below SideBarOpen (300) and above topbar (200)
+                zIndex: 202,
               }}
             />
           )}
 
-          {/* collapsed sidebar (always present) */}
           <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-          {/* render drawer component (separate component) */}
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
           <TopBar
             menuOpen={menuOpen}
             onMenuClick={() => setMenuOpen(true)}
@@ -126,12 +120,9 @@ export default function PDTIndexPage() {
               </div>
             </div>
 
-            {/* THỐNG KÊ USAGE SECTION */}
             <h2 className="section-title">Thống kê sử dụng</h2>
 
             <div className="usage-row">
-              {/* LEFT BAR CHART */}
-
               <div className="chart-card">
                 <div className="chart-header">Thống kê tần suất đăng nhập</div>
                 <div className="chart">

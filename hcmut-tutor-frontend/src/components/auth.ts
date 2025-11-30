@@ -12,7 +12,6 @@ export const getCurrentUsername = (): string | null => {
   return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
 };
 
-// Lấy studentId từ username
 export const getCurrentStudentId = (): string | null => {
   const username = getCurrentUsername();
   if (!username) return null;
@@ -21,7 +20,6 @@ export const getCurrentStudentId = (): string | null => {
   return student?.studentId || null;
 };
 
-// Lấy fullName
 export const getCurrentStudentName = (): string | null => {
   const username = getCurrentUsername();
   if (!username) return null;

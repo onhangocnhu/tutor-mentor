@@ -9,7 +9,6 @@
 .sr-container {
   flex: 1 1 0;
   max-width: calc(100% - 320px);
-  /* leave space for right column on wide screens */
   background: transparent;
 }
 
@@ -67,7 +66,6 @@
   padding: 12px;
 }
 
-/* each result row (responsive stacked blocks instead of absolute boxes) */
 .sr-row {
   background: #EEEEEE;
   border: 1px solid #D2D6DE;
@@ -76,7 +74,6 @@
   border-radius: 4px;
 }
 
-/* meta area under the list (pagination / last evaluated) */
 .sr-meta {
   display: flex;
   align-items: center;
@@ -109,13 +106,11 @@
   font-size: 20px;
 }
 
-/* right column card keeps previous styles */
 .last-login-wrapper {
   width: 300px;
   min-width: 240px;
 }
 
-/* responsive adjustments */
 @media (max-width: 1100px) {
   .student-reviews-wrapper {
     flex-direction: column;

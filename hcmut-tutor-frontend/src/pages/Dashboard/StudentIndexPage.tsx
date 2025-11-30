@@ -54,7 +54,6 @@ export default function StudentIndexPage() {
       : null;
 
     if (!cookieRole || decodeURIComponent(cookieRole) !== "student") {
-      // redirect to unauthorized page which will then redirect to correct dashboard/login
       navigate("/unauthorized");
     }
   }, [navigate]);

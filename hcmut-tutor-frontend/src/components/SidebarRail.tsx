@@ -2,8 +2,8 @@ import React from "react";
 import hcmut_logo from "../images/hcmut_logo.png";
 
 type SidebarRailProps = {
-  wrapperClass?: string; // css class for wrapper (e.g. "sidebar" or "register-sidebar-rail")
-  imgClass?: string; // css class for the img (e.g. "sidebar-avatar" or "register-logo")
+  wrapperClass?: string;
+  imgClass?: string;
   onClick?: () => void;
   alt?: string;
 };

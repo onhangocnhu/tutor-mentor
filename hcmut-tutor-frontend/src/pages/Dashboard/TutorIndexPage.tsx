@@ -111,12 +111,9 @@ export default function TutorIndexPage() {
   };
 
   return (
-    // outer full-width background wrapper
     <div className="page-outer">
-      {/* inner centered container to prevent large white gutter on the right */}
       <div className="page-inner">
         <div className="student-page">
-          {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
           {menuOpen && (
             <div
               onClick={() => setMenuOpen(false)}
@@ -127,7 +124,7 @@ export default function TutorIndexPage() {
                 width: "100vw",
                 height: "100vh",
                 background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 202, // below SideBarOpen (203) and above topbar (201)
+                zIndex: 202, 
               }}
             />
           )}
@@ -136,7 +133,6 @@ export default function TutorIndexPage() {
 
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
           <TopBar
             menuOpen={menuOpen}
             onMenuClick={() => setMenuOpen(true)}
@@ -156,12 +152,9 @@ export default function TutorIndexPage() {
               </div>
             </div>
 
-            {/* THỐNG KÊ USAGE SECTION */}
             <h2 className="section-title">Thống kê sử dụng</h2>
 
             <div className="usage-row">
-              {/* LEFT BAR CHART */}
-
               <div className="chart-card">
                 <div className="chart-header">Thống kê tần suất đăng nhập</div>
                 <div className="chart">

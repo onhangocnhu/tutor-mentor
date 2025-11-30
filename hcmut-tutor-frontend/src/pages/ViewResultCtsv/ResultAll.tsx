@@ -1,7 +1,7 @@
 import home_icon from "../../images/Home.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import resultsData from "../../../results.json";
+import resultsData from "../../../../hcmut-tutor-backend/data/results.json";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/CtsvIndexPage.css";
@@ -50,7 +50,6 @@ export default function ResultAllPage() {
       : null;
 
     if (!cookieRole || decodeURIComponent(cookieRole) !== "ctsv") {
-      // redirect to unauthorized page which will then redirect to correct dashboard/login
       navigate("/unauthorized");
     }
   }, [navigate]);
@@ -75,9 +74,9 @@ export default function ResultAllPage() {
 
     // 1. Add font tùy chỉnh
     doc.addFileToVFS("font-times-new-roman.ttf", TNRFont);
-    doc.addFont("font-times-new-roman.ttf", "TimesNewRoman", "normal"); // tên font gọn, không dấu
+    doc.addFont("font-times-new-roman.ttf", "TimesNewRoman", "normal"); 
     doc.addFont("font-times-new-roman.ttf", "TimesNewRoman", "bold");
-    doc.setFont("TimesNewRoman"); // font mặc định cho doc
+    doc.setFont("TimesNewRoman");
     doc.setFontSize(16);
     doc.text("Kết quả tham gia toàn bộ sinh viên", 105, 20, { align: "center" });
 
@@ -101,7 +100,6 @@ export default function ResultAllPage() {
       r.score,
     ]);
 
-    // 2. AutoTable
     autoTable(doc, {
       head: [headers],
       body: tableData,
@@ -132,13 +130,10 @@ export default function ResultAllPage() {
             />
           )}
 
-          {/* collapsed sidebar (always present) */}
           <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-          {/* render drawer component (separate component) */}
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
           <TopBar
             menuOpen={menuOpen}
             onMenuClick={() => setMenuOpen(true)}

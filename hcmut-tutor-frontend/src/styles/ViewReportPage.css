@@ -22,10 +22,8 @@
   margin-top: 30px;
   display: flex;
   flex-direction: row;
-  /* flex-wrap: nowrap; */
 }
 
-/* new styles moved from inline */
 .report-panel {
   width: 1212px;
   height: 247px;

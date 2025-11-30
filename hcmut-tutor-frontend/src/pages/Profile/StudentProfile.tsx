@@ -63,7 +63,6 @@ const StudentProfile: React.FC = () => {
   // 3. Render
   return (
     <div className="app-container">
-      {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
       {menuOpen && (
         <div
           onClick={() => setMenuOpen(false)}
@@ -79,20 +78,16 @@ const StudentProfile: React.FC = () => {
         />
       )}
 
-      {/* collapsed sidebar (always present) */}
       <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-      {/* render drawer component (separate component) */}
       <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      {/* HEADER (using TopBar component) */}
       <TopBar
         menuOpen={menuOpen}
         onMenuClick={() => setMenuOpen(true)}
         onLogoClick={() => navigate("/student-dashboard")}
       />
 
-      {/* --- Main Content --- */}
       <main className="main-content">
         <div className="content-body">
           <div className="page-title-section profile-title">
@@ -100,7 +95,6 @@ const StudentProfile: React.FC = () => {
             <span className="update-info">Thời điểm cập nhật gần nhất: {studentData.lastUpdate}</span>
           </div>
 
-          {/* SECTION 1: CÁ NHÂN */}
           <section className="info-section">
             <div className="section-header-bar">Thông tin cá nhân</div>
             <div className="info-content-box profile-layout">
@@ -146,7 +140,6 @@ const StudentProfile: React.FC = () => {
             </div>
           </section>
 
-          {/* SECTION 2: LIÊN LẠC */}
           <section className="info-section">
             <div className="section-header-bar">Thông tin liên lạc</div>
             <div className="info-content-box">

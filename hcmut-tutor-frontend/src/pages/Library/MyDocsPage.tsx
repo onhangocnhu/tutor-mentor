@@ -75,12 +75,10 @@ const MyDocsPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [borrowedDocIds, setBorrowedDocIds] = useState<string[]>([]);
 
-  // PDF Preview states
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [previewFilePath, setPreviewFilePath] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
-  // Expand states for "Xem tất cả"
   const [expandSaved, setExpandSaved] = useState(false);
   const [expandBorrowed, setExpandBorrowed] = useState(false);
   const [expandDownloaded, setExpandDownloaded] = useState(false);
@@ -113,13 +111,11 @@ const MyDocsPage: React.FC = () => {
         });
       }
       if (savedData.success) {
-        // Filter out saved documents that don't exist anymore
         const validSaved = savedData.saved.filter((s: SavedDocument) => s.document !== null);
         setSavedDocs(validSaved);
         setSavedDocIds(validSaved.map((s: SavedDocument) => s.documentId));
       }
       if (historyData.success) {
-        // Filter out history records for non-existent documents
         const validHistory = historyData.history.filter((h: BorrowRecord) => h.document !== null);
         const borrowed = validHistory.filter((h: BorrowRecord) => h.status === "borrowed" || h.status === "overdue");
         const downloaded = validHistory.filter((h: BorrowRecord) => h.status === "returned");
@@ -137,7 +133,6 @@ const MyDocsPage: React.FC = () => {
     setSelectedBook(book);
     setIsModalOpen(true);
 
-    // Increment view count
     try {
       await fetch(`${API_BASE}/library/documents/${book.id}/view`, {
         method: "POST",
@@ -296,7 +291,6 @@ const MyDocsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Tài liệu đã lưu */}
         <section className="mb-12">
           <div className="flex justify-between items-center mb-4">
             <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">
@@ -338,7 +332,6 @@ const MyDocsPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Tài liệu đang mượn */}
         <section className="mb-12">
           <div className="flex justify-between items-center mb-4">
             <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">
@@ -381,7 +374,6 @@ const MyDocsPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Tài liệu đã tải về */}
         <section className="mb-12">
           <div className="flex justify-between items-center mb-4">
             <div className="text-slate-800 text-2xl font-normal font-['Inter'] leading-8">

@@ -3,12 +3,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 type Student = {
-  username: string;    // username để match với backend
+  username: string;
   studentId: string;
   classCode: string;
   fullName: string;
   email: string;
-  faculty:string;
+  faculty: string;
 };
 
 export default function StudentListPage(): React.JSX.Element {
@@ -17,7 +17,6 @@ export default function StudentListPage(): React.JSX.Element {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  // Fetch students từ backend
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -35,7 +34,6 @@ export default function StudentListPage(): React.JSX.Element {
     fetchStudents();
   }, []);
 
-  // Filter dữ liệu theo query
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return students;
@@ -100,10 +98,10 @@ export default function StudentListPage(): React.JSX.Element {
               <tr>
                 <th className="px-3 py-2">MSSV</th>
                 <th className="px-3 py-2">Họ và tên</th>
-                 <th className="px-3 py-2">Email</th>
+                <th className="px-3 py-2">Email</th>
                 <th className="px-3 py-2">Lớp</th>
                 <th className="px-3 py-2">Khoa</th>
-               
+
               </tr>
             </thead>
             <tbody>
@@ -120,7 +118,7 @@ export default function StudentListPage(): React.JSX.Element {
                   <td className="px-3 py-3 align-top text-slate-600">{s.email}</td>
                   <td className="px-3 py-3 align-top">{s.classCode}</td>
                   <td className="px-3 py-3 align-top text-slate-700">{s.faculty}</td>
-                  
+
                 </tr>
               ))}
             </tbody>

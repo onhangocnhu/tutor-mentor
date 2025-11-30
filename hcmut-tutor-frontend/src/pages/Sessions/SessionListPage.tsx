@@ -81,7 +81,7 @@ export default function SessionListPage() {
   }
   const fetchSessionInfo = async (sessionId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/sessions/${sessionId}`,{
+      const response = await fetch(`http://localhost:3001/sessions/${sessionId}`, {
         method: "GET",
       })
       if (response.ok) {
@@ -98,7 +98,6 @@ export default function SessionListPage() {
   }
 
   const handleExportExcel = () => {
-    // Placeholder for Excel export functionality
     console.log("Export to Excel clicked")
   }
 
@@ -106,143 +105,135 @@ export default function SessionListPage() {
     return <div className="sessions-container">Loading...</div>
   }
 
-return (
-  <div className="sessions-page relative min-h-screen flex">
+  return (
+    <div className="sessions-page relative min-h-screen flex">
 
-    {/* Overlay khi menu mở */}
-    {menuOpen && (
-      <div
-        onClick={() => setMenuOpen(false)}
-        style={{
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100vw",
-          height: "100vh",
-          background: "rgba(0,0,0,0.5)",
-          zIndex: 202,
-        }}
-      />
-    )}
+      {menuOpen && (
+        <div
+          onClick={() => setMenuOpen(false)}
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            zIndex: 202,
+          }}
+        />
+      )}
 
-    {/* Collapsed sidebar */}
-    <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
+      <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-    {/* Drawer sidebar khi menu mở */}
-    <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-    {/* Main content */}
-    <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col">
 
-      {/* TopBar */}
-      <TopBar
-        menuOpen={menuOpen}
-        onMenuClick={() => setMenuOpen(true)}
-        onLogoClick={() => navigate("/student-dashboard")}
-      />
+        <TopBar
+          menuOpen={menuOpen}
+          onMenuClick={() => setMenuOpen(true)}
+          onLogoClick={() => navigate("/student-dashboard")}
+        />
 
-      {/* Nội dung chính */}
-      <main className="flex-1 p-6 pt-16">
-        {loading ? (
-          <div className="sessions-container">Loading...</div>
-        ) : (
-          <div className="sessions-container">
-            {/* Giữ nguyên header + 2 nút */}
-            <div className="sessions-header">
-              <h2>Các buổi gặp</h2>
-              <div className="sessions-actions">
-                <button className="btn-export" onClick={handleExportExcel}>
-                  <span>📊</span> Xuất Excel
-                </button>
-                <button className="btn-add-session" onClick={handleAddSession}>
-                  <span>+</span> Thêm buổi gặp
-                </button>
-              </div>
-            </div>
-
-            {/* Filter + Table + Pagination */}
-            <div className="sessions-filter-section">
-              <h3>Danh sách buổi gặp</h3>
-              <div className="filter-controls">
-                <div className="filter-date">
-                  <input type="date" defaultValue="2025-09-15" />
-                  <span>-</span>
-                  <input type="date" defaultValue="2025-10-15" />
+        <main className="flex-1 p-6 pt-16">
+          {loading ? (
+            <div className="sessions-container">Loading...</div>
+          ) : (
+            <div className="sessions-container">
+              <div className="sessions-header">
+                <h2>Các buổi gặp</h2>
+                <div className="sessions-actions">
+                  <button className="btn-export" onClick={handleExportExcel}>
+                    <span>📊</span> Xuất Excel
+                  </button>
+                  <button className="btn-add-session" onClick={handleAddSession}>
+                    <span>+</span> Thêm buổi gặp
+                  </button>
                 </div>
-                <button className="btn-location">📍 Lọc</button>
-                <div className="filter-sort">
-                  <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                    <option value="date">Sắp xếp theo A-Z</option>
-                    <option value="department">Sắp xếp theo Bộ môn</option>
-                  </select>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="search-input"
-                />
               </div>
-            </div>
 
-            <div className="sessions-table-wrapper">
-              <table className="sessions-table">
-                <thead>
-                  <tr>
-                    <th><input type="checkbox" /></th>
-                    <th>ID</th>
-                    <th>Thời gian diễn ra</th>
-                    <th>Hình thức</th>
-                    <th>Số lượng sinh viên</th>
-                    <th>Bộ môn</th>
-                    <th>Trạng thái</th>
-                    <th>Chi tiết buổi gặp</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paginatedSessions.map((session) => (
-                    <tr key={session.id}>
-                      <td><input type="checkbox" /></td>
-                      <td className="session-id">{session.id}</td>
-                      <td>{session.time} {session.date}</td>
-                      <td>{session.format}</td>
-                      <td>{session.studentCount}</td>
-                      <td>{session.department}</td>
-                      <td>
-                        <span className={`status-badge ${session.status === "Đã diễn ra" ? "status-done" : "status-pending"}`}>
-                          {session.status === "Đã diễn ra" ? "• Đã diễn ra" : "• Chưa diễn ra"}
-                        </span>
-                      </td>
-                      <td>
-                        <button className="btn-edit" onClick={() => handleEditSession(session.id)}>✏️</button>
-                      </td>
+              <div className="sessions-filter-section">
+                <h3>Danh sách buổi gặp</h3>
+                <div className="filter-controls">
+                  <div className="filter-date">
+                    <input type="date" defaultValue="2025-09-15" />
+                    <span>-</span>
+                    <input type="date" defaultValue="2025-10-15" />
+                  </div>
+                  <button className="btn-location">📍 Lọc</button>
+                  <div className="filter-sort">
+                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                      <option value="date">Sắp xếp theo A-Z</option>
+                      <option value="department">Sắp xếp theo Bộ môn</option>
+                    </select>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-input"
+                  />
+                </div>
+              </div>
+
+              <div className="sessions-table-wrapper">
+                <table className="sessions-table">
+                  <thead>
+                    <tr>
+                      <th><input type="checkbox" /></th>
+                      <th>ID</th>
+                      <th>Thời gian diễn ra</th>
+                      <th>Hình thức</th>
+                      <th>Số lượng sinh viên</th>
+                      <th>Bộ môn</th>
+                      <th>Trạng thái</th>
+                      <th>Chi tiết buổi gặp</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {paginatedSessions.map((session) => (
+                      <tr key={session.id}>
+                        <td><input type="checkbox" /></td>
+                        <td className="session-id">{session.id}</td>
+                        <td>{session.time} {session.date}</td>
+                        <td>{session.format}</td>
+                        <td>{session.studentCount}</td>
+                        <td>{session.department}</td>
+                        <td>
+                          <span className={`status-badge ${session.status === "Đã diễn ra" ? "status-done" : "status-pending"}`}>
+                            {session.status === "Đã diễn ra" ? "• Đã diễn ra" : "• Chưa diễn ra"}
+                          </span>
+                        </td>
+                        <td>
+                          <button className="btn-edit" onClick={() => handleEditSession(session.id)}>✏️</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-            <div className="pagination-section">
-              <span>Trang trước</span>
-              {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
-                <button
-                  key={i + 1}
-                  className={`pagination-btn ${currentPage === i + 1 ? "active" : ""}`}
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              ))}
-              {totalPages > 3 && <span>...</span>}
-              <button className="pagination-btn">{totalPages}</button>
-              <span>Trang kế tiếp</span>
+              <div className="pagination-section">
+                <span>Trang trước</span>
+                {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
+                  <button
+                    key={i + 1}
+                    className={`pagination-btn ${currentPage === i + 1 ? "active" : ""}`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                {totalPages > 3 && <span>...</span>}
+                <button className="pagination-btn">{totalPages}</button>
+                <span>Trang kế tiếp</span>
+              </div>
             </div>
-          </div>
-        )}
-      </main>
+          )}
+        </main>
+      </div>
     </div>
-  </div>
-)
+  )
 
 }

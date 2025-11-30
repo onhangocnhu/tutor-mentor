@@ -6,12 +6,9 @@ import TopBar from "../../components/TopBar";
 import SideBarOpen from "../../components/SideBarOpen";
 import SidebarRail from "../../components/SidebarRail";
 
-// ...existing code...
-
 export default function TutorStudentListPage() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  // store full registrations so we can access subjectName, registration id and student info
   const [registrations, setRegistrations] = useState<any[]>([]);
 
   useEffect(() => {
@@ -31,9 +28,7 @@ export default function TutorStudentListPage() {
     }
   }, [navigate]);
 
-  // load registrations assigned to this tutor (use cookie username fallback)
   useEffect(() => {
-    // read cookie username
     const cookie = document.cookie || "";
     let tutorUsername: string | null = null;
     cookie.split(";").map(s => s.trim()).forEach(pair => {
@@ -47,7 +42,6 @@ export default function TutorStudentListPage() {
     fetch(url, { credentials: "include" })
       .then((res) => res.json())
       .then((payload) => {
-        // keep full registrations so we can display subjectName and pass registration when updating
         const regs = Array.isArray(payload) ? payload : (payload.registrations ?? payload.data ?? []);
         setRegistrations(regs);
       })
@@ -58,7 +52,6 @@ export default function TutorStudentListPage() {
   }, []);
 
   const handleUpdateClick = (registration: any) => {
-    // navigate and pass the registration (contains student and subject info)
     const sid = registration?.student?.studentId ?? registration?.student?.username ?? registration?.student?.id;
     const path = sid ? `/tutor/update-progress/${encodeURIComponent(sid)}` : `/tutor/update-progress`;
     navigate(path, { state: { registration } });
@@ -68,7 +61,6 @@ export default function TutorStudentListPage() {
     <div className="page-outer">
       <div className="page-inner">
         <div className="student-page">
-          {/* overlay (fixed) to dim the page when menu is open; sits under the sidebar */}
           {menuOpen && (
             <div
               onClick={() => setMenuOpen(false)}
@@ -79,18 +71,15 @@ export default function TutorStudentListPage() {
                 width: "100vw",
                 height: "100vh",
                 background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 202, // below SideBarOpen (300) and above topbar (200)
+                zIndex: 202,
               }}
             />
           )}
 
-          {/* collapsed sidebar (always present) */}
           <SidebarRail wrapperClass="sidebar" imgClass="sidebar-avatar" />
 
-          {/* render drawer component (separate component) */}
           <SideBarOpen open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-          {/* HEADER (using TopBar component) */}
           <TopBar
             menuOpen={menuOpen}
             onMenuClick={() => setMenuOpen(true)}

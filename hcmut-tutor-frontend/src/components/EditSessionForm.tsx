@@ -67,11 +67,6 @@ export default function SessionForm({ onSave, onCancel, initialData }: SessionFo
   const handleOpenStudentList = () => setShowStudentList(true);
   const handleCloseStudentList = () => setShowStudentList(false);
 
-  // const handleSubmitMeetingReport = (payload: { content: string; results: string; next: string }) => {
-  //   console.log("Biên bản mới:", payload);
-  //   alert("Đã thêm biên bản thành công!");
-  //   setShowMeetingReportModal(false); // đóng modal sau khi submit
-  // };
   const handleSubmitMeetingReport = (file: File | null) => {
   console.log("File được chọn:", file);
   };

@@ -1,7 +1,7 @@
 {
   "userId": 1,
-  "lastLogin": "2025-11-30T06:02:53.412Z",
-  "totalLogins": 200,
+  "lastLogin": "2025-11-30T06:07:01.275Z",
+  "totalLogins": 201,
   "monthlyStats": [
     {
       "month": "05/2025",
@@ -29,7 +29,7 @@
     },
     {
       "month": "11/2025",
-      "count": 5
+      "count": 6
     }
   ]
 }

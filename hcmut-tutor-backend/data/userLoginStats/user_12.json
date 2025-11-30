@@ -1,35 +1,35 @@
 {
-  "userId": 4,
-  "lastLogin": "2025-11-30T06:15:16.241Z",
-  "totalLogins": 247,
+  "userId": 12,
+  "lastLogin": "2025-11-30T07:30:25.000Z",
+  "totalLogins": 182,
   "monthlyStats": [
     {
       "month": "05/2025",
-      "count": 48
+      "count": 14
     },
     {
       "month": "06/2025",
-      "count": 55
-    },
-    {
-      "month": "07/2025",
-      "count": 42
-    },
-    {
-      "month": "08/2025",
       "count": 35
     },
     {
+      "month": "07/2025",
+      "count": 21
+    },
+    {
+      "month": "08/2025",
+      "count": 25
+    },
+    {
       "month": "09/2025",
-      "count": 38
+      "count": 32
     },
     {
       "month": "10/2025",
-      "count": 22
+      "count": 18
     },
     {
       "month": "11/2025",
-      "count": 7
+      "count": 16
     }
   ]
 }

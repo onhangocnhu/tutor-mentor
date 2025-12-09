@@ -25,10 +25,10 @@ interface Session {
 export default function NewSessionPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [session, setSession] = useState<Session | null>(null)
+  const [session] = useState<Session | null>(null)
   const [showSuccess, setShowSuccess] = useState(false)
   const [successMessage, setSuccessMessage] = useState("")
-  const [isLoading, setIsLoading] = useState(!!id)
+  const [isLoading] = useState(!!id)
 
   const [menuOpen, setMenuOpen] = useState(false);
 

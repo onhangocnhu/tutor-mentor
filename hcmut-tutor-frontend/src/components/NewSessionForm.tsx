@@ -43,7 +43,7 @@ export default function NewSessionForm({ onAdd, onCancel, initialData }: Session
   )
 
   const [showAddConfirm, setShowAddConfirm] = useState(false)
-	const [showAddSuccess, setShowAddSuccess] = useState(false)
+  const [showAddSuccess] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -153,19 +153,19 @@ export default function NewSessionForm({ onAdd, onCancel, initialData }: Session
       </div>
 
       {showAddConfirm && (
-				<ConfirmModal
-					title="Xác nhận thêm buổi gặp"
-					message="Bạn có chắc chắn muốn thêm buổi gặp này?"
-					onConfirm={() => onAdd(formData)}
-					onCancel={() => setShowAddConfirm(false)}
-				/>
-			)}
+        <ConfirmModal
+          title="Xác nhận thêm buổi gặp"
+          message="Bạn có chắc chắn muốn thêm buổi gặp này?"
+          onConfirm={() => onAdd(formData)}
+          onCancel={() => setShowAddConfirm(false)}
+        />
+      )}
 
-			{showAddSuccess && (
-				<SuccessModal
-					message={"Thêm buổi gặp thành công"}
-				/>
-			)}
+      {showAddSuccess && (
+        <SuccessModal
+          message={"Thêm buổi gặp thành công"}
+        />
+      )}
     </div>
   )
 }

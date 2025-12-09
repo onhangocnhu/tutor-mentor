@@ -32,7 +32,7 @@ export default function SessionListPage() {
   const [filteredSessions, setFilteredSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [itemsPerPage] = useState(10)
   const [searchTerm, setSearchTerm] = useState("")
   const [sortBy, setSortBy] = useState("date")
   const navigate = useNavigate()
@@ -85,7 +85,7 @@ export default function SessionListPage() {
         method: "GET",
       })
       if (response.ok) {
-        const data = await response.json()
+        await response.json()
       }
     } catch (error) {
       console.error("Failed to fetch session:", error)
